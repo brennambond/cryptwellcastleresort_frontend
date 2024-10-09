@@ -7,8 +7,8 @@ import Navbar from "./components/Navbar";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Haunted Hotel",
-  description: "Haunted Hotel Django Project",
+  title: "DjangoBnb",
+  description: "Django + BNB Project",
 };
 
 export default function RootLayout({
@@ -16,6 +16,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const content = <p>Content Test</p>;
   return (
     <html lang='en'>
       <body className={inter.className}>
