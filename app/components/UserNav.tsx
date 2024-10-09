@@ -4,8 +4,10 @@ import { useState } from "react";
 
 import { HiMenu, HiOutlineUser } from "react-icons/hi";
 import MenuLink from "./MenuLink";
+import useLoginModal from "../hooks/useLoginModal";
 
 const UserNav = () => {
+  const loginModal = useLoginModal();
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -19,7 +21,10 @@ const UserNav = () => {
         <div className='w-[220px] absolute top-[60px] right-0 bg-white border rounded-xl shadow-md flex flex-col cursor-pointer'>
           <MenuLink
             label='Log in'
-            onClick={() => console.log("Clicked Button")}
+            onClick={() => {
+              setIsOpen(false);
+              loginModal.open();
+            }}
           />
           <MenuLink
             label='Sign up'

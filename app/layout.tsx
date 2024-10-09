@@ -3,12 +3,13 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 
 import Navbar from "./components/Navbar";
+import LoginModal from "./components/LoginModal";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "DjangoBnb",
-  description: "Django + BNB Project",
+  title: "Haunted Hotel",
+  description: "Haunted Hotel Project",
 };
 
 export default function RootLayout({
@@ -22,6 +23,8 @@ export default function RootLayout({
       <body className={inter.className}>
         <Navbar />
         <div className='pt-36'>{children}</div>
+
+        <LoginModal />
       </body>
     </html>
   );
