@@ -1,12 +1,17 @@
 import Image from "next/image";
+import { RoomType } from "./RoomList";
 
-const PropertyListItem = () => {
+interface RoomProps {
+  room: RoomType;
+}
+
+const RoomListItem: React.FC<RoomProps> = ({ room }) => {
   return (
     <div className='cursor-pointer'>
       <div className='relative overflow-hidden aspect-square rounded-xl'>
         <Image
           fill
-          src='/hotel1.png'
+          src={room.image_url}
           sizes='(max-width: 768px) 768px, (max-width: 1200px): 768px, 768px'
           className='hover:scale-110 object-cover transition h-full w-full'
           alt='Haunted Hotel'
@@ -14,15 +19,15 @@ const PropertyListItem = () => {
       </div>
 
       <div className='mt-2'>
-        <p className='text-lg font-bold'>Property Name</p>
+        <p className='text-lg font-bold'>{room.title}</p>
       </div>
       <div className='mt-2'>
         <p className='text-sm text-gray-500'>
-          <strong>$200</strong> per night
+          <strong>${room.price_per_night}</strong> per night
         </p>
       </div>
     </div>
   );
 };
 
-export default PropertyListItem;
+export default RoomListItem;

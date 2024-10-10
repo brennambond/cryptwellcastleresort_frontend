@@ -1,7 +1,7 @@
 import ReservationSidebar from "@/app/components/ReservationSidebar";
 import Image from "next/image";
 
-const PropertyDetailPage = () => {
+const RoomDetailPage = () => {
   return (
     <main className='max-w-[1500px] mx-auto px-6 pb-6'>
       <div className='w-full h-[64vh] overflow-hidden rounded-xl relative mb-4'>
@@ -15,7 +15,7 @@ const PropertyDetailPage = () => {
 
       <div className='grid grid-cols-1 md:grid-cols-5 gap-4'>
         <div className='col-span-3 py-6 pr-6'>
-          <h1 className='mb-4 text-4xl'>Property Name</h1>
+          <h1 className='mb-4 text-4xl'>Room Name</h1>
           <span className='mb-6 block text-lg text-gray-600'>
             4 guests - 2 bedrooms - 1 bathroom
           </span>
@@ -51,4 +51,4 @@ const PropertyDetailPage = () => {
   );
 };
 
-export default PropertyDetailPage;
+export default RoomDetailPage;

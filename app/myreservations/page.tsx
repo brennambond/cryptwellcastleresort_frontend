@@ -19,7 +19,7 @@ const MyReservationsPage = () => {
           </div>
 
           <div className='col-span-1 md:col-span-3 '>
-            <h2 className='mb-4 text-xl'>Property Name</h2>
+            <h2 className='mb-4 text-xl'>Room Name</h2>
             <p className='mb-2'>
               <strong>Check in date:</strong> 2/14/2024
             </p>
@@ -34,7 +34,7 @@ const MyReservationsPage = () => {
             </p>
 
             <div className='mt-6 inline-block cursor-pointer py-4 px-6 bg-airbnb hover:bg-airbnb-dark text-white rounded-xl transition'>
-              Go to property
+              Go to room
             </div>
           </div>
         </div>
@@ -52,7 +52,7 @@ const MyReservationsPage = () => {
           </div>
 
           <div className='col-span-1 md:col-span-3 '>
-            <h2 className='mb-4 text-xl'>Property Name</h2>
+            <h2 className='mb-4 text-xl'>Room Name</h2>
             <p className='mb-2'>
               <strong>Check in date:</strong> 2/14/2024
             </p>
@@ -67,7 +67,7 @@ const MyReservationsPage = () => {
             </p>
 
             <div className='mt-6 inline-block cursor-pointer py-4 px-6 bg-airbnb hover:bg-airbnb-dark text-white rounded-xl transition'>
-              Go to property
+              Go to room
             </div>
           </div>
         </div>
@@ -85,7 +85,7 @@ const MyReservationsPage = () => {
           </div>
 
           <div className='col-span-1 md:col-span-3 '>
-            <h2 className='mb-4 text-xl'>Property Name</h2>
+            <h2 className='mb-4 text-xl'>Room Name</h2>
             <p className='mb-2'>
               <strong>Check in date:</strong> 2/14/2024
             </p>
@@ -100,7 +100,7 @@ const MyReservationsPage = () => {
             </p>
 
             <div className='mt-6 inline-block cursor-pointer py-4 px-6 bg-airbnb hover:bg-airbnb-dark text-white rounded-xl transition'>
-              Go to property
+              Go to room
             </div>
           </div>
         </div>

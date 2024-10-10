@@ -25,7 +25,7 @@ const ReservationSidebar = () => {
       </div>
 
       <div className='mb-4 flex justify-between items-center'>
-        <p>Djangobnb Fee</p>
+        <p>Haunted Hotel Fee</p>
 
         <p>$40</p>
       </div>

@@ -1,5 +1,6 @@
 import ContactButton from "@/app/components/ContactButton";
-import PropertyList from "@/app/components/PropertyList";
+import RoomList from "@/app/components/RoomList";
+
 import Image from "next/image";
 
 const LandlordDetailPage = () => {
@@ -22,7 +23,7 @@ const LandlordDetailPage = () => {
 
         <div className='col-span-1 md:col-span-3 pl-0 md:pl-6'>
           <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
-            <PropertyList />
+            <RoomList />
           </div>
         </div>
       </div>
