@@ -7,6 +7,7 @@ import useSignupModal from "../hooks/useSignupModal";
 import CustomButton from "./CustomButton";
 import Modal from "./Modal";
 import apiService from "../services/apiService";
+import { handleLogin } from "../lib/actions";
 
 const SignupModal = () => {
   const router = useRouter();
@@ -29,7 +30,7 @@ const SignupModal = () => {
     );
 
     if (response.access) {
-      // handleLogin
+      handleLogin(response.user.pk, response.access, response.refresh);
 
       signupModal.close();
 
