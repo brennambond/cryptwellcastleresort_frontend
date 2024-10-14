@@ -2,7 +2,6 @@ import Image from "next/image";
 import Link from "next/link";
 import SearchFilters from "./SearchFilters";
 import UserNav from "./UserNav";
-import AddRoomButton from "./AddRoomButton";
 
 import { getUserId } from "../lib/actions";
 
@@ -25,7 +24,6 @@ const Navbar = async () => {
             <SearchFilters />
           </div>
           <div className='flex items-center space-x-6'>
-            <AddRoomButton />
             <UserNav userId={userId} />
           </div>
         </div>
