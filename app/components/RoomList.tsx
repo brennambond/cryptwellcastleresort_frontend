@@ -1,5 +1,6 @@
 "use client";
 
+import apiService from "../services/apiService";
 import { useEffect, useState } from "react";
 import RoomListItem from "./RoomListItem";
 
@@ -13,25 +14,15 @@ export type RoomType = {
 const RoomList = () => {
   const [rooms, setRooms] = useState<RoomType[]>([]);
   const getRooms = async () => {
-    const url = "http://localhost:8000/api/rooms/";
+    const tmpRooms = await apiService.get("/api/rooms/");
 
-    await fetch(url, {
-      method: "GET",
-    })
-      .then((response) => response.json())
-      .then((json) => {
-        console.log("json", json);
-
-        setRooms(json.data);
-      })
-      .catch((error) => {
-        console.log("error", error);
-      });
+    setRooms(tmpRooms.data);
   };
 
   useEffect(() => {
     getRooms();
   }, []);
+
   return (
     <>
       {rooms.map((room) => {
