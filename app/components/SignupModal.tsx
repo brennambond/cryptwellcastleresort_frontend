@@ -24,7 +24,7 @@ const SignupModal = () => {
       password2: password2,
     };
 
-    const response = await apiService.postWithoutToken(
+    const response = await apiService.post(
       "/api/auth/register/",
       JSON.stringify(formData)
     );
@@ -39,6 +39,7 @@ const SignupModal = () => {
       const tmpErrors: string[] = Object.values(response).map((error: any) => {
         return error;
       });
+
       setErrors(tmpErrors);
     }
   };

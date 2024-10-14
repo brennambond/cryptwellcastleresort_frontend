@@ -1,14 +1,13 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-
-import CustomButton from "./CustomButton";
 import Modal from "./Modal";
 
-import useLoginModal from "../hooks/useLoginModal";
-import apiService from "../services/apiService";
-import { handleLogin } from "../lib/actions";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import useLoginModal from "../hooks/useLoginModal";
+import CustomButton from "./CustomButton";
+import { handleLogin } from "../lib/actions";
+import apiService from "../services/apiService";
 
 const LoginModal = () => {
   const router = useRouter();
@@ -23,7 +22,7 @@ const LoginModal = () => {
       password: password,
     };
 
-    const response = await apiService.postWithoutToken(
+    const response = await apiService.post(
       "/api/auth/login/",
       JSON.stringify(formData)
     );
