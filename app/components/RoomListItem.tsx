@@ -1,13 +1,18 @@
 import Image from "next/image";
 import { RoomType } from "./RoomList";
+import { useRouter } from "next/navigation";
 
 interface RoomProps {
   room: RoomType;
 }
 
 const RoomListItem: React.FC<RoomProps> = ({ room }) => {
+  const router = useRouter();
   return (
-    <div className='cursor-pointer'>
+    <div
+      onClick={() => router.push(`/rooms/${room.id}`)}
+      className='cursor-pointer'
+    >
       <div className='relative overflow-hidden aspect-square rounded-xl'>
         <Image
           fill

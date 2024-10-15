@@ -2,11 +2,10 @@ import ReservationSidebar from "@/app/components/ReservationSidebar";
 import Image from "next/image";
 
 import apiService from "@/app/services/apiService";
-import { getUserId } from "@/app/lib/actions";
 
 const RoomDetailPage = async ({ params }: { params: { id: string } }) => {
   const room = await apiService.get(`/api/rooms/${params.id}`);
-  const userId = await getUserId();
+
   return (
     <main className='max-w-[1500px] mx-auto px-6 pb-6'>
       <div className='w-full h-[64vh] overflow-hidden rounded-xl relative mb-4'>
@@ -29,28 +28,10 @@ const RoomDetailPage = async ({ params }: { params: { id: string } }) => {
 
           <hr />
 
-          <div className='py-6 flex items-center space-x-4'>
-            {room.landlord.avatar_url && (
-              <Image
-                src='/profile-pic.jpg'
-                width={50}
-                height={50}
-                className='rounded-full'
-                alt='User Icon'
-              />
-            )}
-
-            <p>
-              <strong>{room.landlord.name}</strong> is your host
-            </p>
-          </div>
-
-          <hr />
-
           <p className='mt-6 text-lg'>{room.description}</p>
         </div>
 
-        <ReservationSidebar room={room} userId={userId} />
+        <ReservationSidebar room={room} />
       </div>
     </main>
   );

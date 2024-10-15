@@ -21,7 +21,7 @@ export type Room = {
 };
 
 interface ReservationSidebarProps {
-  userId: string | null;
+  userId?: string | null;
   room: Room;
 }
 
