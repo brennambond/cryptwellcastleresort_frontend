@@ -2,16 +2,16 @@
 
 import apiService from "../services/apiService";
 import { useEffect, useState } from "react";
-import RoomListItem from "./RoomListItem";
 
 export type RoomType = {
   id: string;
   title: string;
   price_per_night: number;
   image_url: string;
+  hotel_wing: string;
 };
 
-const RoomList = () => {
+const WingsPage = () => {
   const [rooms, setRooms] = useState<RoomType[]>([]);
   const getRooms = async () => {
     const tmpRooms = await apiService.get("/api/rooms/");
@@ -24,14 +24,7 @@ const RoomList = () => {
   useEffect(() => {
     getRooms();
   }, []);
-
-  return (
-    <>
-      {rooms.map((room) => {
-        return <RoomListItem key={room.id} room={room} />;
-      })}
-    </>
-  );
+  return <div>WingsPage</div>;
 };
 
-export default RoomList;
+export default WingsPage;
