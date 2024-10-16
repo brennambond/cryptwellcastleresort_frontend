@@ -1,14 +1,22 @@
-// "use client";
+import { GiBat, GiGhost, GiWerewolf, GiShamblingZombie } from "react-icons/gi";
 
-// import { useState } from "react";
-// import HotelWings from "./WingsList";
+import { useRouter } from "next/navigation";
+import { WingType } from "./WingsList";
 
-// const WingsListItem = () => {
-//   const [dataWing, setDataWing] = useState("");
-//   const setWing = (wing: string) => {
-//     setDataWing(wing);
-//   };
-//   return <HotelWings dataWing={dataWing} setWing={(wing) => setWing(wing)} />;
-// };
+interface WingProps {
+  wing: WingType;
+}
 
-// export default WingsListItem;
+const WingListItem: React.FC<WingProps> = ({ wing }) => {
+  const router = useRouter();
+  return (
+    <div
+      onClick={() => router.push(`/rooms/wings/${wing.name}`)}
+      className='cursor-pointer'
+    >
+      {wing.name}
+    </div>
+  );
+};
+
+export default WingListItem;

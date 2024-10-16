@@ -9,10 +9,13 @@ const Categories = () => {
     setDataCategory(wing);
   };
   return (
-    <CategorySelect
-      dataCategory={dataCategory}
-      setCategory={(category) => setCategory(category)}
-    />
+    <>
+      <CategorySelect
+        dataCategory={dataCategory}
+        setCategory={(category) => setCategory(category)}
+      />
+      <div>Test</div>
+    </>
   );
 };
 
