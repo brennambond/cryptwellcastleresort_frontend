@@ -8,12 +8,12 @@ import { getUserId } from "../lib/actions";
 const Navbar = async () => {
   const userId = await getUserId();
   return (
-    <nav className='w-full fixed top-0 left-0 py-6 border-b bg-white z-10'>
+    <nav className='w-full fixed top-0 left-0 py-6 border-b  z-10 bg-[#4ea0ae]'>
       <div className='max-w-[1500px] mx-auto px-6'>
         <div className='flex justify-between items-center'>
           <Link href='/'>
             <Image
-              src='/haunted-hotel-logo.png'
+              src='/hotel-logo.png'
               alt='Haunted Hotel logo'
               width={60}
               height={38}

@@ -21,9 +21,9 @@ export default function RootLayout({
   const content = <p>Content Test</p>;
   return (
     <html lang='en'>
-      <body className={inter.className}>
+      <body className={`${inter.className} bg-[#6c53a4]`}>
         <Navbar />
-        <div className='pt-36'>{children}</div>
+        <div className='pt-36 '>{children}</div>
 
         <LoginModal />
         <SignupModal />

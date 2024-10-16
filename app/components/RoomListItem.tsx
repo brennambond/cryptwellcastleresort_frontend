@@ -13,7 +13,7 @@ const RoomListItem: React.FC<RoomProps> = ({ room }) => {
       onClick={() => router.push(`/rooms/${room.id}`)}
       className='cursor-pointer'
     >
-      <div className='relative overflow-hidden aspect-square rounded-xl'>
+      <div className='relative overflow-hidden aspect-square rounded-xl shadow-xl hover:shadow-2xl'>
         <Image
           fill
           src={room.image_url}

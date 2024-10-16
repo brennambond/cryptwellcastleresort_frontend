@@ -28,9 +28,11 @@ const WingsList = () => {
 
   return (
     <>
-      {wings.map((wing) => {
-        return <WingListItem key={wing.id} wing={wing} />;
-      })}
+      <div className='flex items-center space-x-6'>
+        {wings.map((wing) => {
+          return <WingListItem key={wing.id} wing={wing} />;
+        })}
+      </div>
     </>
   );
 };
