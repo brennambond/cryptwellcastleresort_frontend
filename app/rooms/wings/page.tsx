@@ -1,6 +1,7 @@
 "use client";
 
-import apiService from "../services/apiService";
+import WingsList from "@/app/components/WingsList";
+import apiService from "../../services/apiService";
 import { useEffect, useState } from "react";
 
 export type RoomType = {
@@ -24,7 +25,11 @@ const WingsPage = () => {
   useEffect(() => {
     getRooms();
   }, []);
-  return <div>WingsPage</div>;
+  return (
+    <div>
+      <WingsList />
+    </div>
+  );
 };
 
 export default WingsPage;

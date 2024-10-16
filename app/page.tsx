@@ -1,5 +1,5 @@
 import RoomList from "./components/RoomList";
-import HotelWingsContainer from "./components/HotelWingsContainer";
+
 import Categories from "./components/Categories";
 
 export default function Home() {
