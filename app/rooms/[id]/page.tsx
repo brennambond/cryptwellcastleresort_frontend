@@ -16,8 +16,8 @@ const RoomDetailPage = async ({ params }: { params: { id: string } }) => {
       <div className='w-full h-[64vh] overflow-hidden rounded-xl relative mb-4'>
         <Image
           fill
-          src='/hotel1.png'
-          alt='Hotel Image'
+          src={room.image_url}
+          alt={room.title}
           className='object-cover w-full h-full'
         />
       </div>

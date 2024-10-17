@@ -11,6 +11,7 @@ const config: Config = {
       colors: {
         airbnb: "#ff385c",
         "airbnb-dark": "#d50027",
+        "white-main": "#edeffb",
       },
     },
   },
