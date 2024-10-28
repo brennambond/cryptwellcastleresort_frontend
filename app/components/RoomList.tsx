@@ -8,6 +8,9 @@ export type RoomType = {
   id: string;
   title: string;
   price_per_night: number;
+  bedrooms: number;
+  bathrooms: number;
+  guests: number;
   image_url: string;
 };
 
