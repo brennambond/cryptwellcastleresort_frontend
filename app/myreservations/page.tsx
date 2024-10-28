@@ -49,7 +49,7 @@ const MyReservationsPage = async () => {
 
                 <Link
                   href={`/rooms/${reservation.room.id}`}
-                  className='mt-6 inline-block cursor-pointer py-4 px-6 bg-airbnb hover:bg-airbnb-dark text-white rounded-xl transition'
+                  className='mt-6 inline-block cursor-pointer py-4 px-6 bg-blue-main text-white rounded-xl transition'
                 >
                   Go to room
                 </Link>

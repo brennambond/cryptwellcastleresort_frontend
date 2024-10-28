@@ -129,7 +129,7 @@ const ReservationSidebar: React.FC<ReservationSidebarProps> = ({
   }, [dateRange]);
 
   return (
-    <aside className='mt-6 p-6 col-span-2 rounded-xl border border-gray-300 shadow-xl'>
+    <aside className='mt-6 p-6 col-span-2 rounded-xl border border-gray-300 shadow-xl bg-white-main'>
       <h2 className='mb-5 text-2xl'>${room.price_per_night} per night</h2>
 
       <DatePicker
@@ -156,7 +156,7 @@ const ReservationSidebar: React.FC<ReservationSidebarProps> = ({
 
       <div
         onClick={performBooking}
-        className='cursor-pointer w-full mb-6 py-6 text-center text-white bg-airbnb hover:bg-airbnb-dark rounded-xl'
+        className='cursor-pointer w-full mb-6 py-6 text-center text-white bg-blue-main rounded-xl'
       >
         Book
       </div>

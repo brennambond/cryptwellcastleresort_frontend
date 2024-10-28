@@ -21,7 +21,7 @@ const UserNav: React.FC<UserNavProps> = ({ userId }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className='p-2 relative inline-block border rounded-full'>
+    <div className='p-2 relative inline-block border rounded-full bg-white-main'>
       <button onClick={() => setIsOpen(!isOpen)} className='flex items-center'>
         <HiMenu />
         <HiOutlineUser />
