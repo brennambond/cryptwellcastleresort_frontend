@@ -1,5 +1,3 @@
-import { GiBat, GiGhost, GiWerewolf, GiShamblingZombie } from "react-icons/gi";
-
 import { useRouter } from "next/navigation";
 import { WingType } from "./WingsList";
 
@@ -11,7 +9,7 @@ const WingListItem: React.FC<WingProps> = ({ wing }) => {
   const router = useRouter();
   return (
     <div
-      onClick={() => router.push(`/rooms/wings/${wing.name}`)}
+      onClick={() => router.push(`/rooms/wings/${wing.id}`)}
       className='cursor-pointer'
     >
       {wing.name}

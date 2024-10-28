@@ -8,6 +8,7 @@ import Link from "next/link";
 const RoomDetailPage = async ({ params }: { params: { id: string } }) => {
   const room = await apiService.get(`/api/rooms/${params.id}`);
   const userId = await getUserId();
+  console.log(room.wing);
 
   return (
     <main className='max-w-[1500px] mx-auto px-6 pb-6'>
@@ -23,28 +24,9 @@ const RoomDetailPage = async ({ params }: { params: { id: string } }) => {
       <hr />
 
       <Link
-        href={`/wings/${
-          room.wing == 1
-            ? "Vampires"
-            : room.wing == 2
-            ? "Werewolves"
-            : room.wing == 3
-            ? "Ghosts"
-            : room.wing == 4
-            ? "Zombies"
-            : ""
-        }`}
+        href={`/rooms/wings/${room.wing}`}
         className='py-6 flex items-center space-x-4'
       >
-        {room.wing == 1
-          ? "Vampires"
-          : room.wing == 2
-          ? "Werewolves"
-          : room.wing == 3
-          ? "Ghosts"
-          : room.wing == 4
-          ? "Zombies"
-          : ""}{" "}
         Wing
       </Link>
 

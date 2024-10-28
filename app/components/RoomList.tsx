@@ -22,8 +22,6 @@ const RoomList = () => {
     setRooms(tmpRooms.data);
   };
 
-  console.log(rooms);
-
   useEffect(() => {
     getRooms();
   }, []);
