@@ -6,6 +6,16 @@ import { RoomType } from "./RoomList";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import Modal from "./Modal";
+
 interface RoomProps {
   room: RoomType;
 }
@@ -14,10 +24,7 @@ const RoomListItem: React.FC<RoomProps> = ({ room }) => {
   const [isHovering, setIsHovering] = useState(false);
   const router = useRouter();
   return (
-    <div
-      onClick={() => router.push(`/rooms/${room.id}`)}
-      className='cursor-pointer'
-    >
+    <div>
       <div
         onMouseEnter={() => setIsHovering(true)}
         onMouseLeave={() => setIsHovering(false)}
@@ -25,7 +32,25 @@ const RoomListItem: React.FC<RoomProps> = ({ room }) => {
       >
         {isHovering ? (
           <div className='flex absolute bg-gray-600 text-white w-[40px] h-[40px] items-center justify-center rounded-md z-10  border-white border-2'>
-            <HiOutlineDuplicate className='w-6 h-6' />
+            <Dialog>
+              <DialogTrigger>
+                <HiOutlineDuplicate className='w-6 h-6 cursor-pointer' />
+              </DialogTrigger>
+              <DialogContent className='flex flex-col items-center justify-center w-[500px] h-[500px] bg-purple-main'>
+                <DialogHeader>
+                  <DialogTitle className='text-white-main'>
+                    Photos of Room
+                  </DialogTitle>
+                </DialogHeader>
+                <Image
+                  src={room.image_url}
+                  width={2000}
+                  height={2000}
+                  className='object-cover transition h-full w-full relative'
+                  alt='Hotel Picture'
+                />
+              </DialogContent>
+            </Dialog>
           </div>
         ) : (
           ""
@@ -42,7 +67,12 @@ const RoomListItem: React.FC<RoomProps> = ({ room }) => {
       </div>
 
       <div className='mt-2'>
-        <p className='text-lg font-bold'>{room.title}</p>
+        <p
+          onClick={() => router.push(`/rooms/${room.id}`)}
+          className='cursor-pointer text-lg font-bold'
+        >
+          {room.title}
+        </p>
       </div>
 
       <div className='mt-2'>
