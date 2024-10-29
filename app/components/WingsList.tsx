@@ -25,7 +25,7 @@ const WingsList = () => {
 
   return (
     <>
-      <div className='flex items-center space-x-6'>
+      <div className='flex w-full items-center justify-around'>
         {wings.map((wing) => {
           return <WingListItem key={wing.id} wing={wing} />;
         })}
