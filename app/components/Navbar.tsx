@@ -19,10 +19,12 @@ const Navbar = async () => {
               height={38}
             />
           </Link>
+          <Link href='/rooms'>Rooms</Link>
+          <Link href='/rooms/wings'>Wings</Link>
 
-          <div className='flex space-x-6'>
+          {/* <div className='flex space-x-6'>
             <SearchFilters />
-          </div>
+          </div> */}
           <div className='flex items-center space-x-6'>
             <UserNav userId={userId} />
           </div>
