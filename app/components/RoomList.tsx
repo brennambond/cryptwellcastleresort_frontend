@@ -11,10 +11,13 @@ export type RoomType = {
   id: string;
   title: string;
   price_per_night: number;
+  beds: number;
   bedrooms: number;
   bathrooms: number;
   guests: number;
   image_url: string;
+  wing: string;
+  category: string;
 };
 
 const RoomList = () => {
@@ -79,7 +82,7 @@ const RoomList = () => {
 
   useEffect(() => {
     getRooms();
-  }, [category, searchModal.query]);
+  }, [wing, searchModal.query]);
 
   return (
     <>

@@ -1,3 +1,5 @@
+import RoomList from "@/app/components/RoomList";
+import Wings from "@/app/components/Wings";
 import apiService from "@/app/services/apiService";
 import Image from "next/image";
 import React from "react";
@@ -20,6 +22,8 @@ const WingDetailPage = async ({ params }: { params: { id: string } }) => {
       <div className='mt-4 flex flex-col gap-6 '>
         <div>Wing of the {wing.name}</div>
         <div>{wing.description}</div>
+        <Wings />
+        <RoomList />
       </div>
     </main>
   );
