@@ -1,8 +1,15 @@
+"use client";
+
 import { HiOutlineSearch } from "react-icons/hi";
+import useSearchModal from "../hooks/useSearchModal";
 
 const SearchFilters = () => {
+  const searchModal = useSearchModal();
   return (
-    <div className='h-12 lg:h-16 flex flex-row items-center justify-between border rounded-full bg-white-main'>
+    <div
+      onClick={() => searchModal.open("checkin")}
+      className='h-12 lg:h-16 flex flex-row items-center justify-between border rounded-full bg-white-main'
+    >
       <div className='hidden lg:block'>
         <div className='flex flex-row items-center justify-between'>
           <div className='cursor-pointer w-[250px] h-12 lg:h-16 px-8 flex flex-col rounded-full hover:bg-gray-100 justify-center'>
