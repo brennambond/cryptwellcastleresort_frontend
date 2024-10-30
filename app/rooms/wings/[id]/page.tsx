@@ -22,8 +22,10 @@ const WingDetailPage = async ({ params }: { params: { id: string } }) => {
       <div className='mt-4 flex flex-col gap-6 '>
         <div>Wing of the {wing.name}</div>
         <div>{wing.description}</div>
-        <Wings />
-        <RoomList />
+        <div className='mt-4 grid grid-cols-1 md:grid-cols-3 gap-20 px-12 bg-white-main rounded-md py-8'>
+          {" "}
+          <RoomList roomsWing={wing.id} />
+        </div>
       </div>
     </main>
   );

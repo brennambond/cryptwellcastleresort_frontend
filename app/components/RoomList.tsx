@@ -7,6 +7,10 @@ import useSearchModal from "../hooks/useSearchModal";
 import RoomListItem from "./RoomListItem";
 import { useSearchParams } from "next/navigation";
 
+interface RoomProps {
+  roomsWing?: string;
+}
+
 export type RoomType = {
   id: string;
   title: string;
@@ -20,11 +24,11 @@ export type RoomType = {
   category: string;
 };
 
-const RoomList = () => {
-  // const params = useSearchParams();
+const RoomList: React.FC<RoomProps> = ({ roomsWing }) => {
+  const params = useSearchParams();
   const searchModal = useSearchModal();
-
-  const wing = searchModal.query.wing;
+  console.log(roomsWing);
+  const wing = roomsWing;
   const numGuests = searchModal.query.guests;
   const numBeds = searchModal.query.beds;
   const numBedrooms = searchModal.query.bedrooms;
@@ -64,8 +68,6 @@ const RoomList = () => {
       urlQuery += "&category=" + category;
     }
     if (urlQuery.length) {
-      console.log("Query: ", urlQuery);
-
       urlQuery = "?" + urlQuery.substring(1);
 
       url += urlQuery;
