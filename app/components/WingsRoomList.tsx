@@ -24,10 +24,11 @@ export type RoomType = {
   category: string;
 };
 
-const RoomList: React.FC<RoomProps> = ({ roomsWing }) => {
+const WingsRoomList: React.FC<RoomProps> = ({ roomsWing }) => {
   const params = useSearchParams();
   const searchModal = useSearchModal();
-  const wing = searchModal.query.wing;
+  console.log(roomsWing);
+  const wing = roomsWing;
   const numGuests = searchModal.query.guests;
   const numBeds = searchModal.query.beds;
   const numBedrooms = searchModal.query.bedrooms;
@@ -94,4 +95,4 @@ const RoomList: React.FC<RoomProps> = ({ roomsWing }) => {
   );
 };
 
-export default RoomList;
+export default WingsRoomList;
