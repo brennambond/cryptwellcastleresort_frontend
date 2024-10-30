@@ -24,7 +24,7 @@ export default function RootLayout({
     <html lang='en'>
       <body className={`${inter.className} bg-[#6c53a4]`}>
         <Navbar />
-        <div className='pt-36 '>{children}</div>
+        <div className='pt-36 my-20'>{children}</div>
 
         <LoginModal />
         <SearchModal />
