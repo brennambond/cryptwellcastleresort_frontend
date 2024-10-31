@@ -83,7 +83,7 @@ const RoomList: React.FC<RoomProps> = ({ roomsWing }) => {
 
   useEffect(() => {
     getRooms();
-  }, [wing, searchModal.query]);
+  }, [wing, searchModal.query, params]);
 
   return (
     <>
