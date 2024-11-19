@@ -3,6 +3,13 @@
 @tailwind utilities;
 @layer base {
   :root {
-    --radius: 0.5rem
+    --radius: 0.5rem;
+  }
+}
+
+@layer utilities {
+  /* FONTS */
+  .nav-links {
+    @apply font-cormorant font-bold leading-6 text-[16px];
   }
 }
