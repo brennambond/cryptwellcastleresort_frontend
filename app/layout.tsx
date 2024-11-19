@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Cormorant_Infant, UnifrakturCook } from "next/font/google";
 import "./globals.css";
 
 import Navbar from "./components/Navbar";
@@ -7,7 +7,16 @@ import LoginModal from "./components/LoginModal";
 import SignupModal from "./components/SignupModal";
 import SearchModal from "./components/SearchModal";
 
-const inter = Inter({ subsets: ["latin"] });
+const cormorant = Cormorant_Infant({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-cormorant",
+});
+const unifraktur = UnifrakturCook({
+  subsets: ["latin"],
+  weight: ["700"],
+  variable: "--font-unifraktur",
+});
 
 export const metadata: Metadata = {
   title: "Haunted Hotel",
@@ -22,7 +31,9 @@ export default function RootLayout({
   const content = <p>Content Test</p>;
   return (
     <html lang='en'>
-      <body className={`${inter.className} bg-[#6c53a4]`}>
+      <body
+        className={`${cormorant.variable} ${unifraktur.variable} bg-[#6c53a4]`}
+      >
         <Navbar />
         <div className='pt-36 my-20'>{children}</div>
 
