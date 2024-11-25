@@ -40,37 +40,37 @@ const RoomList: React.FC<RoomProps> = ({ roomsWing }) => {
 
   const getRooms = async () => {
     let url = "/api/rooms/";
-    let urlQuery = "";
+    // let urlQuery = "";
 
-    if (wing) {
-      urlQuery += "&wing=" + wing;
-    }
-    if (numGuests) {
-      urlQuery += "&numGuests=" + numGuests;
-    }
-    if (numBeds) {
-      urlQuery += "&numBeds=" + numBeds;
-    }
-    if (numBedrooms) {
-      urlQuery += "&numBedrooms=" + numBedrooms;
-    }
-    if (numBathrooms) {
-      urlQuery += "&numBathrooms=" + numBathrooms;
-    }
-    if (checkinDate) {
-      urlQuery += "&checkin=" + format(checkinDate, "yyyy-MM-dd");
-    }
-    if (checkoutDate) {
-      urlQuery += "&checkout=" + format(checkoutDate, "yyyy-MM-dd");
-    }
-    if (category) {
-      urlQuery += "&category=" + category;
-    }
-    if (urlQuery.length) {
-      urlQuery = "?" + urlQuery.substring(1);
+    // if (wing) {
+    //   urlQuery += "&wing=" + wing;
+    // }
+    // if (numGuests) {
+    //   urlQuery += "&numGuests=" + numGuests;
+    // }
+    // if (numBeds) {
+    //   urlQuery += "&numBeds=" + numBeds;
+    // }
+    // if (numBedrooms) {
+    //   urlQuery += "&numBedrooms=" + numBedrooms;
+    // }
+    // if (numBathrooms) {
+    //   urlQuery += "&numBathrooms=" + numBathrooms;
+    // }
+    // if (checkinDate) {
+    //   urlQuery += "&checkin=" + format(checkinDate, "yyyy-MM-dd");
+    // }
+    // if (checkoutDate) {
+    //   urlQuery += "&checkout=" + format(checkoutDate, "yyyy-MM-dd");
+    // }
+    // if (category) {
+    //   urlQuery += "&category=" + category;
+    // }
+    // if (urlQuery.length) {
+    //   urlQuery = "?" + urlQuery.substring(1);
 
-      url += urlQuery;
-    }
+    //   url += urlQuery;
+    // }
 
     const tmpRooms = await apiService.get(url);
 
