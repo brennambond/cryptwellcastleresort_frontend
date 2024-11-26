@@ -23,6 +23,7 @@ interface RoomProps {
 const RoomListItem: React.FC<RoomProps> = ({ room }) => {
   const [isHovering, setIsHovering] = useState(false);
   const router = useRouter();
+  // for testing
   return (
     <div>
       <div
