@@ -1,11 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
+    domains: ["hauntedhotel-backend-bucket.s3.amazonaws.com"],
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "www.hauntedhotel-backend-api.com",
-        pathname: "/**",
+        hostname: "hauntedhotel-backend-bucket.s3.amazonaws.com",
+        port: "",
+        pathname: "/uploads/**",
       },
     ],
   },
