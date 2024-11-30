@@ -8,14 +8,13 @@ import Link from "next/link";
 const RoomDetailPage = async ({ params }: { params: { id: string } }) => {
   const room = await apiService.get(`/api/rooms/${params.id}`);
   const userId = await getUserId();
-  console.log(room.wing);
 
   return (
     <main className='max-w-[1500px] mx-auto px-6 pb-6'>
       <div className='w-full h-[64vh] overflow-hidden rounded-xl relative mb-4'>
         <Image
           fill
-          src={room.image_url}
+          src={room.image_url.slice(5)}
           alt={room.title}
           className='object-cover w-full h-full'
         />

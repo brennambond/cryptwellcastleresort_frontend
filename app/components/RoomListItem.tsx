@@ -23,7 +23,6 @@ interface RoomProps {
 const RoomListItem: React.FC<RoomProps> = ({ room }) => {
   const [isHovering, setIsHovering] = useState(false);
   const router = useRouter();
-  // for testing
   return (
     <div>
       <div
@@ -44,7 +43,7 @@ const RoomListItem: React.FC<RoomProps> = ({ room }) => {
                   </DialogTitle>
                 </DialogHeader>
                 <Image
-                  src={room.image_url}
+                  src={room.image_url.slice(5)}
                   width={2000}
                   height={2000}
                   className='object-cover transition h-full w-full relative'
@@ -58,7 +57,7 @@ const RoomListItem: React.FC<RoomProps> = ({ room }) => {
         )}
         <Image
           fill
-          src={room.image_url}
+          src={room.image_url.slice(5)}
           sizes='(max-width: 768px) 768px, (max-width: 1200px): 768px, 768px'
           className={` ${
             isHovering ? "opacity-50" : "opacity-100"

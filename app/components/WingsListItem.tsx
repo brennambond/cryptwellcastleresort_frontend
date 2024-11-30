@@ -17,7 +17,7 @@ const WingListItem: React.FC<WingProps> = ({ wing }) => {
       <div className='relative overflow-hidden aspect-square rounded-xl shadow-xl hover:shadow-2xl w-[200px] h-[200px]'>
         <Image
           fill
-          src={wing.image_url}
+          src={wing.image_url.slice(5)}
           className='hover:scale-110 object-cover transition h-full w-full'
           alt='Hotel Picture'
         />

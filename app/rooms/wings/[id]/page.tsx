@@ -13,7 +13,7 @@ const WingDetailPage = async ({ params }: { params: { id: string } }) => {
       <div className='w-full h-[64vh] overflow-hidden rounded-xl relative mb-4'>
         <Image
           fill
-          src={wing.image_url}
+          src={wing.room.image_url.slice(5)}
           alt={wing.name}
           className='object-cover w-full h-full'
         />

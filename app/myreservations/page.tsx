@@ -20,7 +20,7 @@ const MyReservationsPage = async () => {
               <div className='col-span-1'>
                 <div className='relative overflow-hidden aspect-square rounded-xl'>
                   <Image
-                    src={reservation.room.image_url}
+                    src={reservation.room.image_url.slice(5)}
                     fill
                     className='hover:scale-110 object-cover transition h-full w-full'
                     alt='Main Hotel'
