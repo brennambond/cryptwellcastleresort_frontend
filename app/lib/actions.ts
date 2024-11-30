@@ -3,23 +3,20 @@
 import { cookies } from "next/headers";
 
 export async function handleRefresh() {
-  console.log("handleRresh");
+  console.log("handleRefresh");
 
   const refreshToken = await getRefreshToken();
 
-  const token = await fetch(
-    "https://www.hauntedhotel-backend-api.com/api/auth/token/refresh/",
-    {
-      method: "POST",
-      body: JSON.stringify({
-        refresh: refreshToken,
-      }),
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    }
-  )
+  const token = await fetch("http://localhost:8000/api/auth/token/refresh/", {
+    method: "POST",
+    body: JSON.stringify({
+      refresh: refreshToken,
+    }),
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+  })
     .then((response) => response.json())
     .then((json) => {
       console.log("Response - Refresh:", json);
@@ -27,10 +24,11 @@ export async function handleRefresh() {
       if (json.access) {
         cookies().set("session_access_token", json.access, {
           httpOnly: true,
-          secure: process.env.NODE_ENV === "production",
-          maxAge: 60 * 60,
+          secure: false,
+          maxAge: 60 * 60, // 60 minutes
           path: "/",
         });
+
         return json.access;
       } else {
         resetAuthCookies();
@@ -41,6 +39,7 @@ export async function handleRefresh() {
 
       resetAuthCookies();
     });
+
   return token;
 }
 
@@ -51,22 +50,22 @@ export async function handleLogin(
 ) {
   cookies().set("session_userid", userId, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    maxAge: 60 * 60 * 24 * 7,
+    secure: false,
+    maxAge: 60 * 60 * 24 * 7, // One week
     path: "/",
   });
 
   cookies().set("session_access_token", accessToken, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    maxAge: 60 * 60,
+    secure: false,
+    maxAge: 60 * 60, // 60 minutes
     path: "/",
   });
 
   cookies().set("session_refresh_token", refreshToken, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    maxAge: 60 * 60 * 24 * 7,
+    secure: false,
+    maxAge: 60 * 60 * 24 * 7, // One week
     path: "/",
   });
 }
