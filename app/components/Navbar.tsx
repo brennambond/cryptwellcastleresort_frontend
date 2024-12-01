@@ -55,10 +55,6 @@ const Navbar = async () => {
                         <GiMagnifyingGlass />
                       </button>
                     </li>
-                    {/* <li className='h-8 w-20 flex gap-2 items-center justify-center bg-white-main shadow-primary rounded-full p-2'>
-                      <GiMagnifyingGlass />
-                      <span className='text-[11px]'>Sign in</span>
-                    </li> */}
                     <li>
                       <UserNav userId={userId} />
                     </li>

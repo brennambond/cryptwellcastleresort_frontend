@@ -47,26 +47,30 @@ const SearchModal = () => {
   };
 
   const contentCheckin = (
-    <>
-      <h2 className='mb-6 text-2xl'>When would you like to check in?</h2>
+    <div className='flex flex-col '>
+      <h2 className='mb-6 text-2xl self-center'>
+        When would you like to check in?
+      </h2>
 
       <DatePicker
         value={dateRange}
         onChange={(value) => _setDateRange(value.selection)}
       />
 
-      <div className='mt-6 flex flex-row gap-4'>
+      <div className='mt-6 flex w-[50%] self-center'>
         <CustomButton
           label='Continue to Check Out Date'
           onClick={() => searchModal.open("checkout")}
         />
       </div>
-    </>
+    </div>
   );
 
   const contentCheckout = (
-    <>
-      <h2 className='mb-6 text-2xl'>When would you like to check out?</h2>
+    <div className='flex flex-col '>
+      <h2 className='mb-6 text-2xl self-center'>
+        When would you like to check out?
+      </h2>
 
       <DatePicker
         value={dateRange}
@@ -83,7 +87,7 @@ const SearchModal = () => {
           onClick={() => searchModal.open("details")}
         />
       </div>
-    </>
+    </div>
   );
 
   const contentDetails = (

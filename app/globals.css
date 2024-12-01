@@ -8,6 +8,9 @@
 }
 
 @layer utilities {
+  .link-hover {
+    @apply cursor-pointer transition-colors duration-200 hover:bg-[#38717d];
+  }
   /* SHADOWS */
   .shadow-primary {
     @apply shadow-[0px_2x_4px_rgba(9,17,41,0.14)] hover:shadow-full;
@@ -29,7 +32,7 @@
   }
 
   .mini-wrapper {
-    @apply max-w-7xl w-full lg:mx-auto p-2 md:px-4 xl:px-0;
+    @apply max-w-7xl w-full lg:mx-auto md:px-4 xl:px-0;
   }
 
   .flex-center {
@@ -105,6 +108,10 @@
   }
 
   /* 18 */
+  .p-bold-18 {
+    @apply font-bold text-[18px] leading-6 tracking-wider capitalize;
+  }
+
   .p-semibold-18 {
     @apply text-[18px] font-semibold leading-[28px] tracking-[2%];
   }
