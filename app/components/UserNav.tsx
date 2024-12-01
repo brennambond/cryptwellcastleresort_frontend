@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { HiMenu, HiOutlineUser } from "react-icons/hi";
+import { HiUser } from "react-icons/hi2";
 import MenuLink from "./MenuLink";
 import LogoutButton from "./LogoutButton";
 
@@ -21,14 +22,19 @@ const UserNav: React.FC<UserNavProps> = ({ userId }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className='h-8 relative inline-block rounded-lg shadow-2xl border'>
-      <button onClick={() => setIsOpen(!isOpen)} className='flex items-center'>
-        <HiMenu />
-        <HiOutlineUser />
+    <div className='h-8 w-[90px] relative flex items-center justify-center rounded-full shadow-2xl  bg-white-main'>
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className='flex items-center justify-between gap-2 text-purple-950'
+      >
+        <span className='text-[14px] font-extrabold'>Log-in</span>
+        <span className='rounded-full bg-gray-300 p-1'>
+          <HiUser />
+        </span>
       </button>
 
       {isOpen && (
-        <div className='w-[220px] absolute top-[60px] right-0 bg-white border rounded-xl shadow-md flex flex-col cursor-pointer'>
+        <div className='w-[220px] absolute top-[40px] -left-10 bg-white border rounded-xl shadow-md flex flex-col cursor-pointer'>
           {userId ? (
             <>
               <MenuLink

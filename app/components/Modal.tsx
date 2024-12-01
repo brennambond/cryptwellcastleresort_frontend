@@ -30,7 +30,11 @@ const Modal: React.FC<ModalProps> = ({ label, content, isOpen, close }) => {
     return null;
   }
   return (
-    <div className='flex items-center justify-center fixed inset-0 z-50 bg-black/60'>
+    <div
+      className={`flex items-center justify-center fixed inset-0 z-[99] bg-black/60 ${
+        showModal ? "overflow-hidden" : "overflow-auto"
+      }`}
+    >
       <div className='relative w-[90%] md:w-[80%] lg:w-[700px] my-6 mx-auto h-auto'>
         <div
           className={`translate duration-600 h-full ${

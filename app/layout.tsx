@@ -3,9 +3,6 @@ import { Cormorant_Infant, UnifrakturCook } from "next/font/google";
 import "./globals.css";
 
 import Navbar from "./components/Navbar";
-import LoginModal from "./components/LoginModal";
-import SignupModal from "./components/SignupModal";
-import SearchModal from "./components/SearchModal";
 
 const cormorant = Cormorant_Infant({
   subsets: ["latin"],
@@ -32,14 +29,10 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body
-        className={`${cormorant.variable} ${unifraktur.variable} bg-[#6c53a4]`}
+        className={`${cormorant.variable} ${unifraktur.variable} bg-[#6c53a4] flex h-screen flex-col`}
       >
         <Navbar />
-        <div className='pt-36 my-20'>{children}</div>
-
-        <LoginModal />
-        <SearchModal />
-        <SignupModal />
+        <div className='flex-1'>{children}</div>
       </body>
     </html>
   );
