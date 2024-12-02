@@ -20,7 +20,7 @@ export default function Home() {
               quae! Cupiditate pariatur beatae dolore omnis!
             </p>
             <button
-              className='w-full rounded-full h-[54px] p-bold-20 bg-gray-800 text-white transition cursor-pointer text-center font-unifraktur tracking-wider hover:bg-opacity-70'
+              className='w-full rounded-md h-[54px] p-bold-20 bg-gray-700 text-white transition cursor-pointer text-center font-unifraktur tracking-wider hover:bg-opacity-70'
               onClick={() => router.push("/rooms")}
             >
               Join our Covenant

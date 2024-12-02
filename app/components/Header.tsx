@@ -12,10 +12,8 @@ import MobileNav from "./MobileNav";
 
 const Header = async () => {
   const userId = await getUserId();
-
-  console.log("userId: ", userId);
   return (
-    <header className=' bg-[#4ea0ae] font-cormorant w-full'>
+    <header className=' bg-gray-800 font-cormorant w-full'>
       <div className='mini-wrapper flex-between h-full'>
         <div id='header-right' className='flex-between h-full'>
           <div className='px-3 flex-center link-hover h-full'>
