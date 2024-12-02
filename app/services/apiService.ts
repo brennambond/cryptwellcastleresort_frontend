@@ -7,7 +7,7 @@ const apiService = {
     const token = await getAccessToken();
 
     return new Promise((resolve, reject) => {
-      fetch(`${process.env.NEXT_PUBLIC_API_HOST}${url}`, {
+      fetch(`http://44.213.110.216${url}`, {
         method: "GET",
         headers: {
           Accept: "application/json",
@@ -33,7 +33,7 @@ const apiService = {
     const token = await getAccessToken();
 
     return new Promise((resolve, reject) => {
-      fetch(`${process.env.NEXT_PUBLIC_API_HOST}${url}`, {
+      fetch(`http://44.213.110.216${url}`, {
         method: "POST",
         body: data,
         headers: {
@@ -56,7 +56,7 @@ const apiService = {
     console.log("post", url, data);
 
     return new Promise((resolve, reject) => {
-      fetch(`${process.env.NEXT_PUBLIC_API_HOST}${url}`, {
+      fetch(`http://44.213.110.216${url}`, {
         method: "POST",
         body: data,
         headers: {
