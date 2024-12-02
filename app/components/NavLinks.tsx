@@ -16,7 +16,7 @@ const NavLinks = () => {
             key={link.route}
             href={link.route}
             className={`${
-              isActive && "text-blue-main lg:text-[#6c53a4] "
+              isActive && "text-[#6c53a4] "
             } lg:px-[1rem] flex-center whitespace-nowrap cursor-pointer transition-colors h-full link-hover-secondary lg:link-hover`}
           >
             <span className='p-bold-18'>{link.label}</span>

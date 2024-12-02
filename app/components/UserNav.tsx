@@ -32,7 +32,7 @@ const UserNav: React.FC<UserNavProps> = ({ userId }) => {
       </button>
 
       {isOpen && (
-        <div className='w-[120px] sm:w-[160px] xl:w-[200px] absolute top-[40px] -right-2 md:-right-6 xl:-right-4 bg-white border rounded-xl shadow-md flex flex-col cursor-pointer'>
+        <div className='w-[120px] sm:w-[160px] xl:w-[200px] absolute top-[40px] -right-2 md:-right-6 xl:-right-4 bg-white border rounded-xl shadow-md flex flex-col cursor-pointer z-[99]'>
           {userId ? (
             <>
               <MenuLink
@@ -51,6 +51,7 @@ const UserNav: React.FC<UserNavProps> = ({ userId }) => {
                 onClick={() => {
                   setIsOpen(false);
                   loginModal.open();
+                  router.push("/");
                 }}
               />
               <MenuLink

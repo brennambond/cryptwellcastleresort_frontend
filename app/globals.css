@@ -12,7 +12,7 @@
     @apply cursor-pointer transition-colors duration-200 hover:bg-[#38717d] hover:text-purple-800;
   }
   .link-hover-secondary {
-    @apply cursor-pointer transition-colors duration-200 hover:text-blue-main;
+    @apply cursor-pointer transition-colors duration-200 hover:text-purple-800;
   }
 
   /* SHADOWS */
