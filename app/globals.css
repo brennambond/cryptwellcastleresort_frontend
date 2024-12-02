@@ -9,8 +9,12 @@
 
 @layer utilities {
   .link-hover {
-    @apply cursor-pointer transition-colors duration-200 hover:bg-[#38717d];
+    @apply cursor-pointer transition-colors duration-200 hover:bg-[#38717d] hover:text-purple-800;
   }
+  .link-hover-secondary {
+    @apply cursor-pointer transition-colors duration-200 hover:text-blue-main;
+  }
+
   /* SHADOWS */
   .shadow-primary {
     @apply shadow-[0px_2x_4px_rgba(9,17,41,0.14)] hover:shadow-full;
