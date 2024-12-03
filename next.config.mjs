@@ -5,7 +5,11 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "hauntedhotel-backend-bucket.s3.amazonaws.com",
+        hostname: "**hauntedhotel-backend-bucket.s3.amazonaws.com",
+      },
+      {
+        protocol: "https",
+        hostname: "**.vercel.app",
       },
     ],
   },
