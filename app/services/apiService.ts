@@ -7,7 +7,7 @@ const apiService = {
     const token = await getAccessToken();
 
     return new Promise((resolve, reject) => {
-      fetch(`http://44.213.110.216${url}`, {
+      fetch(`https://hauntedhotel-backend-api.com${url}`, {
         method: "GET",
         headers: {
           Accept: "application/json",
@@ -33,7 +33,7 @@ const apiService = {
     const token = await getAccessToken();
 
     return new Promise((resolve, reject) => {
-      fetch(`http://44.213.110.216${url}`, {
+      fetch(`https://hauntedhotel-backend-api.com${url}`, {
         method: "POST",
         body: data,
         headers: {
@@ -56,7 +56,7 @@ const apiService = {
     console.log("post", url, data);
 
     return new Promise((resolve, reject) => {
-      fetch(`http://44.213.110.216${url}`, {
+      fetch(`https://hauntedhotel-backend-api.com${url}`, {
         method: "POST",
         body: data,
         headers: {

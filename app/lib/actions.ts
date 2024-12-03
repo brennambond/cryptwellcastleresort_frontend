@@ -7,16 +7,19 @@ export async function handleRefresh() {
 
   const refreshToken = await getRefreshToken();
 
-  const token = await fetch("http://44.213.110.216/api/auth/token/refresh/", {
-    method: "POST",
-    body: JSON.stringify({
-      refresh: refreshToken,
-    }),
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-  })
+  const token = await fetch(
+    "https://hauntedhotel-backend-api.com/api/auth/token/refresh/",
+    {
+      method: "POST",
+      body: JSON.stringify({
+        refresh: refreshToken,
+      }),
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    }
+  )
     .then((response) => response.json())
     .then((json) => {
       console.log("Response - Refresh:", json);
