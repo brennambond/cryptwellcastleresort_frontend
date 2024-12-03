@@ -23,7 +23,10 @@ interface RoomProps {
 const RoomListItem: React.FC<RoomProps> = ({ room }) => {
   const [isHovering, setIsHovering] = useState(false);
   const router = useRouter();
-  console.log(room.image_url);
+  const room_imageurl =
+    "https://hauntedhotel-backend-bucket" + room.image_url.slice(17);
+
+  console.log(room_imageurl);
   return (
     <div>
       <div
