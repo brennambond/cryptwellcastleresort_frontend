@@ -34,7 +34,7 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body
-        className={`${cormorant.variable} ${unifraktur.variable} bg-[#6c53a4] flex h-screen flex-col`}
+        className={`${cormorant.variable} ${unifraktur.variable} bg-gray-800 flex h-screen flex-col`}
       >
         <Header />
         <div className='flex-1'>{children}</div>

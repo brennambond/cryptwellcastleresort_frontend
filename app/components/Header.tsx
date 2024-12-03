@@ -1,7 +1,10 @@
+"use server";
+
 import Image from "next/image";
 import Link from "next/link";
 
-import { GiMagnifyingGlass, GiHamburgerMenu } from "react-icons/gi";
+import { motion } from "framer-motion";
+import { fadeIn, navVariants } from "@/utils/motion";
 
 import UserNav from "./UserNav";
 import SearchFilters from "./SearchFilters";
@@ -9,11 +12,17 @@ import SearchFilters from "./SearchFilters";
 import { getUserId } from "../lib/actions";
 import NavLinks from "./NavLinks";
 import MobileNav from "./MobileNav";
+import MotionNav from "@/components/motion/MotionNav";
 
 const Header = async () => {
   const userId = await getUserId();
   return (
-    <header className=' bg-gray-800 font-cormorant w-full'>
+    <MotionNav
+      variants={fadeIn("down", "tween", 0.3, 0.7)}
+      initial='hidden'
+      whileInView='show'
+      className=' bg-gray-800 font-cormorant w-full relative'
+    >
       <div className='mini-wrapper flex-between h-full'>
         <div id='header-right' className='flex-between h-full'>
           <div className='px-3 flex-center link-hover h-full'>
@@ -53,7 +62,7 @@ const Header = async () => {
           </div>
         </div>
       </div>
-    </header>
+    </MotionNav>
   );
 };
 
