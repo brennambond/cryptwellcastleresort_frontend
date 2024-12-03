@@ -23,6 +23,7 @@ interface RoomProps {
 const RoomListItem: React.FC<RoomProps> = ({ room }) => {
   const [isHovering, setIsHovering] = useState(false);
   const router = useRouter();
+  console.log(room.image_url);
   return (
     <div>
       <div
