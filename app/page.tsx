@@ -10,27 +10,31 @@ export default function Home() {
           alt='Hotel Foyer'
           width={1500}
           height={1500}
-          className='object-contain object-center w-full border-b-2 border-[#366f79]'
+          className='object-contain object-center w-full'
         />
-        <div className='custom-shape-divider-bottom-1733169569'>
-          <svg
-            data-name='Layer 1'
-            xmlns='http://www.w3.org/2000/svg'
-            viewBox='0 0 1200 120'
-            preserveAspectRatio='none'
-          >
-            <path
-              d='M649.97 0L599.91 54.12 550.03 0 0 0 0 120 1200 120 1200 0 649.97 0z'
-              className='shape-fill'
-            ></path>
-          </svg>
-        </div>
       </section>
 
       <Hero />
-      <section className='mini-wrapper my-8 flex flex-col gap-8 md:gap-12'>
-        <h2 className='h2-bold font-unifraktur'>Explore our Hotel</h2>
-        <div className='flex w-full flex-col gap-5 md:flex-row'></div>
+
+      <section className="bg-[url('../public/background-2.png')] bg-cover bg-center py-20 md:py-40 text-white-main">
+        <div className='flex flex-col my-20 relative mini-wrapper'>
+          <h2 className='h2-bold font-unifraktur'>Wings</h2>
+          <div className='flex w-full flex-col gap-5 md:flex-row'></div>
+        </div>
+      </section>
+
+      <section className="bg-[url('../public/background-purple.png')] bg-cover bg-center py-20 md:py-40 text-white-main">
+        <div className='flex flex-col my-20 relative mini-wrapper'>
+          <h2 className='h2-bold font-unifraktur'>Dining</h2>
+          <div className='flex w-full flex-col gap-5 md:flex-row'></div>
+        </div>
+      </section>
+
+      <section className="bg-[url('../public/background-red.png')] bg-cover bg-center py-20 md:py-40 text-white-main">
+        <div className='flex flex-col my-20 relative mini-wrapper'>
+          <h2 className='h2-bold font-unifraktur'>Contact us</h2>
+          <div className='flex w-full flex-col gap-5 md:flex-row'></div>
+        </div>
       </section>
     </>
   );

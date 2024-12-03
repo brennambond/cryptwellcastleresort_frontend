@@ -6,7 +6,7 @@ import Image from "next/image";
 const Hero = () => {
   const router = useRouter();
   return (
-    <section className='bg-[#366f79] bg-contain py-5 md:py-10 border-t-4 border-[#366f79]'>
+    <section className="bg-[url('../public/background-blue.png')] bg-cover bg-center py-20 md:py-40">
       <div className='wrapper grid grid-cols-1 gap-5 md:grid-cols-2 md:gap-10 2xl:gap-40'>
         <div className='flex flex-col justify-center gap-8'>
           <h1 className='h1-bold font-unifraktur text-white-main'>
@@ -18,7 +18,7 @@ const Hero = () => {
             Cupiditate pariatur beatae dolore omnis!
           </p>
           <button
-            className='w-full rounded-md h-[54px] p-bold-20 bg-gray-700 text-white transition cursor-pointer text-center font-unifraktur tracking-wider hover:bg-opacity-70'
+            className='w-full rounded-md h-[54px] p-bold-20 bg-gray-700 text-white transition cursor-pointer text-center font-unifraktur tracking-wider hover:bg-opacity-70 shadow-2xl'
             onClick={() => router.push("/rooms")}
           >
             Join our Covenant
@@ -30,7 +30,7 @@ const Hero = () => {
           alt='Hotel Foyer'
           width={1000}
           height={1000}
-          className='max-h-[70vh] object-cover object-center xl:max-w-[35vw] rounded-lg'
+          className='max-h-[70vh] object-cover object-center xl:max-w-[35vw] rounded-lg shadow-2xl'
         />
       </div>
     </section>

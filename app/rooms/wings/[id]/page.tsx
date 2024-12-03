@@ -13,7 +13,7 @@ const WingDetailPage = async ({ params }: { params: { id: string } }) => {
       <div className='w-full h-[64vh] overflow-hidden rounded-xl relative mb-4'>
         <Image
           fill
-          src={wing.room.image_url.slice(5)}
+          src={wing.image_url.slice(5)}
           alt={wing.name}
           className='object-cover w-full h-full'
         />
@@ -24,7 +24,6 @@ const WingDetailPage = async ({ params }: { params: { id: string } }) => {
         <div>Wing of the {wing.name}</div>
         <div>{wing.description}</div>
         <div className='mt-4 grid grid-cols-1 md:grid-cols-3 gap-20 px-12 bg-white-main rounded-md py-8'>
-          {" "}
           <WingsRoomList roomsWing={wing.id} />
         </div>
       </div>
