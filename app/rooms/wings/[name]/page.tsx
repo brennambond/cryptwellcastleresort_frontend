@@ -5,8 +5,8 @@ import apiService from "@/app/services/apiService";
 import Image from "next/image";
 import React from "react";
 
-const WingDetailPage = async ({ params }: { params: { id: string } }) => {
-  const wing = await apiService.get(`/api/rooms/wings/${params.id}`);
+const WingDetailPage = async ({ params }: { params: { name: string } }) => {
+  const wing = await apiService.get(`/api/rooms/wings/${params.name}`);
   console.log(wing);
   return (
     <main className='max-w-[1500px] mx-auto px-6 '>

@@ -11,7 +11,7 @@ export const TypingText: React.FC<TypingProps> = ({ title }) => {
   return (
     <motion.p
       variants={textContainer}
-      className={`mt-[8px] md:text-[80px] text-[40px] z-20 absolute font-germania text-white-main capitalize text-center`}
+      className={`mt-[8px] md:text-[64px] text-[40px] z-20 absolute font-germania text-white-main capitalize text-center`}
     >
       {Array.from(title).map((letter, index) => (
         <motion.span variants={textVariant2} key={index}>
