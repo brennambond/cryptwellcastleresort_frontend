@@ -19,11 +19,11 @@ const Header = async () => {
       initial='hidden'
       whileInView='show'
       viewport={{ once: true }}
-      className=' bg-gray-800 font-cormorant w-full relative'
+      className=' bg-gray-800 font-cormorant w-full relative z-[99]'
     >
       <div className='mini-wrapper flex-between h-full'>
         <div id='header-right' className='flex-between h-full'>
-          <div className='px-3 flex-center link-hover h-full'>
+          <div className='px-3 flex-center link-hover h-full lg:hidden'>
             <MobileNav />
           </div>
           <Link
@@ -35,6 +35,7 @@ const Header = async () => {
               alt='Haunted Hotel logo'
               width={1000}
               height={1000}
+              className='bg-white-main rounded-full'
             />
           </Link>
         </div>

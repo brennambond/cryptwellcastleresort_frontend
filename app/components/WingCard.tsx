@@ -27,7 +27,7 @@ const WingCard: React.FC<WingProps> = ({
         active === wing.id
           ? "lg:flex-[3.5] flex-[10]"
           : "lg:flex-[0.5] flex-[2]"
-      } flex-center min-w-[170px] h-[700px] transition-all duration-500 ease-in-outout cursor-pointer`}
+      } flex-center min-w-[170px] h-[700px] transition-all duration-500 ease-in-outout cursor-pointer shadow-xl`}
       variants={fadeIn("right", "tween", (index + 1) * 0.5, 0.75)}
       initial='hidden'
       whileInView='show'
@@ -39,7 +39,7 @@ const WingCard: React.FC<WingProps> = ({
         width={1500}
         height={1500}
         alt='image'
-        className='absolute w-full h-full object-cover rounded-md'
+        className='absolute w-full h-full object-cover rounded-md '
       />
       {active !== wing.id ? (
         <h3 className='font-semibold sm:text-[26px] text-[18px] text-white-main absolute z-0 lg:bottom-20 lg:rotate-[-90deg] lg:origin-[0,0]'>

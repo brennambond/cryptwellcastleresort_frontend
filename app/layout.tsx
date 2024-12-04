@@ -1,5 +1,10 @@
 import type { Metadata } from "next";
-import { Cormorant_Infant, UnifrakturCook } from "next/font/google";
+import {
+  Almendra,
+  Cormorant_Infant,
+  Germania_One,
+  UnifrakturCook,
+} from "next/font/google";
 import "./globals.css";
 
 import Navbar from "./components/Navbar";
@@ -19,6 +24,16 @@ const unifraktur = UnifrakturCook({
   weight: ["700"],
   variable: "--font-unifraktur",
 });
+const almendra = Almendra({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  variable: "--font-almendra",
+});
+const germania = Germania_One({
+  subsets: ["latin"],
+  weight: ["400"],
+  variable: "--font-germania",
+});
 
 export const metadata: Metadata = {
   title: "Haunted Hotel",
@@ -30,11 +45,10 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const content = <p>Content Test</p>;
   return (
     <html lang='en'>
       <body
-        className={`${cormorant.variable} ${unifraktur.variable} bg-gray-800 flex h-screen flex-col`}
+        className={`${cormorant.variable} ${unifraktur.variable} ${almendra.variable} ${germania.variable} bg-gray-800 flex h-screen flex-col`}
       >
         <Header />
         <div className='flex-1'>{children}</div>

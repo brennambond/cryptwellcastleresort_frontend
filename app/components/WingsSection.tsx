@@ -29,7 +29,7 @@ const WingsSection = () => {
   const [active, setActive] = useState(wings[1]);
 
   return (
-    <section className='mini-wrapper relative z-50 '>
+    <section className='relative z-50 '>
       <MotionDiv
         variants={staggerContainer}
         initial='hidden'
@@ -38,7 +38,7 @@ const WingsSection = () => {
         className='mx-auto flex flex-col'
       >
         <h2>Wings</h2>
-        <div className='mt-[50px] flex lg:flex-row flex-col min-h-[70vh] gap-2 backdrop-blur-sm'>
+        <div className='mt-[50px] flex lg:flex-row flex-col min-h-[70vh] gap-2 backdrop-blur-sm '>
           {wings.map((wing) => {
             const index = wings.indexOf(wing);
             return (
