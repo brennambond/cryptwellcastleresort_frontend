@@ -1,25 +1,33 @@
 import Image from "next/image";
 import Hero from "./components/Hero";
+import MotionDiv from "@/components/motion/MotionDiv";
+import { fadeIn, zoomIn } from "@/utils/motion";
+import WingsSection from "./components/WingsSection";
 
 export default function Home() {
   return (
     <>
-      <section className='flex relative'>
+      <MotionDiv
+        variants={fadeIn("up", "tween", 0.3, 0.7)}
+        initial='hidden'
+        whileInView='show'
+        viewport={{ once: true }}
+        className='flex relative max-h-[20%]'
+      >
         <Image
           src='/hotel-main-1.png'
           alt='Hotel Foyer'
           width={1500}
           height={1500}
-          className='object-contain object-center w-full'
+          className='object-cover object-bottom w-full'
         />
-      </section>
+      </MotionDiv>
 
       <Hero />
 
       <section className="bg-[url('../public/background-2.png')] bg-cover bg-center py-20 md:py-40 text-white-main">
         <div className='flex flex-col my-20 relative mini-wrapper'>
-          <h2 className='h2-bold font-unifraktur'>Wings</h2>
-          <div className='flex w-full flex-col gap-5 md:flex-row'></div>
+          <WingsSection />
         </div>
       </section>
 

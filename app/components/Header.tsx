@@ -1,10 +1,7 @@
-"use server";
-
 import Image from "next/image";
 import Link from "next/link";
 
-import { motion } from "framer-motion";
-import { fadeIn, navVariants } from "@/utils/motion";
+import { fadeIn } from "@/utils/motion";
 
 import UserNav from "./UserNav";
 import SearchFilters from "./SearchFilters";
@@ -21,6 +18,7 @@ const Header = async () => {
       variants={fadeIn("down", "tween", 0.3, 0.7)}
       initial='hidden'
       whileInView='show'
+      viewport={{ once: true }}
       className=' bg-gray-800 font-cormorant w-full relative'
     >
       <div className='mini-wrapper flex-between h-full'>
