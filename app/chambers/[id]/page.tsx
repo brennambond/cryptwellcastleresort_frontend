@@ -5,7 +5,7 @@ import apiService from "@/app/services/apiService";
 import { getUserId } from "@/app/lib/actions";
 import Link from "next/link";
 
-const RoomDetailPage = async ({ params }: { params: { id: string } }) => {
+const ChamberDetailPage = async ({ params }: { params: { id: string } }) => {
   const room = await apiService.get(`/api/rooms/${params.id}`);
   const userId = await getUserId();
 
@@ -51,4 +51,4 @@ const RoomDetailPage = async ({ params }: { params: { id: string } }) => {
   );
 };
 
-export default RoomDetailPage;
+export default ChamberDetailPage;

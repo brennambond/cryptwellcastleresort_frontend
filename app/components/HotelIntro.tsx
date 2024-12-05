@@ -10,16 +10,18 @@ const HotelIntro = () => {
       initial='hidden'
       whileInView='show'
       viewport={{ once: true }}
-      className='flex-center relative max-h-[20%]'
+      className='flex-center relative'
     >
       <Image
         src='/hotel-main-1.png'
         alt='Hotel Main'
         width={1500}
         height={1500}
-        className='object-cover object-bottom w-full z-10 relative'
+        className='object-cover object-bottom w-full z-10 relative h-[100vh]'
       />
-      <TypingText title={"The vacation of your nightmares starts here..."} />
+      <div className='absolute max-w-[80%] z-20 flex flex-col'>
+        <TypingText title={"The vacation of your nightmares starts here..."} />
+      </div>
     </MotionDiv>
   );
 };

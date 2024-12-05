@@ -42,23 +42,20 @@ const WingCard: React.FC<WingProps> = ({
         className='absolute w-full h-full object-cover rounded-md '
       />
       {active !== wing.id ? (
-        <h3 className='font-semibold sm:text-[26px] text-[18px] text-white-main absolute z-0 lg:bottom-20 lg:rotate-[-90deg] lg:origin-[0,0]'>
+        <h3 className='font-semibold font-germania sm:text-[26px] lg:text-[48px] text-[18px] lg:tracking-widest text-white-main z-0  lg:rotate-[-90deg] '>
           {wing.name}
         </h3>
       ) : (
-        <div className='absolute bottom-0 flex-center w-full h-full px-4 py-10 flex-col bg-[rgba(0,0,0,0.5)] rounded-md'>
-          <p className='text-[24px] leading-5 text-white-main font-unifraktur'>
+        <div className='relative bottom-0 flex-center w-full h-full  gap-8 flex-col bg-[rgba(0,0,0,0.5)] rounded-md '>
+          <h2 className='h2-bold leading-5 text-white-main font-germania tracking-[0.04em]'>
             Enter the Hall of the {wing.name}
-          </p>
-          <h2 className='mt-[24px] font-semibold text-[16px] text-white font-cormorant'>
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ut
-            laboriosam debitis perspiciatis doloribus hic delectus reiciendis
-            unde saepe et nam excepturi, veritatis quam aliquid doloremque
-            voluptate nihil nobis fuga iusto.
           </h2>
+          <p className='md:mt-[24px] font-semibold text-[14px] md:text-[18px] text-white font-cormorant px-14 max-h-[80%] max-w-[90%] text-wrap'>
+            {wing.description}
+          </p>
           <Link
-            className='w-[200px] flex-center rounded-md h-[54px] p-bold-20 bg-gray-700 text-white transition cursor-pointer text-center font-unifraktur tracking-wider hover:bg-opacity-70 shadow-2xl'
-            href={`/rooms/wings/${wing.id}`}
+            className='rounded-md h-[54px] p-medium-20 bg-gray-700 text-white transition cursor-pointer flex-center px-6 font-germania capitalize tracking-wider hover:bg-gray-600 shadow-2xl'
+            href={`/wings/${wing.id}`}
           >
             Explore further...
           </Link>
