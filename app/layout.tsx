@@ -8,11 +8,11 @@ import {
 import "./globals.css";
 
 import Navbar from "./components/Navbar";
-import Header from "./components/Header";
+import Header from "./components/header/Header";
 import Footer from "./components/Footer";
-import LoginModal from "./components/LoginModal";
-import SearchModal from "./components/SearchModal";
-import SignupModal from "./components/SignupModal";
+import LoginModal from "./components/header/LoginModal";
+import SearchModal from "./components/header/SearchModal";
+import SignupModal from "./components/header/SignupModal";
 
 const cormorant = Cormorant_Infant({
   subsets: ["latin"],

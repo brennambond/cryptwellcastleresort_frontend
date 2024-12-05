@@ -3,11 +3,11 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-import useSignupModal from "../hooks/useSignupModal";
-import CustomButton from "./CustomButton";
-import Modal from "./Modal";
-import apiService from "../services/apiService";
-import { handleLogin } from "../lib/actions";
+import useSignupModal from "../../hooks/useSignupModal";
+import CustomButton from "../CustomButton";
+import Modal from "../Modal";
+import apiService from "../../services/apiService";
+import { handleLogin } from "../../lib/actions";
 
 const SignupModal = () => {
   const router = useRouter();

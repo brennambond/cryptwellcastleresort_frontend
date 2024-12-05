@@ -1,11 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
-import SearchFilters from "./SearchFilters";
-import UserNav from "./UserNav";
+import SearchFilters from "./header/SearchFilters";
+import UserNav from "./header/UserNav";
 import { GiMagnifyingGlass, GiHamburgerMenu } from "react-icons/gi";
 
 import { getUserId } from "../lib/actions";
-import SearchModal from "./SearchModal";
+import SearchModal from "./header/SearchModal";
 
 const Navbar = async () => {
   const userId = await getUserId();

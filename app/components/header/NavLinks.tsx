@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { headerLinks } from "../constants";
+import { headerLinks } from "../../constants";
 
 const NavLinks = () => {
   const pathname = usePathname();

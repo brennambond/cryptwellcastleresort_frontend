@@ -6,7 +6,7 @@ import { fadeIn } from "@/utils/motion";
 import UserNav from "./UserNav";
 import SearchFilters from "./SearchFilters";
 
-import { getUserId } from "../lib/actions";
+import { getUserId } from "../../lib/actions";
 import NavLinks from "./NavLinks";
 import MobileNav from "./MobileNav";
 import MotionNav from "@/components/motion/MotionNav";

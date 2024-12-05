@@ -1,6 +1,6 @@
 "use client";
 
-import useSearchModal from "../hooks/useSearchModal";
+import useSearchModal from "../../hooks/useSearchModal";
 import { PiMagnifyingGlassDuotone } from "react-icons/pi";
 
 const SearchFilters = () => {

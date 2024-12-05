@@ -1,13 +1,13 @@
 "use client";
 
-import Modal from "./Modal";
+import Modal from "../Modal";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import useLoginModal from "../hooks/useLoginModal";
-import CustomButton from "./CustomButton";
-import { handleLogin } from "../lib/actions";
-import apiService from "../services/apiService";
+import useLoginModal from "../../hooks/useLoginModal";
+import CustomButton from "../CustomButton";
+import { handleLogin } from "../../lib/actions";
+import apiService from "../../services/apiService";
 
 const LoginModal = () => {
   const router = useRouter();

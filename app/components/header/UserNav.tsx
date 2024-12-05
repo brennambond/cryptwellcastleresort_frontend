@@ -7,8 +7,8 @@ import { HiUser } from "react-icons/hi2";
 import MenuLink from "./MenuLink";
 import LogoutButton from "./LogoutButton";
 
-import useLoginModal from "../hooks/useLoginModal";
-import useSignupModal from "../hooks/useSignupModal";
+import useLoginModal from "../../hooks/useLoginModal";
+import useSignupModal from "../../hooks/useSignupModal";
 
 interface UserNavProps {
   userId?: string | null;

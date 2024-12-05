@@ -5,7 +5,7 @@ export const headerLinks = [
   },
   {
     label: "Wings",
-    route: "/rooms/wings",
+    route: "/wings",
   },
   {
     label: "Dining",

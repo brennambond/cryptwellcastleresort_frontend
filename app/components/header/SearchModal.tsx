@@ -1,11 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import useSearchModal, { SearchQuery } from "../hooks/useSearchModal";
-import Modal from "./Modal";
+import useSearchModal, { SearchQuery } from "../../hooks/useSearchModal";
+import Modal from "../Modal";
 import { Range } from "react-date-range";
-import DatePicker from "./Calendar";
-import CustomButton from "./CustomButton";
+import DatePicker from "../Calendar";
+import CustomButton from "../CustomButton";
 
 const initialDateRange = {
   startDate: new Date(),
