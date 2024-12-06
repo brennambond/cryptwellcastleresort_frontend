@@ -27,7 +27,7 @@ const WingCard: React.FC<WingProps> = ({
         active === wing.id
           ? "lg:flex-[3.5] flex-[10]"
           : "lg:flex-[0.5] flex-[2]"
-      } flex-center min-w-[170px] h-[700px] transition-all duration-500 ease-in-outout cursor-pointer shadow-xl`}
+      } flex-center min-w-[170px] h-[600px] transition-all duration-500 ease-in-out cursor-pointer shadow-xl text-center`}
       variants={fadeIn("right", "tween", (index + 1) * 0.5, 0.75)}
       initial='hidden'
       whileInView='show'
@@ -42,19 +42,19 @@ const WingCard: React.FC<WingProps> = ({
         className='absolute w-full h-full object-cover rounded-md '
       />
       {active !== wing.id ? (
-        <h3 className='font-semibold font-germania sm:text-[26px] lg:text-[48px] text-[18px] lg:tracking-widest text-white-main z-0  lg:rotate-[-90deg] '>
+        <h3 className='font-semibold font-germania text-[26px] lg:text-[48px]  tracking-widest text-white-main z-0 lg:rotate-[-90deg] '>
           {wing.name}
         </h3>
       ) : (
-        <div className='relative bottom-0 flex-center w-full h-full  gap-8 flex-col bg-[rgba(0,0,0,0.5)] rounded-md '>
-          <h2 className='h2-bold leading-5 text-white-main font-germania tracking-[0.04em]'>
+        <div className='relative bottom-0 flex-center w-full h-full gap-4 xl:gap-8 flex-col bg-[rgba(0,0,0,0.5)] rounded-md wrapper-sm '>
+          <h2 className='h3-bold lg:h2-bold leading-5 text-white-main font-germania tracking-[0.04em] lg:px-4'>
             Enter the Hall of the {wing.name}
           </h2>
-          <p className='md:mt-[24px] font-semibold text-[14px] md:text-[18px] text-white font-cormorant px-14 max-h-[80%] max-w-[90%] text-wrap'>
+          <p className='font-semibold text-[18px] xl:text-[20px] text-white font-cormorant lg:px-4 max-h-[80%] max-w-[90%] text-wrap backdrop-blur-sm'>
             {wing.description}
           </p>
           <Link
-            className='rounded-md h-[54px] p-medium-20 bg-gray-700 text-white transition cursor-pointer flex-center px-6 font-germania capitalize tracking-wider hover:bg-gray-600 shadow-2xl'
+            className='rounded-md h-10 lg:h-[54px] p-medium-18 md:p-medium-20 bg-gray-700 text-white transition cursor-pointer flex-center px-6 font-germania capitalize tracking-wide hover:bg-gray-600 shadow-2xl'
             href={`/wings/${wing.id}`}
           >
             Explore further...

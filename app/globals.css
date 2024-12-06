@@ -18,15 +18,15 @@
 @layer utilities {
   /* WRAPPERS */
   .wrapper {
-    @apply max-w-7xl mx-auto p-5 px-10 xl:px-0 w-full;
+    @apply max-w-7xl mx-auto p-5 px-10 2xl:px-0 w-full;
   }
 
   .mini-wrapper {
-    @apply max-w-7xl w-full lg:mx-auto md:px-4 xl:px-0;
+    @apply max-w-7xl w-full lg:mx-auto md:px-4 2xl:px-0;
   }
 
   .wrapper-sm {
-    @apply max-w-7xl lg:mx-auto p-5 md:px-10 xl:px-0 w-full;
+    @apply max-w-7xl mx-auto px-4 py-8 md:px-10 lg:px-0 w-full;
   }
 
   /* FOR LINKS */

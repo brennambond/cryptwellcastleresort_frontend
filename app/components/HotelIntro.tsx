@@ -17,7 +17,7 @@ const HotelIntro = () => {
         alt='Hotel Main'
         width={1500}
         height={1500}
-        className='object-cover object-bottom w-full z-10 relative h-[100vh]'
+        className='object-cover object-center w-full z-10 relative h-[100vh]'
       />
       <div className='absolute max-w-[80%] z-20 flex flex-col'>
         <TypingText title={"The vacation of your nightmares starts here..."} />

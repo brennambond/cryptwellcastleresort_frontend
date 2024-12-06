@@ -22,7 +22,7 @@ const Header = async () => {
       className=' bg-gray-800 font-cormorant w-full relative z-[99]'
     >
       <div className='mini-wrapper flex-between h-full'>
-        <div id='header-right' className='flex-between h-full'>
+        <div id='header-right' className='flex-between h-full xl:px-8 xl:py-2'>
           <div className='px-3 flex-center link-hover h-full lg:hidden'>
             <MobileNav />
           </div>

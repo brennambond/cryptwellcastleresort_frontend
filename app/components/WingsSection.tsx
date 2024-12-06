@@ -30,7 +30,7 @@ const WingsSection = () => {
   const [active, setActive] = useState(wings[1]);
 
   return (
-    <section className="bg-[url('../public/background-purple.png')] bg-cover bg-center py-20 md:py-40">
+    <section className="bg-[url('../public/background-red.png')] bg-cover bg-center py-20 lg:py-40">
       <div className='flex-center flex-col relative wrapper text-white-main'>
         <div className='relative z-50'>
           <MotionDiv
@@ -48,7 +48,7 @@ const WingsSection = () => {
               className='flex-center relative flex-col text-center gap-8'
             >
               <h1 className='font-germania capitalize h1-medium'>Wings</h1>
-              <p className='p-semibold-20 md:p-regular-24 font-cormorant backdrop-blur-[2px]'>
+              <p className='p-semibold-20 lg:p-regular-24 font-cormorant backdrop-blur-[2px]'>
                 Each corner of our resort invities you to enter a uniquely
                 chilling realm from Gothic lore. Choose your fate and book a
                 stay in one of our four unnaturally dreadful wings: The Wing of
