@@ -35,7 +35,9 @@ const DiningSection = () => {
           viewport={{ once: true }}
           className='flex flex-col justify-center gap-8 order-2 lg:order-1 pt-10 lg:pt-0'
         >
-          <h1 className='font-germania capitalize h1-medium'>Dining</h1>
+          <h2 className='font-germania capitalize h1-medium md:text-[60px] md:leading-[60px] xl:leading-[74px] '>
+            Dining
+          </h2>
           <p className='p-semibold-20 lg:p-regular-24 font-cormorant backdrop-blur-[2px]'>
             Dine among our dearly departed at our signature restaurant{" "}
             <span className='italic font-germania'>The Veiled Board</span>,

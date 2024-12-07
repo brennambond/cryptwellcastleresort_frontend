@@ -18,10 +18,10 @@ const HeroSection = () => {
           viewport={{ once: true }}
           className='flex flex-col justify-center gap-8 order-2 lg:order-1 pt-10 lg:pt-0'
         >
-          <h1 className='font-germania capitalize h1-medium'>
+          <h2 className='font-germania capitalize h1-medium md:text-[60px] md:leading-[60px] xl:leading-[74px] '>
             Welcome to{" "}
             <span className='italic'>The Cyptwell Castle Resort</span>
-          </h1>
+          </h2>
           <p className='p-semibold-20 lg:p-regular-24 font-cormorant backdrop-blur-[2px]'>
             Beyond wrought-iron gates and through creaking doors lies a
             sanctuary for the strange and supernatural, where the line between

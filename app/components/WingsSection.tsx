@@ -47,7 +47,9 @@ const WingsSection = () => {
               viewport={{ once: true }}
               className='flex-center relative flex-col text-center gap-8'
             >
-              <h1 className='font-germania capitalize h1-medium'>Wings</h1>
+              <h2 className='font-germania capitalize h1-medium md:text-[60px] md:leading-[60px] xl:leading-[74px] '>
+                Wings
+              </h2>
               <p className='p-semibold-20 lg:p-regular-24 font-cormorant backdrop-blur-[2px]'>
                 Each corner of our resort invities you to enter a uniquely
                 chilling realm from Gothic lore. Choose your fate and book a

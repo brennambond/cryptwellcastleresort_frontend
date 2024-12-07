@@ -19,7 +19,7 @@ const WingListItem: React.FC<WingProps> = ({ wing }) => {
         <Image
           fill
           src={wing_image}
-          className='hover:scale-110 object-cover transition h-full w-full'
+          className='object-cover transition h-full w-full'
           alt='Hotel Picture'
         />
       </div>

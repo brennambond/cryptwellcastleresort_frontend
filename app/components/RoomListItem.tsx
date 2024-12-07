@@ -13,7 +13,7 @@ interface RoomProps {
 const RoomListItem: React.FC<RoomProps> = ({ room }) => {
   var roomTitle = room.title.split(" ")[0].toString();
   const colorStyle = [
-    roomTitle === "Sanguine"
+    roomTitle === "Bloodborn"
       ? "text-red-700 hover:text-red-900"
       : roomTitle === "Haunted"
       ? "text-cyan-700 hover:text-cyan-900"
@@ -45,7 +45,7 @@ const RoomListItem: React.FC<RoomProps> = ({ room }) => {
           <p>
             <strong>${room.price_per_night}</strong> per night
           </p>
-          <p className='p-semibold-16'>Capacity of {room.guests} Persons</p>
+          <p className='p-semibold-16'>Capacity for {room.guests} Guests</p>
         </div>
       </div>
     </div>

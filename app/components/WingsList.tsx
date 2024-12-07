@@ -24,11 +24,9 @@ const WingsList = () => {
 
   return (
     <>
-      <div className='flex w-full items-center justify-around'>
-        {wings.map((wing) => {
-          return <WingListItem key={wing.id} wing={wing} />;
-        })}
-      </div>
+      {wings.map((wing) => {
+        return <WingListItem key={wing.id} wing={wing} />;
+      })}
     </>
   );
 };

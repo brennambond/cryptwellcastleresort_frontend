@@ -10,7 +10,7 @@ const ChamberDetailPage = async ({ params }: { params: { id: string } }) => {
   const userId = await getUserId();
 
   return (
-    <main className='max-w-[1500px] mx-auto px-6 pb-6'>
+    <main className="flex-center flex-col min-h-[100vh] flex-1 bg-[url('../public/background-blue.png')] bg-center py-20 text-white-main">
       <div className='w-full h-[64vh] overflow-hidden rounded-xl relative mb-4'>
         <Image
           fill
