@@ -40,7 +40,7 @@ const RoomList: React.FC<RoomProps> = ({ roomsWing }) => {
 
   const getRooms = async () => {
     let url = "/api/rooms/";
-    // test
+
     let urlQuery = "";
 
     if (wing) {

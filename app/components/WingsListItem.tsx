@@ -9,10 +9,10 @@ interface WingProps {
 const WingListItem: React.FC<WingProps> = ({ wing }) => {
   const router = useRouter();
   const wing_image = wing.image_url.slice(5);
-  console.log(wing_image);
+  console.log(wing);
   return (
     <div
-      onClick={() => router.push(`/rooms/wings/${wing.id}`)}
+      onClick={() => router.push(`/wings/${wing.id}`)}
       className='cursor-pointer flex flex-col items-center justify-center'
     >
       <div className='relative overflow-hidden aspect-square rounded-xl shadow-xl hover:shadow-2xl w-[200px] h-[200px]'>

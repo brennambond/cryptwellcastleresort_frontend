@@ -1,89 +1,52 @@
 "use client";
 
 import Image from "next/image";
-import { HiOutlineDuplicate } from "react-icons/hi";
 import { RoomType } from "./RoomList";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
-
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import Modal from "./Modal";
 import Link from "next/link";
+import { HiMiniArrowRightCircle } from "react-icons/hi2";
 
 interface RoomProps {
   room: RoomType;
 }
 
 const RoomListItem: React.FC<RoomProps> = ({ room }) => {
-  const [isHovering, setIsHovering] = useState(false);
-  const router = useRouter();
-  const room_imageurl =
-    "https://hauntedhotel-backend-bucket" + room.image_url.slice(17);
+  var roomTitle = room.title.split(" ")[0].toString();
+  const colorStyle = [
+    roomTitle === "Sanguine"
+      ? "text-red-700 hover:text-red-900"
+      : roomTitle === "Haunted"
+      ? "text-cyan-700 hover:text-cyan-900"
+      : roomTitle === "Reborn"
+      ? "text-emerald-700 hover:text-emerald-900"
+      : "text-purple-700 hover:text-purple-900",
+  ];
 
-  console.log(room_imageurl);
   return (
-    <div>
-      <div
-        onMouseEnter={() => setIsHovering(true)}
-        onMouseLeave={() => setIsHovering(false)}
-        className='relative overflow-hidden aspect-square rounded-xl shadow-xl hover:shadow-2xl flex items-center justify-center'
-      >
-        {isHovering ? (
-          <div className='flex absolute bg-gray-600 text-white w-[40px] h-[40px] items-center justify-center rounded-md z-10  border-white border-2'>
-            <Dialog>
-              <DialogTrigger>
-                <HiOutlineDuplicate className='w-6 h-6 cursor-pointer' />
-              </DialogTrigger>
-              <DialogContent className='flex flex-col items-center justify-center w-[500px] h-[500px] bg-purple-main'>
-                <DialogHeader>
-                  <DialogTitle className='text-white-main'>
-                    Photos of Room
-                  </DialogTitle>
-                </DialogHeader>
-                <Image
-                  src={room.image_url.slice(5)}
-                  width={2000}
-                  height={2000}
-                  className='object-cover transition h-full w-full relative'
-                  alt='Hotel Picture'
-                />
-              </DialogContent>
-            </Dialog>
-          </div>
-        ) : (
-          ""
-        )}
-        <Image
-          fill
-          src={room.image_url.slice(5)}
-          sizes='(max-width: 768px) 768px, (max-width: 1200px): 768px, 768px'
-          className={` ${
-            isHovering ? "opacity-50" : "opacity-100"
-          } object-cover transition h-full w-full relative`}
-          alt='Hotel Picture'
-        />
-      </div>
+    <div className='bg-white-main rounded-xl flex flex-col container'>
+      <Image
+        src={room.image_url.slice(5)}
+        className='object-cover object-center overflow-hidden aspect-square rounded-t-xl max-h-[250px]'
+        alt='Hotel Picture'
+        height={1000}
+        width={1000}
+      />
 
-      <div className='mt-2'>
+      <div className='flex flex-col gap-2 py-4 px-6'>
         <Link
-          href={`/rooms/${room.id}`}
-          className='cursor-pointer text-lg font-bold'
+          href={`/chambers/${room.id}`}
+          className={`cursor-pointer text-lg flex items-center gap-2 text-em ${colorStyle}`}
         >
-          {room.title}
+          <HiMiniArrowRightCircle className='w-6 h-6' />
+          <h3 className='p-regular-18 font-germania'>{room.title}</h3>
         </Link>
-      </div>
 
-      <div className='mt-2'>
-        <p className='text-sm text-gray-500'>
-          <strong>${room.price_per_night}</strong> per night
-        </p>
+        <div className='flex justify-between items-center p-semibold-18 font-cormorant'>
+          <p>
+            <strong>${room.price_per_night}</strong> per night
+          </p>
+          <p className='p-semibold-16'>Capacity of {room.guests} Persons</p>
+        </div>
       </div>
     </div>
   );

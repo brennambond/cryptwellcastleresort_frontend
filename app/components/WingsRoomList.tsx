@@ -25,9 +25,7 @@ export type RoomType = {
 };
 
 const WingsRoomList: React.FC<RoomProps> = ({ roomsWing }) => {
-  const params = useSearchParams();
   const searchModal = useSearchModal();
-  console.log(roomsWing);
   const wing = roomsWing;
   const numGuests = searchModal.query.guests;
   const numBeds = searchModal.query.beds;

@@ -155,6 +155,9 @@
   .p-bold-16 {
     @apply text-[16px] font-bold leading-[24px];
   }
+  .p-semibold-16 {
+    @apply text-[16px] font-semibold leading-[24px];
+  }
 
   .p-medium-16 {
     @apply text-[16px] font-medium leading-[24px];
