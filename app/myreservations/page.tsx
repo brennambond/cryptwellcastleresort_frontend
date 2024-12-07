@@ -7,7 +7,7 @@ const MyReservationsPage = async () => {
   const reservations = await apiService.get("/api/auth/myreservations/");
 
   return (
-    <main className='max-w-[1500px] mx-auto px-6 pb-6'>
+    <main className="wrapper-main bg-[url('../public/background-blue.png')]">
       <h1 className='my-6 text-2xl'>My Reservations</h1>
 
       <div className='space-y-4 '>

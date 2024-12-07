@@ -19,9 +19,7 @@ const WingDetailPage = async ({ params }: { params: { id: string } }) => {
   ];
 
   return (
-    <main
-      className={`flex-center flex-col min-h-[100vh] flex-1 bg-center ${backgroundStyle} text-white-main py-20`}
-    >
+    <main className={`wrapper-main ${backgroundStyle} `}>
       {/* flex-center flex-col min-h-[100vh] flex-1 bg-center ${backgroundStyle} py-20 text-white-main py-20*/}
       <div className='flex-center flex-col gap-8 wrapper'>
         <MotionDiv

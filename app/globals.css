@@ -25,6 +25,10 @@
     @apply max-w-7xl w-full lg:mx-auto md:px-4 2xl:px-0;
   }
 
+  .wrapper-main {
+    @apply mx-auto p-5 px-10  w-full flex-center flex-col min-h-[100vh] bg-center text-white-main font-cormorant;
+  }
+
   .wrapper-sm {
     @apply max-w-7xl mx-auto px-4 py-8 md:px-10 lg:px-0 w-full;
   }
@@ -136,7 +140,7 @@
 
   /* 18 */
   .p-bold-18 {
-    @apply font-bold text-[18px] leading-6 tracking-wider capitalize;
+    @apply font-bold text-[18px] leading-6 tracking-wider;
   }
 
   .p-semibold-18 {

@@ -1,17 +1,17 @@
 "use client";
 
+import MotionDiv from "@/components/motion/MotionDiv";
+import { staggerContainer } from "@/utils/motion";
+
+import { useSearchParams } from "next/navigation";
+import useSearchModal from "../hooks/useSearchModal";
+import { useEffect, useState } from "react";
 import { format } from "date-fns";
 import apiService from "../services/apiService";
-import { useEffect, useState } from "react";
-import useSearchModal from "../hooks/useSearchModal";
-import RoomListItem from "./RoomListItem";
-import { useSearchParams } from "next/navigation";
 
-interface RoomProps {
-  roomsWing?: string;
-}
+import ChambersListItem from "./ChambersListItem";
 
-export type RoomType = {
+export type ChamberType = {
   id: string;
   title: string;
   price_per_night: number;
@@ -24,7 +24,7 @@ export type RoomType = {
   category: string;
 };
 
-const RoomList: React.FC<RoomProps> = ({ roomsWing }) => {
+const ChambersList = () => {
   const params = useSearchParams();
   const searchModal = useSearchModal();
   const wing = searchModal.query.wing;
@@ -36,9 +36,9 @@ const RoomList: React.FC<RoomProps> = ({ roomsWing }) => {
   const checkoutDate = searchModal.query.checkOut;
   const category = searchModal.query.category;
 
-  const [rooms, setRooms] = useState<RoomType[]>([]);
+  const [chambers, setChambers] = useState<ChamberType[]>([]);
 
-  const getRooms = async () => {
+  const getChambers = async () => {
     let url = "/api/rooms/";
 
     let urlQuery = "";
@@ -73,26 +73,35 @@ const RoomList: React.FC<RoomProps> = ({ roomsWing }) => {
       url += urlQuery;
     }
 
-    const tmpRooms = await apiService.get(url);
+    const tmpChambers = await apiService.get(url);
 
-    setRooms(
-      tmpRooms.data.map((room: RoomType) => {
-        return room;
+    setChambers(
+      tmpChambers.data.map((chamber: ChamberType) => {
+        return chamber;
       })
     );
   };
 
   useEffect(() => {
-    getRooms();
+    getChambers();
   }, [wing, searchModal.query, params]);
 
   return (
-    <>
-      {rooms.map((room) => {
-        return <RoomListItem key={room.id} room={room} />;
+    <MotionDiv
+      variants={staggerContainer}
+      initial='hidden'
+      whileInView='show'
+      viewport={{ once: true }}
+      className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 rounded-xl gap-8 lg:gap-10 xl:gap-12 sm:w-[90%] max-w-[90%]'
+    >
+      {chambers.map((chamber) => {
+        const index = chambers.indexOf(chamber);
+        return (
+          <ChambersListItem key={chamber.id} chamber={chamber} index={index} />
+        );
       })}
-    </>
+    </MotionDiv>
   );
 };
 
-export default RoomList;
+export default ChambersList;

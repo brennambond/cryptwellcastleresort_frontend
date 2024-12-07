@@ -21,7 +21,7 @@ export default function WingsHomePage() {
 
   const [active, setActive] = useState(wings[1]);
   return (
-    <main className="flex-center flex-col min-h-[100vh] flex-1 bg-[url('../public/background-blue.png')] bg-center py-20 text-white-main">
+    <main className="wrapper-main bg-[url('../public/background-blue.png')]">
       <div className='flex-center flex-col py-20 mx-auto gap-8 relative wrapper '>
         <h1 className='h1-bold text-white-main flex-center font-germania tracking-wider border-b-4  border-white-main pt-20'>
           Choose Your Fate
