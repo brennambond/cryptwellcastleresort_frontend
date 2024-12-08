@@ -15,7 +15,7 @@ const initialDateRange = {
   key: "selection",
 };
 
-export type Room = {
+export type Chamber = {
   id: string;
   guests: number;
   price_per_night: number;
@@ -23,11 +23,11 @@ export type Room = {
 
 interface ReservationSidebarProps {
   userId: string | null;
-  room: Room;
+  chamber: Chamber;
 }
 
 const ReservationSidebar: React.FC<ReservationSidebarProps> = ({
-  room,
+  chamber,
   userId,
 }) => {
   const loginModal = useLoginModal();
@@ -40,7 +40,7 @@ const ReservationSidebar: React.FC<ReservationSidebarProps> = ({
   const [bookedDates, setBookedDates] = useState<Date[]>([]);
   const [guests, setGuests] = useState<string>("1");
   const guestsRange = Array.from(
-    { length: room.guests },
+    { length: chamber.guests },
     (_, index) => index + 1
   );
 
@@ -58,7 +58,7 @@ const ReservationSidebar: React.FC<ReservationSidebarProps> = ({
         formData.append("total_price", totalPrice.toString());
 
         const response = await apiService.post(
-          `/api/rooms/${room.id}/book/`,
+          `/api/rooms/${chamber.id}/book/`,
           formData
         );
 
@@ -90,7 +90,7 @@ const ReservationSidebar: React.FC<ReservationSidebarProps> = ({
 
   const getReservations = async () => {
     const reservations = await apiService.get(
-      `/api/rooms/${room.id}/reservations/`
+      `/api/rooms/${chamber.id}/reservations/`
     );
 
     let dates: Date[] = [];
@@ -112,17 +112,17 @@ const ReservationSidebar: React.FC<ReservationSidebarProps> = ({
     if (dateRange.startDate && dateRange.endDate) {
       const dayCount = differenceInDays(dateRange.endDate, dateRange.startDate);
 
-      if (dayCount && room.price_per_night) {
-        const _fee = ((dayCount * room.price_per_night) / 100) * 5;
+      if (dayCount && chamber.price_per_night) {
+        const _fee = ((dayCount * chamber.price_per_night) / 100) * 5;
 
         setFee(_fee);
-        setTotalPrice(dayCount * room.price_per_night + _fee);
+        setTotalPrice(dayCount * chamber.price_per_night + _fee);
         setNights(dayCount);
       } else {
-        const _fee = (room.price_per_night / 100) * 5;
+        const _fee = (chamber.price_per_night / 100) * 5;
 
         setFee(_fee);
-        setTotalPrice(room.price_per_night + _fee);
+        setTotalPrice(chamber.price_per_night + _fee);
         setNights(1);
       }
     }
@@ -130,7 +130,7 @@ const ReservationSidebar: React.FC<ReservationSidebarProps> = ({
 
   return (
     <aside className='mt-6 p-6 col-span-2 rounded-xl border border-gray-300 shadow-xl bg-white-main'>
-      <h2 className='mb-5 text-2xl'>${room.price_per_night} per night</h2>
+      <h2 className='mb-5 text-2xl'>${chamber.price_per_night} per night</h2>
 
       <DatePicker
         value={dateRange}
@@ -163,10 +163,10 @@ const ReservationSidebar: React.FC<ReservationSidebarProps> = ({
 
       <div className='mb-4 flex justify-between items-center'>
         <p>
-          ${room.price_per_night} * {nights} nights
+          ${chamber.price_per_night} * {nights} nights
         </p>
 
-        <p>${room.price_per_night * nights}</p>
+        <p>${chamber.price_per_night * nights}</p>
       </div>
 
       <div className='mb-4 flex justify-between items-center'>

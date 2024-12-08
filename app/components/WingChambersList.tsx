@@ -4,14 +4,13 @@ import { format } from "date-fns";
 import apiService from "../services/apiService";
 import { useEffect, useState } from "react";
 import useSearchModal from "../hooks/useSearchModal";
-import RoomListItem from "./RoomListItem";
-import { useSearchParams } from "next/navigation";
+import ChambersListItem from "./ChambersListItem";
 
-interface RoomProps {
-  roomsWing?: string;
+interface ChambersProps {
+  chambersWing?: string;
 }
 
-export type RoomType = {
+export type ChamberType = {
   id: string;
   title: string;
   price_per_night: number;
@@ -24,9 +23,9 @@ export type RoomType = {
   category: string;
 };
 
-const WingsRoomList: React.FC<RoomProps> = ({ roomsWing }) => {
+const WingChambersList: React.FC<ChambersProps> = ({ chambersWing }) => {
   const searchModal = useSearchModal();
-  const wing = roomsWing;
+  const wing = chambersWing;
   const numGuests = searchModal.query.guests;
   const numBeds = searchModal.query.beds;
   const numBedrooms = searchModal.query.bedrooms;
@@ -35,9 +34,9 @@ const WingsRoomList: React.FC<RoomProps> = ({ roomsWing }) => {
   const checkoutDate = searchModal.query.checkOut;
   const category = searchModal.query.category;
 
-  const [rooms, setRooms] = useState<RoomType[]>([]);
+  const [chambers, setChambers] = useState<ChamberType[]>([]);
 
-  const getRooms = async () => {
+  const getChambers = async () => {
     let url = "/api/rooms/";
     let urlQuery = "";
 
@@ -71,26 +70,29 @@ const WingsRoomList: React.FC<RoomProps> = ({ roomsWing }) => {
       url += urlQuery;
     }
 
-    const tmpRooms = await apiService.get(url);
+    const tmpChambers = await apiService.get(url);
 
-    setRooms(
-      tmpRooms.data.map((room: RoomType) => {
-        return room;
+    setChambers(
+      tmpChambers.data.map((chamber: ChamberType) => {
+        return chamber;
       })
     );
   };
 
   useEffect(() => {
-    getRooms();
+    getChambers();
   }, [wing, searchModal.query]);
 
   return (
     <>
-      {rooms.map((room) => {
-        return <RoomListItem key={room.id} room={room} />;
+      {chambers.map((chamber) => {
+        const index = chambers.indexOf(chamber);
+        return (
+          <ChambersListItem key={chamber.id} chamber={chamber} index={index} />
+        );
       })}
     </>
   );
 };
 
-export default WingsRoomList;
+export default WingChambersList;

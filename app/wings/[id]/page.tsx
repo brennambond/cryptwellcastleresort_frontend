@@ -1,4 +1,4 @@
-import WingsRoomList from "@/app/components/WingsRoomList";
+import WingChambersList from "@/app/components/WingChambersList";
 import apiService from "@/app/services/apiService";
 import MotionDiv from "@/components/motion/MotionDiv";
 import { fadeIn } from "@/utils/motion";
@@ -20,7 +20,6 @@ const WingDetailPage = async ({ params }: { params: { id: string } }) => {
 
   return (
     <main className={`wrapper-main ${backgroundStyle} `}>
-      {/* flex-center flex-col min-h-[100vh] flex-1 bg-center ${backgroundStyle} py-20 text-white-main py-20*/}
       <div className='flex-center flex-col gap-8 wrapper'>
         <MotionDiv
           variants={fadeIn("up", "tween", 0.3, 0.7)}
@@ -44,7 +43,7 @@ const WingDetailPage = async ({ params }: { params: { id: string } }) => {
           </h1>
           <div>{wing.description}</div>
           <div className='mt-4 grid grid-cols-1 md:grid-cols-3 gap-20 px-12  rounded-md py-8'>
-            <WingsRoomList roomsWing={wing.id} />
+            <WingChambersList chambersWing={wing.id} />
           </div>
         </div>
       </div>
