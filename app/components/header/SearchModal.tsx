@@ -35,6 +35,7 @@ const SearchModal = () => {
     };
     searchModal.setQuery(newSearchQuery);
     searchModal.close();
+    console.log(newSearchQuery);
   };
 
   const _setDateRange = (selection: Range) => {
@@ -59,6 +60,7 @@ const SearchModal = () => {
 
       <div className='mt-6 flex w-[50%] self-center'>
         <CustomButton
+          className='button-main'
           label='Continue to Check Out Date'
           onClick={() => searchModal.open("checkout")}
         />
@@ -79,10 +81,12 @@ const SearchModal = () => {
 
       <div className='mt-6 flex flex-row gap-4'>
         <CustomButton
+          className='button-main'
           label='Back to Check In Date'
           onClick={() => searchModal.open("checkin")}
         />
         <CustomButton
+          className='button-main'
           label='Continue to Booking Details'
           onClick={() => searchModal.open("details")}
         />
@@ -150,10 +154,12 @@ const SearchModal = () => {
 
       <div className='mt-6 flex flex-row gap-4'>
         <CustomButton
+          className='button-main'
           label='Back to Check Out Date'
           onClick={() => searchModal.open("checkout")}
         />
         <CustomButton
+          className='button-main'
           label='Search for Available Rooms'
           onClick={closeAndSearch}
         />

@@ -1,10 +1,5 @@
 import type { Metadata } from "next";
-import {
-  Almendra,
-  Cormorant_Infant,
-  Germania_One,
-  UnifrakturCook,
-} from "next/font/google";
+import { Cormorant_Infant, Germania_One } from "next/font/google";
 import "./globals.css";
 
 import Header from "./components/header/Header";
@@ -18,16 +13,7 @@ const cormorant = Cormorant_Infant({
   weight: ["400", "500", "600", "700"],
   variable: "--font-cormorant",
 });
-const unifraktur = UnifrakturCook({
-  subsets: ["latin"],
-  weight: ["700"],
-  variable: "--font-unifraktur",
-});
-const almendra = Almendra({
-  subsets: ["latin"],
-  weight: ["400", "700"],
-  variable: "--font-almendra",
-});
+
 const germania = Germania_One({
   subsets: ["latin"],
   weight: ["400"],
@@ -47,7 +33,7 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body
-        className={`${cormorant.variable} ${unifraktur.variable} ${almendra.variable} ${germania.variable} bg-gray-800 flex h-screen flex-col`}
+        className={`${cormorant.variable} ${germania.variable} bg-gray-800 flex h-screen flex-col`}
       >
         <Header />
         <div className='flex-1'>{children}</div>

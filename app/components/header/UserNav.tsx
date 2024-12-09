@@ -26,8 +26,8 @@ const UserNav: React.FC<UserNavProps> = ({ userId }) => {
         onClick={() => setIsOpen(!isOpen)}
         className='flex items-center justify-between gap-2 text-purple-950'
       >
-        <span className='rounded-full bg-gray-300 p-1 sm:h-8 sm:w-8 md:w-9 md:h-9 flex-center'>
-          <HiUser className='sm:h-5 sm:w-5 md:h-6 md:w-6' />
+        <span className='rounded-full bg-white-main h-10 w-10 md:h-11 md:w-11 xl:h-12 xl:w-12 flex-center'>
+          <HiUser className='w-6 h-6 md:w-7 md:h-7 xl:h-8 xl:w-8' />
         </span>
       </button>
 

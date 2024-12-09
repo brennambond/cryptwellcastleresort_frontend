@@ -48,7 +48,7 @@ const WingCard: React.FC<WingProps> = ({
       ) : (
         <div className='relative bottom-0 flex-center w-full h-full gap-4 xl:gap-8 flex-col bg-[rgba(0,0,0,0.5)] rounded-md wrapper-sm '>
           <h2 className='h3-bold lg:h2-bold leading-5 text-white-main font-germania tracking-[0.04em] lg:px-4'>
-            Enter the Hall of the {wing.name}
+            Enter the Wing of the {wing.name}
           </h2>
           <p className='font-semibold text-[18px] xl:text-[20px] text-white font-cormorant lg:px-4 max-h-[80%] max-w-[90%] text-wrap backdrop-blur-sm'>
             {wing.description}
@@ -57,7 +57,7 @@ const WingCard: React.FC<WingProps> = ({
             className='rounded-md h-10 lg:h-[54px] p-medium-18 md:p-medium-20 bg-gray-700 text-white transition cursor-pointer flex-center px-6 font-germania capitalize tracking-wide hover:bg-gray-600 shadow-2xl'
             href={`/wings/${wing.id}`}
           >
-            Explore further...
+            Explore further
           </Link>
         </div>
       )}

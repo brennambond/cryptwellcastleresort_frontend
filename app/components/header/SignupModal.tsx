@@ -77,7 +77,11 @@ const SignupModal = () => {
           );
         })}
 
-        <CustomButton label='Submit' onClick={submitSignup} />
+        <CustomButton
+          className='button-main'
+          label='Submit'
+          onClick={submitSignup}
+        />
       </form>
     </>
   );

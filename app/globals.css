@@ -104,6 +104,10 @@
     @apply font-bold text-[28px] leading-[36px];
   }
 
+  .p-medium-28 {
+    @apply font-medium text-[28px] leading-[36px];
+  }
+
   .h5-bold {
     @apply font-bold text-[28px] leading-[36px];
   }
@@ -235,7 +239,7 @@
   }
 
   .custom-shape-divider-bottom-1733169569 .shape-fill {
-    fill: #366f79;
+    fill: #1f2937;
   }
 
   .custom-shape-divider-top-1733250278 {
@@ -256,6 +260,6 @@
   }
 
   .custom-shape-divider-top-1733250278 .shape-fill {
-    fill: #366f79;
+    fill: #1f2937;
   }
 }

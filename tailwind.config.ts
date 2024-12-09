@@ -23,8 +23,6 @@ const config: Config = {
       },
       fontFamily: {
         cormorant: "var(--font-cormorant)",
-        unifraktur: "var(--font-unifraktur)",
-        almendra: "var(--font-almendra)",
         germania: "var(--font-germania)",
       },
     },

@@ -4,7 +4,6 @@ import Link from "next/link";
 import { fadeIn } from "@/utils/motion";
 
 import UserNav from "./UserNav";
-import SearchFilters from "./SearchFilters";
 
 import { getUserId } from "../../lib/actions";
 import NavLinks from "./NavLinks";
@@ -46,18 +45,10 @@ const Header = async () => {
 
         <div
           id='header-left'
-          className='flex w-32 items-center justify-end lg:gap-3 h-full'
+          className='flex px-8 py-2 justify-end link-hover h-full'
         >
-          <div className='flex items-center justify-center cursor-pointer link-hover h-full'>
-            <div className='flex items-center justify-center text-[#dadada] px-[0.3125rem]'>
-              <SearchFilters />
-            </div>
-          </div>
-
-          <div className='px-3 lg:px-[0.8125rem] flex items-center justify-center cursor-pointer link-hover h-full'>
-            <div className='flex items-center justify-center text-[#dadada] px-[0.3125rem]'>
-              <UserNav userId={userId} />
-            </div>
+          <div className='flex items-center justify-center text-white-main '>
+            <UserNav userId={userId} />
           </div>
         </div>
       </div>

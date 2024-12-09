@@ -28,7 +28,7 @@ const ContactSection = () => {
           <p className='p-bold-24 md:text-[28px] md:leading-8 lg:h3-bold backdrop-blur-[1px]'>
             Will you stalk with the Vampires, roam with the Ghouls, embrace the
             Witches' magic, or face the terrors of the Mad Labratory? Book your
-            escape-or your eteranl stay-today.
+            escape-or your eternal stay-today.
           </p>
 
           <Link

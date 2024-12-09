@@ -8,7 +8,7 @@ export type SearchQuery = {
   beds: Number;
   bedrooms: Number;
   bathrooms: Number;
-  category: String;
+  category: String | undefined;
 };
 
 interface SearchModalStore {

@@ -40,7 +40,7 @@ const LoginModal = () => {
 
   const content = (
     <>
-      <form action={submitLogin} className='space-y-4'>
+      <form action={submitLogin} className='space-y-4 font-cormorant'>
         <input
           onChange={(e) => setEmail(e.target.value)}
           placeholder='Your email address'
@@ -65,7 +65,11 @@ const LoginModal = () => {
           );
         })}
 
-        <CustomButton label='Submit' onClick={submitLogin} />
+        <CustomButton
+          className='button-main'
+          label='Submit'
+          onClick={submitLogin}
+        />
       </form>
     </>
   );

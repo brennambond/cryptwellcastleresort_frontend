@@ -5,6 +5,7 @@ import { GiBathtub, GiSofa, GiMagicBroom } from "react-icons/gi";
 import MotionDiv from "@/components/motion/MotionDiv";
 import { fadeIn } from "@/utils/motion";
 import ChambersList from "../components/ChambersList";
+import SearchFilters from "../components/header/SearchFilters";
 
 export default function ChambersHomePage() {
   return (
@@ -30,7 +31,8 @@ export default function ChambersHomePage() {
           Each Wing of our resort comprises of 30 guest chambers: 16{" "}
           <strong className='italic '> Single Bedrooms with 2 Beds</strong>, 10{" "}
           <strong className='italic'> Single Bedrooms with 3 Beds</strong>, and
-          4 <strong className='italic'> Double Bedroom Deluxe Suites</strong>.
+          4 <strong className='italic'> Double Bedroom Deluxe Suites</strong>.{" "}
+          <SearchFilters />
         </p>
       </MotionDiv>
 
