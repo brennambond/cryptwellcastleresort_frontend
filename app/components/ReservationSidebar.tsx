@@ -222,14 +222,8 @@ const ReservationSidebar: React.FC<ReservationSidebarProps> = ({
           <p>Total: ${totalPrice}</p>
         </div>
       </div>
-
-      <div
-        onClick={performBooking}
-        className={`button-main-nobg xl:mt-4 ${buttonColorStyle}`}
-      >
-        Book
-      </div>
       <CheckoutModal
+        onClick={performBooking}
         className={`button-main-nobg xl:mt-4 ${buttonColorStyle}`}
       />
     </div>
