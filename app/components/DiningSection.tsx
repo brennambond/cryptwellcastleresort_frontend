@@ -45,8 +45,8 @@ const DiningSection = () => {
             thin—it’s the setting for the most unforgettable meal of your
             afterlife.
           </p>
-          <div className='pt-6 lg:pt-10'>
-            <Link className='button-main px-6 py-3' href='/dining'>
+          <div className='pt-6 lg:pt-10 flex-center'>
+            <Link className='button-main max-w-[60%]' href='/dining'>
               Enter the Veil
             </Link>
           </div>

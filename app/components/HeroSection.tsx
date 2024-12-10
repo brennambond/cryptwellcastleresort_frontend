@@ -29,8 +29,8 @@ const HeroSection = () => {
             three-story estate beckons you to explore its spectral halls and
             ghostly chambers.
           </p>
-          <div className='pt-6 lg:pt-10'>
-            <Link className='button-main px-6 py-3' href='/chambers'>
+          <div className='pt-6 lg:pt-10 flex-center'>
+            <Link className='button-main max-w-[60%]' href='/chambers'>
               Explore Our Chambers
             </Link>
           </div>

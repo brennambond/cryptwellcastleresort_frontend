@@ -31,15 +31,14 @@ const ContactSection = () => {
             escape-or your eternal stay-today.
           </p>
 
-          <Link
-            href='/chambers'
-            className='button-main px-6 py-3 max-w-[40%] lg:max-w-[20%]'
-          >
-            Join Us
-          </Link>
+          <div className='pt-6 lg:pt-10 flex-center'>
+            <Link href='/chambers' className='button-main'>
+              Join Us
+            </Link>
+          </div>
         </div>
 
-        <div className='flex-center flex-col text-white-main capitalize max-w-[90%] sm:max-w-[80%] pt-40'>
+        <div className='flex-center flex-col text-white-main capitalize max-w-[90%] sm:max-w-[80%] pt-20'>
           <h2 className='h2-bold font-germania tracking-wider border-b-4  border-white-main backdrop-blur-[1px]'>
             Hotel Services Available
           </h2>
