@@ -153,7 +153,7 @@ const ReservationSidebar: React.FC<ReservationSidebarProps> = ({
   }, [dateRange]);
 
   return (
-    <div className='flex-center flex-col rounded-xl bg-white-main gap-6 pb-10 w-full sm:w-[90%] md:w-[80%]'>
+    <div className='flex-center flex-col rounded-xl bg-white-main gap-6 pb-10 w-full sm:w-[90%] md:w-[80%] lg:w-[70%] 2xl:w-[60%]'>
       <header
         className={`flex-center py-4 rounded-t-xl w-full border-b border-gray-400 ${backgroundColorStyle}`}
       >
