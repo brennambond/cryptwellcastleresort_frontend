@@ -1,11 +1,9 @@
 import Image from "next/image";
-
-import { FaBed } from "react-icons/fa";
-import { GiBathtub, GiSofa, GiMagicBroom } from "react-icons/gi";
 import MotionDiv from "@/components/motion/MotionDiv";
 import { fadeIn } from "@/utils/motion";
 import ChambersList from "../components/ChambersList";
 import SearchFilters from "../components/header/SearchFilters";
+import ChamberServices from "../components/ChamberServices";
 
 export default function ChambersHomePage() {
   return (
@@ -38,48 +36,7 @@ export default function ChambersHomePage() {
 
       <ChambersList />
 
-      <div className='flex-center flex-col capitalize max-w-[90%] sm:max-w-[80%] lg:max-w-[60%] py-10 lg:py-20 text-center'>
-        <h2 className='h2-bold font-germania tracking-wider border-b-4  border-white-main backdrop-blur-[1px]'>
-          Chamber Services and Facilities Available
-        </h2>
-
-        <ul className='grid grid-cols-3 py-10 gap-10 sm:gap-12 md:gap-16 lg:gap-20 p-bold-16'>
-          <li className='flex-center flex-col gap-1 '>
-            <GiSofa className='w-8 h-8' />
-            <p className='backdrop-blur-[1px] lg:p-bold-18'>
-              On-premise medical care
-            </p>
-          </li>
-          <li className='flex-center flex-col gap-1'>
-            <GiBathtub className='w-8 h-8' />
-            <p className='backdrop-blur-[1px] lg:p-bold-18'>
-              24/7 Customer Service
-            </p>
-          </li>
-          <li className='flex-center flex-col gap-1'>
-            <GiBathtub className='w-8 h-8' />
-            <p className='backdrop-blur-[1px] lg:p-bold-18'>
-              Concierge and Free Luggage Service
-            </p>
-          </li>
-          <li className='flex-center flex-col gap-1'>
-            <FaBed className='w-8 h-8' />
-            <p className='backdrop-blur-[1px] lg:p-bold-18'>
-              Free Parking for guests
-            </p>
-          </li>
-          <li className='flex-center flex-col gap-1'>
-            <GiMagicBroom className='w-8 h-8' />
-            <p className='backdrop-blur-[1px] lg:p-bold-18'>
-              Wheelchair accessible
-            </p>
-          </li>
-          <li className='flex-center flex-col gap-1'>
-            <GiMagicBroom className='w-8 h-8' />
-            <p className='backdrop-blur-[1px] lg:p-bold-18'>Free Wifi</p>
-          </li>
-        </ul>
-      </div>
+      <ChamberServices />
     </main>
   );
 }

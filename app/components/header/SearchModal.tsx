@@ -53,10 +53,12 @@ const SearchModal = () => {
         When would you like to check in?
       </h2>
 
-      <DatePicker
-        value={dateRange}
-        onChange={(value) => _setDateRange(value.selection)}
-      />
+      <div className='flex-center'>
+        <DatePicker
+          value={dateRange}
+          onChange={(value) => _setDateRange(value.selection)}
+        />
+      </div>
 
       <div className='mt-6 flex w-[50%] self-center'>
         <CustomButton
@@ -74,10 +76,12 @@ const SearchModal = () => {
         When would you like to check out?
       </h2>
 
-      <DatePicker
-        value={dateRange}
-        onChange={(value) => _setDateRange(value.selection)}
-      />
+      <div className='flex-center'>
+        <DatePicker
+          value={dateRange}
+          onChange={(value) => _setDateRange(value.selection)}
+        />
+      </div>
 
       <div className='mt-6 flex flex-row gap-4'>
         <CustomButton

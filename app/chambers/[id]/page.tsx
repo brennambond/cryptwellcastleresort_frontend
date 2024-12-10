@@ -1,9 +1,13 @@
 import Image from "next/image";
 
 import ReservationSidebar from "@/app/components/ReservationSidebar";
+import ChamberServices from "@/app/components/ChamberServices";
 
 import apiService from "@/app/services/apiService";
 import { getUserId } from "@/app/lib/actions";
+
+import MotionDiv from "@/components/motion/MotionDiv";
+import { fadeIn } from "@/utils/motion";
 
 const ChamberDetailPage = async ({ params }: { params: { id: string } }) => {
   const chamber = await apiService.get(`/api/rooms/${params.id}`);
@@ -21,34 +25,43 @@ const ChamberDetailPage = async ({ params }: { params: { id: string } }) => {
   ];
 
   return (
-    <main className={`wrapper-main ${backgroundStyle}`}>
-      <div className='w-full h-[64vh] overflow-hidden rounded-xl relative mb-4'>
-        <Image
-          fill
-          src={chamber.image_url.slice(5)}
-          alt={chamber.title}
-          className='object-cover w-full h-full shadow-2xl'
-        />
-      </div>
+    <main
+      className={`${backgroundStyle} font-cormorant text-white bg-cover bg-center`}
+    >
+      <div className='flex-center flex-col wrapper-main gap-20 p-medium-20'>
+        <MotionDiv
+          variants={fadeIn("up", "tween", 0.3, 0.7)}
+          initial='hidden'
+          whileInView='show'
+          viewport={{ once: true }}
+          className='flex-center flex-col gap-16 sm:w-[90%] max-w-[90%] md:w-[80%] md:max-w-[80%] '
+        >
+          <h1 className='h2-medium font-germania tracking-wider mt-20 text-center'>
+            {chamber.title}
+          </h1>
+          <Image
+            width={1000}
+            height={1000}
+            src={chamber.image_url.slice(5)}
+            alt={chamber.title}
+            className='object-cover object-center rounded-xl shadow-2xl overflow-hidden h-[50vh] md:h-[60vh] xl:max-h-[60vh] xl:max-w-[60vw]'
+          />
+        </MotionDiv>
 
-      <hr />
-
-      <div className='grid grid-cols-1 md:grid-cols-5 gap-4 '>
-        <div className='col-span-3 py-6 pr-6'>
-          <h1 className='mb-4 text-4xl'>{chamber.title}</h1>
-          <span className='mb-6 block text-lg text-gray-600'>
-            {chamber.guests} {chamber.guests == 1 ? "guest" : "guests"} -{" "}
+        <div className='flex-center flex-col'>
+          <p className='backdrop-blur-[2px] drop-shadow-2xl mb-6 capitalize border-b-2 border-main-white p-bold-20 tracking-wide'>
+            Up to {chamber.guests} {chamber.guests == 1 ? "guest" : "guests"} -{" "}
             {chamber.bedrooms} {chamber.bedrooms == 1 ? "bedroom" : "bedrooms"}{" "}
             - {chamber.bathrooms}{" "}
             {chamber.bathrooms == 1 ? "bathroom" : "bathrooms"}
-          </span>
+          </p>
 
-          <hr />
-
-          <p className='mt-6 text-lg'>{chamber.description}</p>
+          <p className='backdrop-blur-[2px] drop-shadow-2xl max-w-[90%] lg:max-w-[80%]'>
+            {chamber.description}
+          </p>
         </div>
-
         <ReservationSidebar chamber={chamber} userId={userId} />
+        <ChamberServices />
       </div>
     </main>
   );

@@ -44,7 +44,7 @@ const ContactSection = () => {
             Hotel Services Available
           </h2>
 
-          <ul className='grid grid-cols-3 py-10 gap-10 sm:gap-12 md:gap-16 lg:gap-20 p-bold-16'>
+          <ul className='grid grid-cols-3 py-10 gap-10 sm:gap-12 md:gap-16 lg:gap-20 p-bold-16 items-start'>
             <li className='flex-center flex-col gap-1 '>
               <FaAmbulance className='w-8 h-8' />
               <p className='backdrop-blur-[1px] lg:p-bold-18'>

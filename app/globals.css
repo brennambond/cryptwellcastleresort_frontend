@@ -29,6 +29,10 @@
     @apply mx-auto p-5 px-10  w-full flex-center flex-col min-h-[100vh] bg-center text-white-main font-cormorant;
   }
 
+  .wrapper-calendar {
+    @apply mx-auto p-5 px-10 w-full flex-center flex-col font-cormorant;
+  }
+
   .wrapper-sm {
     @apply max-w-7xl mx-auto px-4 py-8 md:px-10 lg:px-0 w-full;
   }
@@ -211,7 +215,11 @@
   }
 
   .button-main {
-    @apply w-full rounded-md h-[54px] p-medium-20 bg-gray-700 text-white transition cursor-pointer text-center font-germania capitalize tracking-wider hover:bg-gray-600 shadow-2xl;
+    @apply px-6 rounded-md h-[54px] p-medium-20 bg-gray-700 text-white transition cursor-pointer flex-center font-germania capitalize tracking-wider hover:bg-gray-600 shadow-2xl;
+  }
+
+  .button-main-nobg {
+    @apply px-8 lg:px-12 rounded-md h-[54px] p-medium-20 text-white transition cursor-pointer flex-center font-germania capitalize tracking-wider shadow-2xl;
   }
 
   .select-item {

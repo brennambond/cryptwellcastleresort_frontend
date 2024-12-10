@@ -9,7 +9,7 @@ interface WingProps {
 const WingListItem: React.FC<WingProps> = ({ wing }) => {
   const router = useRouter();
   const wing_image = wing.image_url.slice(5);
-  console.log(wing);
+
   return (
     <div
       onClick={() => router.push(`/wings/${wing.id}`)}
