@@ -60,7 +60,7 @@ const SearchModal = () => {
         />
       </div>
 
-      <div className='mt-6 flex w-[50%] self-center'>
+      <div className='mt-6 flex w-[80%] sm:w-[60%] md:w-[50%] self-center'>
         <CustomButton
           className='button-main'
           label='Continue to Check Out Date'
@@ -83,14 +83,14 @@ const SearchModal = () => {
         />
       </div>
 
-      <div className='mt-6 flex flex-row gap-4'>
+      <div className='mt-6 flex flex-row gap-4 w-full'>
         <CustomButton
-          className='button-main'
+          className='button-main-secondary'
           label='Back to Check In Date'
           onClick={() => searchModal.open("checkin")}
         />
         <CustomButton
-          className='button-main'
+          className='button-main-secondary'
           label='Continue to Booking Details'
           onClick={() => searchModal.open("details")}
         />
@@ -158,12 +158,12 @@ const SearchModal = () => {
 
       <div className='mt-6 flex flex-row gap-4'>
         <CustomButton
-          className='button-main'
+          className='button-main-secondary'
           label='Back to Check Out Date'
           onClick={() => searchModal.open("checkout")}
         />
         <CustomButton
-          className='button-main'
+          className='button-main-secondary'
           label='Search for Available Rooms'
           onClick={closeAndSearch}
         />
