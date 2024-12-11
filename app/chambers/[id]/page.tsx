@@ -23,6 +23,8 @@ const ChamberDetailPage = async ({ params }: { params: { id: string } }) => {
       ? "bg-[url('../public/background-2.png')]"
       : "bg-[url('../public/background-purple.png')]",
   ];
+  const chamber_imageurl =
+    "https://hauntedhotel-backend-bucket" + chamber.image_url.slice(17);
 
   return (
     <main
@@ -42,7 +44,7 @@ const ChamberDetailPage = async ({ params }: { params: { id: string } }) => {
           <Image
             width={1000}
             height={1000}
-            src={chamber.image_url.slice(5)}
+            src={chamber_imageurl}
             alt={chamber.title}
             className='object-cover object-center rounded-xl shadow-2xl overflow-hidden h-[50vh] md:h-[60vh] xl:max-h-[60vh] xl:max-w-[60vw]'
           />

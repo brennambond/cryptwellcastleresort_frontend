@@ -3,8 +3,6 @@
 import { cookies } from "next/headers";
 
 export async function handleRefresh() {
-  console.log("handleRefresh");
-
   const refreshToken = await getRefreshToken();
 
   const token = await fetch(
@@ -78,9 +76,6 @@ export async function resetAuthCookies() {
   cookies().set("session_access_token", "");
   cookies().set("session_refresh_token", "");
 }
-
-//
-// Get data
 
 export async function getUserId() {
   const userId = cookies().get("session_userid")?.value;

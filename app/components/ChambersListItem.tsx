@@ -23,6 +23,7 @@ const ChambersListItem: React.FC<ChamberProps> = ({ chamber, index }) => {
   ];
   const chamber_imageurl =
     "https://hauntedhotel-backend-bucket" + chamber.image_url.slice(17);
+
   return (
     <MotionDiv
       variants={fadeIn("right", "tween", (index + 1) * 0.5, 0.75)}

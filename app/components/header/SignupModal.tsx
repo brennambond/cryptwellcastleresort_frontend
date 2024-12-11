@@ -91,7 +91,7 @@ const SignupModal = () => {
       close={signupModal.close}
       label='Sign up'
       content={content}
-    ></Modal>
+    />
   );
 };
 

@@ -79,7 +79,7 @@ const LoginModal = () => {
       close={loginModal.close}
       label='Log in'
       content={content}
-    ></Modal>
+    />
   );
 };
 
