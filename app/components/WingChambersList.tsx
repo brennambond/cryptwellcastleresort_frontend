@@ -5,6 +5,8 @@ import apiService from "../services/apiService";
 import { useEffect, useState } from "react";
 import useSearchModal from "../hooks/useSearchModal";
 import ChambersListItem from "./ChambersListItem";
+import MotionDiv from "@/components/motion/MotionDiv";
+import { staggerContainer } from "@/utils/motion";
 
 interface ChambersProps {
   chambersWing?: string;
@@ -84,14 +86,20 @@ const WingChambersList: React.FC<ChambersProps> = ({ chambersWing }) => {
   }, [wing, searchModal.query]);
 
   return (
-    <>
+    <MotionDiv
+      variants={staggerContainer}
+      initial='hidden'
+      whileInView='show'
+      viewport={{ once: true }}
+      className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 rounded-xl gap-8 lg:gap-10 xl:gap-12 sm:w-[90%] max-w-[90%]'
+    >
       {chambers.map((chamber) => {
         const index = chambers.indexOf(chamber);
         return (
           <ChambersListItem key={chamber.id} chamber={chamber} index={index} />
         );
       })}
-    </>
+    </MotionDiv>
   );
 };
 

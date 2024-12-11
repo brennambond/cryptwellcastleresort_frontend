@@ -23,34 +23,38 @@ const WingDetailPage = async ({ params }: { params: { id: string } }) => {
   ];
 
   return (
-    <main className={`wrapper-main ${backgroundStyle} `}>
-      <div className='flex-center flex-col gap-8 wrapper'>
-        <MotionDiv
-          variants={fadeIn("up", "tween", 0.3, 0.7)}
-          initial='hidden'
-          whileInView='show'
-          viewport={{ once: true }}
-          className='flex-center relative'
-        >
-          <Image
-            width={1500}
-            height={1500}
-            src={wing.image_url.slice(5)}
-            alt={wing.name}
-            className='object-cover object-center w-full z-10 relative h-[80vh]'
-          />
-        </MotionDiv>
+    <main className={`wrapper-main ${backgroundStyle} gap-20`}>
+      <MotionDiv
+        variants={fadeIn("down", "tween", 0.3, 0.7)}
+        initial='hidden'
+        whileInView='show'
+        viewport={{ once: true }}
+        className='flex-center flex-col sm:w-[90%] max-w-[90%] md:w-[80%] md:max-w-[80%] pt-20'
+      >
+        <Image
+          width={1000}
+          height={1000}
+          src={wing.image_url.slice(5)}
+          alt={wing.name}
+          className='object-cover object-center rounded-xl shadow-2xl overflow-hidden h-[50vh] md:h-[70vh] xl:h-[80vh]'
+        />
+      </MotionDiv>
 
-        <div className='mt-4 flex flex-col gap-6 '>
-          <h1 className='h1-bold text-white-main flex-center font-germania tracking-wider border-b-4  border-white-main pt-20'>
-            Wing of the {wing.name}
-          </h1>
-          <div>{wing.description}</div>
-          <div className='mt-4 grid grid-cols-1 md:grid-cols-3 gap-20 px-12  rounded-md py-8'>
-            <WingChambersList chambersWing={wing.id} />
-          </div>
-        </div>
-      </div>
+      <MotionDiv
+        variants={fadeIn("up", "tween", 0.3, 0.7)}
+        initial='hidden'
+        whileInView='show'
+        viewport={{ once: true }}
+        className='flex-center flex-col text-center gap-6 md:max-w-[90%] lg:max-w-[80%]'
+      >
+        <h1 className='h2-bold font-germania tracking-wider border-b-4 border-white-main '>
+          Welcome to the Realm of the {wing.name}
+        </h1>
+        <div className='p-regular-18 2xl:p-regular-20'>{wing.description}</div>
+      </MotionDiv>
+
+      <WingChambersList chambersWing={wing.id} />
+
       {wing.name === "Bloodborn" ? (
         <BloodbornServices />
       ) : wing.name === "Arcane" ? (
