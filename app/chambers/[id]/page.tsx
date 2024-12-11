@@ -1,7 +1,7 @@
 import Image from "next/image";
 
 import ReservationSidebar from "@/app/components/ReservationSidebar";
-import ChamberServices from "@/app/components/ChamberServices";
+import ChamberServices from "@/app/components/services/ChamberServices";
 
 import apiService from "@/app/services/apiService";
 import { getUserId } from "@/app/lib/actions";

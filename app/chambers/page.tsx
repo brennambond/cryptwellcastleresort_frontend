@@ -3,7 +3,7 @@ import MotionDiv from "@/components/motion/MotionDiv";
 import { fadeIn } from "@/utils/motion";
 import ChambersList from "../components/ChambersList";
 import SearchFilters from "../components/header/SearchFilters";
-import ChamberServices from "../components/ChamberServices";
+import ChamberServices from "../components/services/ChamberServices";
 
 export default function ChambersHomePage() {
   return (

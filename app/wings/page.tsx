@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { WingSectionType } from "../components/WingsSection";
 import apiService from "../services/apiService";
 import WingCard from "../components/WingCard";
+import WingServices from "../components/services/WingServices";
 
 export default function WingsHomePage() {
   const [wings, setWings] = useState<WingSectionType[]>([]);
@@ -51,6 +52,7 @@ export default function WingsHomePage() {
           </MotionDiv>
         </div>
       </div>
+      <WingServices />
     </main>
   );
 }
