@@ -22,6 +22,8 @@ const WingDetailPage = async ({ params }: { params: { id: string } }) => {
       : "bg-[url('../public/background-purple.png')]",
   ];
 
+  const wing_imageurl =
+    "https://hauntedhotel-backend-bucket" + wing.image_url.slice(17);
   return (
     <main className={`wrapper-main ${backgroundStyle} gap-20`}>
       <MotionDiv
@@ -34,7 +36,7 @@ const WingDetailPage = async ({ params }: { params: { id: string } }) => {
         <Image
           width={1000}
           height={1000}
-          src={wing.image_url.slice(5)}
+          src={wing_imageurl}
           alt={wing.name}
           className='object-cover object-center rounded-xl shadow-2xl overflow-hidden h-[50vh] md:h-[70vh] xl:h-[80vh]'
         />

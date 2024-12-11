@@ -8,7 +8,8 @@ interface WingProps {
 
 const WingListItem: React.FC<WingProps> = ({ wing }) => {
   const router = useRouter();
-  const wing_image = wing.image_url.slice(5);
+  const wing_imageurl =
+    "https://hauntedhotel-backend-bucket" + wing.image_url.slice(17);
 
   return (
     <div
@@ -18,7 +19,7 @@ const WingListItem: React.FC<WingProps> = ({ wing }) => {
       <div className='relative overflow-hidden aspect-square rounded-xl shadow-xl hover:shadow-2xl w-[200px] h-[200px]'>
         <Image
           fill
-          src={wing_image}
+          src={wing_imageurl}
           className='object-cover transition h-full w-full'
           alt='Hotel Picture'
         />

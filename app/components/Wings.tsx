@@ -3,7 +3,6 @@
 import { useState } from "react";
 import Image from "next/image";
 import useSearchModal, { SearchQuery } from "../hooks/useSearchModal";
-import WingsList from "./WingsList";
 
 const Wings = () => {
   const searchModal = useSearchModal();

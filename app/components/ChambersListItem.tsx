@@ -21,6 +21,8 @@ const ChambersListItem: React.FC<ChamberProps> = ({ chamber, index }) => {
       ? "text-emerald-700 hover:text-emerald-900"
       : "text-purple-700 hover:text-purple-900",
   ];
+  const chamber_imageurl =
+    "https://hauntedhotel-backend-bucket" + chamber.image_url.slice(17);
   return (
     <MotionDiv
       variants={fadeIn("right", "tween", (index + 1) * 0.5, 0.75)}
@@ -30,7 +32,7 @@ const ChambersListItem: React.FC<ChamberProps> = ({ chamber, index }) => {
       className='bg-white-main rounded-xl flex flex-col gap-2'
     >
       <Image
-        src={chamber.image_url.slice(5)}
+        src={chamber_imageurl}
         className='object-cover object-center overflow-hidden aspect-square rounded-t-xl max-h-[250px]'
         alt='Hotel Picture'
         height={1000}

@@ -21,6 +21,8 @@ const WingCard: React.FC<WingProps> = ({
   handleClick,
   index,
 }) => {
+  const wing_imageurl =
+    "https://hauntedhotel-backend-bucket" + wing.image_url.slice(17);
   return (
     <motion.div
       className={`relative ${
@@ -35,7 +37,7 @@ const WingCard: React.FC<WingProps> = ({
       onClick={() => handleClick(wing.id)}
     >
       <Image
-        src={wing.image_url.slice(5)}
+        src={wing_imageurl}
         width={1500}
         height={1500}
         alt='image'

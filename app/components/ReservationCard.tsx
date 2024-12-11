@@ -33,6 +33,9 @@ const ReservationCard: React.FC<ReservationProps> = ({
       ? "bg-emerald-900 hover:bg-emerald-800"
       : "bg-fuchsia-950 hover:bg-fuchsia-900",
   ];
+  const chamber_imageurl =
+    "https://hauntedhotel-backend-bucket" +
+    reservation.room.image_url.slice(17);
 
   return (
     <MotionDiv
@@ -44,7 +47,7 @@ const ReservationCard: React.FC<ReservationProps> = ({
       key={reservation.id}
     >
       <Image
-        src={reservation.room.image_url.slice(5)}
+        src={chamber_imageurl}
         width={1000}
         height={1000}
         className='object-cover object-center overflow-hidden aspect-square rounded-t-xl max-h-[250px]'
