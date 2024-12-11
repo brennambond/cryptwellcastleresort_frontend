@@ -1,7 +1,7 @@
 "use client";
 
 import MotionDiv from "@/components/motion/MotionDiv";
-import { staggerContainer } from "@/utils/motion";
+import { fadeIn, staggerContainer } from "@/utils/motion";
 import { useEffect, useState } from "react";
 import { WingSectionType } from "../components/WingsSection";
 import apiService from "../services/apiService";
@@ -22,37 +22,41 @@ export default function WingsHomePage() {
 
   const [active, setActive] = useState(wings[1]);
   return (
-    <main className="wrapper-main bg-[url('../public/background-blue.png')]">
-      <div className='flex-center flex-col py-20 mx-auto gap-8 relative wrapper '>
-        <h1 className='h1-bold text-white-main flex-center font-germania tracking-wider border-b-4  border-white-main pt-20'>
-          Choose Your Fate
-        </h1>
-        <div className='relative z-50 w-full'>
-          <MotionDiv
-            variants={staggerContainer}
-            initial='hidden'
-            whileInView='show'
-            viewport={{ once: true }}
-            className='mx-auto flex flex-col'
-          >
-            <div className='mt-[50px] flex lg:flex-row flex-col min-h-[70vh] gap-2'>
-              {wings.map((wing) => {
-                const index = wings.indexOf(wing);
-                return (
-                  <WingCard
-                    key={wing.id}
-                    wing={wing}
-                    active={active}
-                    handleClick={setActive}
-                    index={index}
-                  />
-                );
-              })}
-            </div>
-          </MotionDiv>
+    <main className="bg-[url('../public/background-blue.png')] bg-cover bg-center relative">
+      <MotionDiv
+        variants={staggerContainer}
+        initial='hidden'
+        whileInView='show'
+        viewport={{ once: true }}
+        className='flex-center flex-col wrapper text-white-main '
+      >
+        <MotionDiv
+          variants={fadeIn("down", "tween", 0.3, 0.7)}
+          initial='hidden'
+          whileInView='show'
+          viewport={{ once: true }}
+        >
+          <h1 className='h1-bold text-white-main flex-center font-germania tracking-wider border-b-4  border-white-main pt-20'>
+            Choose Your Fate
+          </h1>
+        </MotionDiv>
+
+        <div className='mt-[50px] flex w-full lg:flex-row flex-col min-h-[70vh] gap-2 '>
+          {wings.map((wing) => {
+            const index = wings.indexOf(wing);
+            return (
+              <WingCard
+                key={wing.id}
+                wing={wing}
+                active={active}
+                handleClick={setActive}
+                index={index}
+              />
+            );
+          })}
         </div>
-      </div>
-      <WingServices />
+        <WingServices />
+      </MotionDiv>
     </main>
   );
 }

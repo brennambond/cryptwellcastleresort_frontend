@@ -11,7 +11,7 @@ const LogoutButton: React.FC = () => {
   const submitLogout = async () => {
     resetAuthCookies();
 
-    router.push("/");
+    router.refresh();
   };
   return <MenuLink label='Log out' onClick={submitLogout} />;
 };

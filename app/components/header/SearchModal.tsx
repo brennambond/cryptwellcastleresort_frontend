@@ -35,7 +35,6 @@ const SearchModal = () => {
     };
     searchModal.setQuery(newSearchQuery);
     searchModal.close();
-    console.log(newSearchQuery);
   };
 
   const _setDateRange = (selection: Range) => {

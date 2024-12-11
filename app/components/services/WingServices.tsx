@@ -9,8 +9,8 @@ import {
 
 const WingServices = () => {
   return (
-    <div className='flex-center flex-col capitalize max-w-[90%] sm:max-w-[80%]  py-10 lg:pb-20 lg:pt-40 text-center'>
-      <h2 className='h2-bold font-germania tracking-wider border-b-4  border-white-main backdrop-blur-[1px]'>
+    <div className='flex-center flex-col capitalize max-w-[90%] sm:max-w-[80%]  py-20 text-center'>
+      <h2 className='h2-bold flex-center font-germania tracking-wider border-b-4  border-white-main backdrop-blur-[1px]'>
         Wing Services and Facilities Available
       </h2>
 

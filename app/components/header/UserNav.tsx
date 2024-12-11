@@ -51,7 +51,7 @@ const UserNav: React.FC<UserNavProps> = ({ userId }) => {
                 onClick={() => {
                   setIsOpen(false);
                   loginModal.open();
-                  router.push("/");
+                  router.refresh();
                 }}
               />
               <MenuLink

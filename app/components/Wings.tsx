@@ -23,7 +23,6 @@ const Wings = () => {
       guests: searchModal.query.guests,
     };
     searchModal.setQuery(query);
-    console.log(query);
   };
 
   return (

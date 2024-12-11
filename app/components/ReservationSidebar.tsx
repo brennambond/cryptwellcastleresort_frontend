@@ -62,7 +62,7 @@ const ReservationSidebar: React.FC<ReservationSidebarProps> = ({
     chamberTitle === "Bloodborn"
       ? "bg-red-900 hover:bg-red-800"
       : chamberTitle === "Haunted"
-      ? "bg-cyan-900 bg:text-cyan-800"
+      ? "bg-cyan-900 hover:bg-cyan-800"
       : chamberTitle === "Reborn"
       ? "bg-emerald-900 hover:bg-emerald-800"
       : "bg-fuchsia-950 hover:bg-fuchsia-900",
@@ -222,10 +222,19 @@ const ReservationSidebar: React.FC<ReservationSidebarProps> = ({
           <p>Total: ${totalPrice}</p>
         </div>
       </div>
-      <CheckoutModal
-        onClick={performBooking}
-        className={`button-main-nobg xl:mt-4 ${buttonColorStyle}`}
-      />
+      {userId ? (
+        <CheckoutModal
+          onClick={performBooking}
+          className={`button-main-nobg xl:mt-4 ${buttonColorStyle}`}
+        />
+      ) : (
+        <button
+          onClick={performBooking}
+          className={`button-main-nobg xl:mt-4 ${buttonColorStyle}`}
+        >
+          Sign-In to Book This Room
+        </button>
+      )}
     </div>
   );
 };

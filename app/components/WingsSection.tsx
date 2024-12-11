@@ -20,7 +20,6 @@ const WingsSection = () => {
     const tmpWings = await apiService.get("/api/rooms/wings/");
 
     setWings(tmpWings.data);
-    console.log(tmpWings);
   };
 
   useEffect(() => {

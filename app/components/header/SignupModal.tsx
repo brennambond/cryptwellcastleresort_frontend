@@ -34,7 +34,7 @@ const SignupModal = () => {
 
       signupModal.close();
 
-      router.push("/");
+      router.refresh();
     } else {
       const tmpErrors: string[] = Object.values(response).map((error: any) => {
         return error;
@@ -70,7 +70,7 @@ const SignupModal = () => {
           return (
             <div
               key={`error_${index}`}
-              className='p-5 bg-airbnb text-white rounded-xl opacity-80'
+              className='p-5 bg-airbnb text-gray-800 rounded-xl opacity-80'
             >
               {error}
             </div>

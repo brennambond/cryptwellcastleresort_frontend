@@ -23,7 +23,7 @@ const ChamberServices = () => {
         <li className='flex-center flex-col gap-1'>
           <FaBaby className='w-8 h-8' />
           <p className='backdrop-blur-[1px] lg:p-bold-18'>
-            Ameneties For Children
+            Ameneties For Childcare
           </p>
         </li>
         <li className='flex-center flex-col gap-1'>
