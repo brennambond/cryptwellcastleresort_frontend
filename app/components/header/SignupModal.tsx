@@ -2,12 +2,12 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import useSignupModal from "@/app/hooks/useSignupModal";
 
-import useSignupModal from "../../hooks/useSignupModal";
+import apiService from "@/app/services/apiService";
+import { handleLogin } from "@/app/lib/actions";
 import CustomButton from "../CustomButton";
 import Modal from "../Modal";
-import apiService from "../../services/apiService";
-import { handleLogin } from "../../lib/actions";
 
 const SignupModal = () => {
   const router = useRouter();
@@ -34,7 +34,7 @@ const SignupModal = () => {
 
       signupModal.close();
 
-      router.refresh();
+      router.push("/");
     } else {
       const tmpErrors: string[] = Object.values(response).map((error: any) => {
         return error;
@@ -49,16 +49,18 @@ const SignupModal = () => {
       <form action={submitSignup} className='space-y-4'>
         <input
           onChange={(e) => setEmail(e.target.value)}
-          placeholder='Your email address'
+          placeholder='Your e-mail address'
           type='email'
           className='w-full h-[54px] border border-gray-300 px-4 rounded-xl'
         />
+
         <input
           onChange={(e) => setPassword1(e.target.value)}
           placeholder='Your password'
           type='password'
           className='w-full h-[54px] border border-gray-300 px-4 rounded-xl'
         />
+
         <input
           onChange={(e) => setPassword2(e.target.value)}
           placeholder='Repeat password'
@@ -70,7 +72,7 @@ const SignupModal = () => {
           return (
             <div
               key={`error_${index}`}
-              className='p-5 bg-airbnb text-gray-800 rounded-xl opacity-80'
+              className='p-5 text-gray-800 rounded-xl opacity-80'
             >
               {error}
             </div>
@@ -85,6 +87,7 @@ const SignupModal = () => {
       </form>
     </>
   );
+
   return (
     <Modal
       isOpen={signupModal.isOpen}
