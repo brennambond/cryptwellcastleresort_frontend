@@ -11,7 +11,7 @@ import { fadeIn } from "@/utils/motion";
 
 const ChamberDetailPage = async ({ params }: { params: { id: string } }) => {
   const chamber = await apiService.get(`/api/rooms/${params.id}`);
-  const userId = await getUserId();
+  var userId = await getUserId();
 
   var chamberWing = chamber.title.split(" ")[0].toString();
   const backgroundStyle = [
@@ -26,7 +26,11 @@ const ChamberDetailPage = async ({ params }: { params: { id: string } }) => {
   const chamber_imageurl =
     "https://hauntedhotel-backend-bucket" + chamber.image_url.slice(17);
 
-  console.log(userId);
+  {
+    !userId
+      ? (userId = "913202af-3711-4f93-9cd1-d8b9c78859d0")
+      : (userId = userId);
+  }
 
   return (
     <main
