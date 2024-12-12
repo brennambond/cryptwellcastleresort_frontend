@@ -26,12 +26,6 @@ const ChamberDetailPage = async ({ params }: { params: { id: string } }) => {
   const chamber_imageurl =
     "https://hauntedhotel-backend-bucket" + chamber.image_url.slice(17);
 
-  {
-    !userId
-      ? (userId = "913202af-3711-4f93-9cd1-d8b9c78859d0")
-      : (userId = userId);
-  }
-
   return (
     <main
       className={`${backgroundStyle} font-cormorant text-white bg-cover bg-center`}
@@ -68,7 +62,14 @@ const ChamberDetailPage = async ({ params }: { params: { id: string } }) => {
             {chamber.description}
           </p>
         </div>
-        <ReservationSidebar chamber={chamber} userId={userId} />
+        {!userId ? (
+          <div className='capitalize border-b-2 border-main-white p-bold-20 tracking-wide'>
+            You must be logged in to book with use
+          </div>
+        ) : (
+          <ReservationSidebar chamber={chamber} userId={userId} />
+        )}
+
         <ChamberServices />
       </div>
     </main>
