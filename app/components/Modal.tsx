@@ -7,11 +7,18 @@ interface ModalProps {
   close: () => void;
   content: React.ReactElement;
   isOpen: boolean;
+  onClick?: () => void;
 }
 
 import { HiOutlineX } from "react-icons/hi";
 
-const Modal: React.FC<ModalProps> = ({ label, content, isOpen, close }) => {
+const Modal: React.FC<ModalProps> = ({
+  label,
+  content,
+  isOpen,
+  close,
+  onClick,
+}) => {
   const [showModal, setShowModal] = useState(isOpen);
 
   useEffect(() => {
@@ -57,7 +64,9 @@ const Modal: React.FC<ModalProps> = ({ label, content, isOpen, close }) => {
               </h2>
             </header>
 
-            <section className='p-6 text-gray-800'>{content}</section>
+            <section onClick={onClick} className='p-6 text-gray-800'>
+              {content}
+            </section>
           </div>
         </div>
       </div>
