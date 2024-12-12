@@ -83,6 +83,7 @@ const SignupModal = () => {
           className='button-main'
           label='Submit'
           onClick={submitSignup}
+          onSubmit={() => router.refresh()}
         />
       </form>
     </>
@@ -94,7 +95,6 @@ const SignupModal = () => {
       close={signupModal.close}
       label='Sign up'
       content={content}
-      onClick={() => router.refresh()}
     />
   );
 };
