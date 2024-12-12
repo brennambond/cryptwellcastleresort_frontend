@@ -23,11 +23,9 @@ const CheckoutModal: React.FC<CheckoutProps> = ({ className, onClick }) => {
         Book
       </DialogTrigger>
       <DialogContent className='flex items-start justify-start flex-col lg:h-[50vh] font-cormorant bg-white-main p-0 w-[80%] rounded-xl'>
-        <DialogHeader className='h-[100px] flex-center rounded-t-xl sm:rounded-t-lg w-full bg-gray-800'>
-          <DialogTitle className='text-white-main h3-medium capitalize tracking-wider font-germania'>
-            Thanks for booking!
-          </DialogTitle>
-        </DialogHeader>
+        <DialogTitle className='h-[100px] flex-center rounded-t-xl sm:rounded-t-lg w-full bg-gray-800 text-white-main h3-medium capitalize tracking-wider font-germania'>
+          Thanks for booking!
+        </DialogTitle>
         <DialogDescription className='px-10 p-semibold-18 py-4 text-gray-900'>
           Our Haunted Hosts appreciate your choice to spend what little mortal
           life you have left with us. Should you wish to see the details of your
