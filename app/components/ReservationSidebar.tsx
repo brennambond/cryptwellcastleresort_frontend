@@ -24,7 +24,7 @@ export type Chamber = {
 };
 
 interface ReservationSidebarProps {
-  userId: string | null;
+  userId: string | null | undefined;
   chamber: Chamber;
 }
 
