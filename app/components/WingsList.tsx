@@ -4,17 +4,13 @@ import apiService from "../services/apiService";
 import { useEffect, useState } from "react";
 import WingListItem from "./WingsListItem";
 
-interface UserProps {
-  userId: string | null;
-}
-
 export type WingType = {
   id: string;
   name: string;
   image_url: string;
 };
 
-const WingsList: React.FC<UserProps> = ({ userId }) => {
+const WingsList = () => {
   const [wings, setWings] = useState<WingType[]>([]);
   const getWings = async () => {
     const tmpWings = await apiService.get("/api/rooms/wings/");

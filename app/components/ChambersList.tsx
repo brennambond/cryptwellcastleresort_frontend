@@ -11,10 +11,6 @@ import apiService from "../services/apiService";
 
 import ChambersListItem from "./ChambersListItem";
 
-interface UserProps {
-  userId: string | null;
-}
-
 export type ChamberType = {
   id: string;
   title: string;
@@ -28,7 +24,7 @@ export type ChamberType = {
   category: string;
 };
 
-const ChambersList: React.FC<UserProps> = ({ userId }) => {
+const ChambersList = () => {
   const params = useSearchParams();
   const searchModal = useSearchModal();
   const wing = searchModal.query.wing;
@@ -101,12 +97,7 @@ const ChambersList: React.FC<UserProps> = ({ userId }) => {
       {chambers.map((chamber) => {
         const index = chambers.indexOf(chamber);
         return (
-          <ChambersListItem
-            key={chamber.id}
-            chamber={chamber}
-            index={index}
-            userId={userId}
-          />
+          <ChambersListItem key={chamber.id} chamber={chamber} index={index} />
         );
       })}
     </MotionDiv>

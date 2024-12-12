@@ -10,7 +10,6 @@ import { staggerContainer } from "@/utils/motion";
 
 interface ChambersProps {
   chambersWing?: string;
-  userId: string | null;
 }
 
 export type ChamberType = {
@@ -26,10 +25,7 @@ export type ChamberType = {
   category: string;
 };
 
-const WingChambersList: React.FC<ChambersProps> = ({
-  chambersWing,
-  userId,
-}) => {
+const WingChambersList: React.FC<ChambersProps> = ({ chambersWing }) => {
   const searchModal = useSearchModal();
   const wing = chambersWing;
   const numGuests = searchModal.query.guests;
@@ -100,12 +96,7 @@ const WingChambersList: React.FC<ChambersProps> = ({
       {chambers.map((chamber) => {
         const index = chambers.indexOf(chamber);
         return (
-          <ChambersListItem
-            userId={userId}
-            key={chamber.id}
-            chamber={chamber}
-            index={index}
-          />
+          <ChambersListItem key={chamber.id} chamber={chamber} index={index} />
         );
       })}
     </MotionDiv>

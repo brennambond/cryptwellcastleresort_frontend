@@ -4,11 +4,8 @@ import { fadeIn } from "@/utils/motion";
 import ChambersList from "../components/ChambersList";
 import SearchFilters from "../components/header/SearchFilters";
 import ChamberServices from "../components/services/ChamberServices";
-import { getUserId } from "../lib/actions";
 
 export default async function ChambersHomePage() {
-  const userId = await getUserId();
-
   return (
     <main className="wrapper-main bg-[url('../public/background-blue.png')] gap-20">
       <MotionDiv
@@ -37,7 +34,7 @@ export default async function ChambersHomePage() {
         </p>
       </MotionDiv>
 
-      <ChambersList userId={userId} />
+      <ChambersList />
 
       <ChamberServices />
     </main>
