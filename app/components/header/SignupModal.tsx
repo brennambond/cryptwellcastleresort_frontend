@@ -37,6 +37,7 @@ const SignupModal = () => {
       router.push("/");
     } else {
       const tmpErrors: string[] = Object.values(response).map((error: any) => {
+        router.push("/");
         return error;
       });
 
