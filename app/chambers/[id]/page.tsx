@@ -26,6 +26,8 @@ const ChamberDetailPage = async ({ params }: { params: { id: string } }) => {
   const chamber_imageurl =
     "https://hauntedhotel-backend-bucket" + chamber.image_url.slice(17);
 
+  console.log(userId);
+
   return (
     <main
       className={`${backgroundStyle} font-cormorant text-white bg-cover bg-center`}
