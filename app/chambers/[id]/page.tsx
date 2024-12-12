@@ -11,7 +11,7 @@ import { fadeIn } from "@/utils/motion";
 
 const ChamberDetailPage = async ({ params }: { params: { id: string } }) => {
   const chamber = await apiService.get(`/api/rooms/${params.id}`);
-  var userId = await getUserId();
+  const userId = await getUserId();
 
   var chamberWing = chamber.title.split(" ")[0].toString();
   const backgroundStyle = [
@@ -62,13 +62,8 @@ const ChamberDetailPage = async ({ params }: { params: { id: string } }) => {
             {chamber.description}
           </p>
         </div>
-        {!userId ? (
-          <div className='capitalize border-b-2 border-main-white p-bold-20 tracking-wide'>
-            You must be logged in to book with use
-          </div>
-        ) : (
-          <ReservationSidebar chamber={chamber} userId={userId} />
-        )}
+
+        <ReservationSidebar chamber={chamber} userId={userId} />
 
         <ChamberServices />
       </div>

@@ -3,6 +3,7 @@ import BloodbornServices from "@/app/components/services/BloodbornServices";
 import HauntedServices from "@/app/components/services/HauntedServices";
 import RebornServices from "@/app/components/services/RebornServices";
 import WingChambersList from "@/app/components/WingChambersList";
+import { getUserId } from "@/app/lib/actions";
 import apiService from "@/app/services/apiService";
 import MotionDiv from "@/components/motion/MotionDiv";
 import { fadeIn } from "@/utils/motion";
@@ -11,7 +12,7 @@ import React from "react";
 
 const WingDetailPage = async ({ params }: { params: { id: string } }) => {
   const wing = await apiService.get(`/api/rooms/wings/${params.id}`);
-
+  const userId = await getUserId();
   const backgroundStyle = [
     wing.name === "Bloodborn"
       ? "bg-[url('../public/background-red.png')]"
@@ -24,6 +25,8 @@ const WingDetailPage = async ({ params }: { params: { id: string } }) => {
 
   const wing_imageurl =
     "https://hauntedhotel-backend-bucket" + wing.image_url.slice(17);
+
+  console.log(userId);
   return (
     <main className={`wrapper-main ${backgroundStyle} gap-20`}>
       <MotionDiv
@@ -55,7 +58,7 @@ const WingDetailPage = async ({ params }: { params: { id: string } }) => {
         <div className='p-regular-18 2xl:p-regular-20'>{wing.description}</div>
       </MotionDiv>
 
-      <WingChambersList chambersWing={wing.id} />
+      <WingChambersList userId={userId} chambersWing={wing.id} />
 
       {wing.name === "Bloodborn" ? (
         <BloodbornServices />

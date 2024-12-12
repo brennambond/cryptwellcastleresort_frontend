@@ -4,14 +4,28 @@ import { fadeIn } from "@/utils/motion";
 import Image from "next/image";
 import Link from "next/link";
 import { HiMiniArrowRightCircle } from "react-icons/hi2";
+import LoginModal from "./header/LoginModal";
+import MenuLink from "./header/MenuLink";
+import { useRouter } from "next/navigation";
+import useLoginModal from "../hooks/useLoginModal";
+import { useState } from "react";
 
 interface ChamberProps {
   chamber: ChamberType;
   index: number;
+  userId: string | null;
 }
 
-const ChambersListItem: React.FC<ChamberProps> = ({ chamber, index }) => {
+const ChambersListItem: React.FC<ChamberProps> = ({
+  chamber,
+  index,
+  userId,
+}) => {
   var chamberTitle = chamber.title.split(" ")[0].toString();
+  const router = useRouter();
+  const loginModal = useLoginModal();
+  const [isOpen, setIsOpen] = useState(false);
+
   const colorStyle = [
     chamberTitle === "Bloodborn"
       ? "text-red-700 hover:text-red-900"
@@ -41,13 +55,31 @@ const ChambersListItem: React.FC<ChamberProps> = ({ chamber, index }) => {
       />
 
       <div className='flex flex-col items-start justify-center px-6 py-4 gap-2 p-regular-18'>
-        <Link
-          href={`/chambers/${chamber.id}`}
-          className={`cursor-pointer text-lg flex-center gap-1 ${colorStyle}`}
-        >
-          <HiMiniArrowRightCircle className='w-6 h-6' />
-          <h3 className=' font-germania'>{chamber.title}</h3>
-        </Link>
+        {userId === null ? (
+          <>
+            <MenuLink
+              label={"You Must Log in To Visit This Chamber"}
+              className='font-germania cursor-pointer self-center text-red-900 p-regular-20 underline hover:text-red-800 text-center'
+              onClick={() => {
+                setIsOpen(false);
+                loginModal.open();
+                router.refresh();
+              }}
+            />
+            <div className={`flex-center  gap-1 ${colorStyle}`}>
+              <HiMiniArrowRightCircle className='w-6 h-6' />
+              <h3 className=' font-germania'>{chamber.title}</h3>
+            </div>
+          </>
+        ) : (
+          <Link
+            href={`/chambers/${chamber.id}`}
+            className={`cursor-pointer text-lg flex-center gap-1 ${colorStyle}`}
+          >
+            <HiMiniArrowRightCircle className='w-6 h-6' />
+            <h3 className=' font-germania'>{chamber.title}</h3>
+          </Link>
+        )}
 
         <div className='flex justify-between items-center  w-full text-gray-500'>
           <p>

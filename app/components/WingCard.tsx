@@ -1,5 +1,3 @@
-"use client";
-
 import { WingSectionType } from "./WingsSection";
 
 import { motion } from "framer-motion";

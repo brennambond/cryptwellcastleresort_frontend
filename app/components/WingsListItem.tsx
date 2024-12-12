@@ -10,6 +10,7 @@ const WingListItem: React.FC<WingProps> = ({ wing }) => {
   const router = useRouter();
   const wing_imageurl =
     "https://hauntedhotel-backend-bucket" + wing.image_url.slice(17);
+  // console.log(userId);
 
   return (
     <div

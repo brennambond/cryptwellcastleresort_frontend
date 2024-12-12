@@ -3,14 +3,12 @@
 interface MenuLinkProps {
   label: string;
   onClick: () => void;
+  className?: string;
 }
 
-const MenuLink: React.FC<MenuLinkProps> = ({ label, onClick }) => {
+const MenuLink: React.FC<MenuLinkProps> = ({ label, onClick, className }) => {
   return (
-    <div
-      onClick={onClick}
-      className='px-5 py-4 cursor-pointer hover:bg-gray-100 transition rounded-xl text-purple-main'
-    >
+    <div onClick={onClick} className={`${className}`}>
       {label}
     </div>
   );

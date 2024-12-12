@@ -36,6 +36,7 @@ const UserNav: React.FC<UserNavProps> = ({ userId }) => {
           {userId ? (
             <>
               <MenuLink
+                className='px-5 py-4 cursor-pointer hover:bg-gray-100 transition rounded-xl text-purple-main '
                 label='My Reservations'
                 onClick={() => {
                   setIsOpen(false);
@@ -47,6 +48,7 @@ const UserNav: React.FC<UserNavProps> = ({ userId }) => {
           ) : (
             <>
               <MenuLink
+                className='px-5 py-4 cursor-pointer hover:bg-gray-100 transition rounded-xl text-purple-main '
                 label='Log in'
                 onClick={() => {
                   setIsOpen(false);
@@ -55,6 +57,7 @@ const UserNav: React.FC<UserNavProps> = ({ userId }) => {
                 }}
               />
               <MenuLink
+                className='px-5 py-4 cursor-pointer hover:bg-gray-100 transition rounded-xl text-purple-main '
                 label='Sign up'
                 onClick={() => {
                   setIsOpen(false);
