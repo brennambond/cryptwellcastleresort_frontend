@@ -3,11 +3,14 @@ import { getAccessToken } from "../lib/actions";
 const apiService = {
   get: async function (url: string): Promise<any> {
     let token: string | undefined = "";
-    const myToken = await getAccessToken();
 
     {
-      url === "/api/auth/myreservations/" ? (token = myToken) : (token = "123");
+      url === "/api/auth/myreservations/"
+        ? (token = await getAccessToken())
+        : (token = "123");
     }
+
+    console.log(token);
 
     return new Promise((resolve, reject) => {
       fetch(`https://hauntedhotel-backend-api.com${url}`, {
