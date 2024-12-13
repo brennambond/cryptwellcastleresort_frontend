@@ -2,7 +2,7 @@
 # The Cryptwell Castle Resort: Frontend
 
 ## Project Overview
-This Cryptwell Castle Resort hotel-booking application offers an immersive experience where users can book themed hotel rooms (called chambers) in a Gothic-inspired hotel. With four distinct wings—Bloodborn (Vampires), Haunted (Ghosts), Arcane (Witches), and Reborn (Frankenstein)—each featuring uniquely styled chambers, users can indulge in a one-of-a-kind escape into Gothic lore. The application also provides seamless chamber booking and reservation tracking, requiring users to create an account for full access.
+This Cryptwell Castle Resort hotel-booking application offers an immersive experience where users can book themed hotel rooms (called chambers) in a Gothic-inspired hotel. With four distinct wings—Bloodborn (Vampires), Haunted (Ghosts), Arcane (Witches), and Reborn (Frankenstein)—each featuring uniquely styled chambers, users can indulge in a one-of-a-kind escape into Gothic lore. The application also provides seamless chamber booking and reservation tracking, requiring users to create an account for full access. The link to the backend of the application can be found here: https://github.com/brennambond/cryptwellcastleresort_backend. 
 
 ### Key Features
 - **Uniquely Themed Wings:** Explore the Bloodborn, Haunted, Arcane, and Reborn wings, each inspired by Gothic legends.
