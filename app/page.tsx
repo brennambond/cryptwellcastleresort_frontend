@@ -1,11 +1,14 @@
-import Hero from "./components/HeroSection";
-
 import WingsSection from "./components/WingsSection";
 
 import HotelIntro from "./components/HotelIntro";
 import DiningSection from "./components/DiningSection";
 import HeroSection from "./components/HeroSection";
 import ContactSection from "./components/ContactSection";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Home | Cryptwell Castle Resort",
+};
 
 export default function Home() {
   return (

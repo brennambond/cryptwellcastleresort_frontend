@@ -3,6 +3,11 @@ import apiService from "../services/apiService";
 import ReservationCard from "../components/ReservationCard";
 import MotionDiv from "@/components/motion/MotionDiv";
 import { fadeIn } from "@/utils/motion";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "My Reservations | Cryptwell Castle Resort",
+};
 
 const MyReservationsPage = async () => {
   const reservations = await apiService.get("/api/auth/myreservations/");

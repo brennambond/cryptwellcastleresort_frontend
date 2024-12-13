@@ -5,6 +5,11 @@ import ChambersList from "../components/ChambersList";
 import SearchFilters from "../components/header/SearchFilters";
 import ChamberServices from "../components/services/ChamberServices";
 import { getUserId } from "../lib/actions";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Chambers | Cryptwell Castle Resort",
+};
 
 export default async function ChambersHomePage() {
   const userId = await getUserId();

@@ -10,6 +10,12 @@ import { getUserId } from "@/app/lib/actions";
 
 import MotionDiv from "@/components/motion/MotionDiv";
 import { fadeIn } from "@/utils/motion";
+import { Metadata } from "next";
+
+export type SearchParamProps = {
+  params: { id: string };
+  searchParams?: { [key: string]: string | string[] | undefined };
+};
 
 const ChamberDetailPage = async ({ params }: { params: { id: string } }) => {
   const chamber = await apiService.get(`/api/rooms/${params.id}`);
@@ -72,5 +78,15 @@ const ChamberDetailPage = async ({ params }: { params: { id: string } }) => {
     </main>
   );
 };
+
+export async function generateMetadata({
+  params: { id },
+}: SearchParamProps): Promise<Metadata> {
+  const chamber = await apiService.get(`/api/rooms/${id}`);
+
+  return {
+    title: `${chamber.title} | Cryptwell Castle Resort`,
+  };
+}
 
 export default ChamberDetailPage;

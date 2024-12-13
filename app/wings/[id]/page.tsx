@@ -7,8 +7,14 @@ import { getUserId } from "@/app/lib/actions";
 import apiService from "@/app/services/apiService";
 import MotionDiv from "@/components/motion/MotionDiv";
 import { fadeIn } from "@/utils/motion";
+import { Metadata } from "next";
 import Image from "next/image";
 import React from "react";
+
+export type SearchParamProps = {
+  params: { id: string };
+  searchParams?: { [key: string]: string | string[] | undefined };
+};
 
 const WingDetailPage = async ({ params }: { params: { id: string } }) => {
   const wing = await apiService.get(`/api/rooms/wings/${params.id}`);
@@ -70,5 +76,15 @@ const WingDetailPage = async ({ params }: { params: { id: string } }) => {
     </main>
   );
 };
+
+export async function generateMetadata({
+  params: { id },
+}: SearchParamProps): Promise<Metadata> {
+  const wing = await apiService.get(`/api/rooms/wings/${id}`);
+
+  return {
+    title: `Wing of the ${wing.name} | Cryptwell Castle Resort`,
+  };
+}
 
 export default WingDetailPage;

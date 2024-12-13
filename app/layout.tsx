@@ -21,8 +21,8 @@ const germania = Germania_One({
 });
 
 export const metadata: Metadata = {
-  title: "Haunted Hotel",
-  description: "Haunted Hotel Project",
+  title: "Cryptwell Castle Resort",
+  description: "The Cryptwell Castle Resort",
 };
 
 export default function RootLayout({

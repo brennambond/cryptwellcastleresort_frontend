@@ -2,6 +2,11 @@ import MotionDiv from "@/components/motion/MotionDiv";
 import { fadeIn } from "@/utils/motion";
 import Image from "next/image";
 import DiningServices from "../components/services/DiningServices";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Dining | Cryptwell Castle Resort",
+};
 
 export default function DiningHomePage() {
   return (
