@@ -2,7 +2,7 @@ import { getAccessToken } from "../lib/actions";
 
 const apiService = {
   get: async function (url: string): Promise<any> {
-    const token = await getAccessToken();
+    // const token = await getAccessToken();
 
     return new Promise((resolve, reject) => {
       fetch(`https://hauntedhotel-backend-api.com${url}`, {
@@ -10,7 +10,8 @@ const apiService = {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+
+          Authorization: `Bearer 123`,
         },
       })
         .then((response) => response.json())

@@ -1,3 +1,5 @@
+"use server";
+
 import Image from "next/image";
 
 import ReservationSidebar from "@/app/components/ReservationSidebar";
@@ -13,7 +15,7 @@ const ChamberDetailPage = async ({ params }: { params: { id: string } }) => {
   const chamber = await apiService.get(`/api/rooms/${params.id}`);
   const userId = await getUserId();
 
-  var chamberWing = chamber.title.split(" ")[0].toString();
+  const chamberWing = chamber.title.split(" ")[0].toString();
   const backgroundStyle = [
     chamberWing === "Bloodborn"
       ? "bg-[url('../public/background-red.png')]"
