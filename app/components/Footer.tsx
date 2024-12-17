@@ -19,7 +19,7 @@ const Footer = () => {
           />
         </Link>
         <p className='text-white-main p-bold-16 pb-4 md:pb-0'>
-          2024 The Cyptwell Castle Resort. All Rights Reserved
+          2024 The Cryptwell Castle Resort. All Rights Reserved
         </p>
       </div>
     </footer>

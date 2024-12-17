@@ -2,18 +2,12 @@
 
 import MotionDiv from "@/components/motion/MotionDiv";
 import { staggerContainer } from "@/utils/motion";
-
 import { useSearchParams } from "next/navigation";
 import useSearchModal from "../hooks/useSearchModal";
 import { useEffect, useState } from "react";
 import { format } from "date-fns";
 import apiService from "../services/apiService";
-
 import ChambersListItem from "./ChambersListItem";
-
-interface ChamberProps {
-  userId: string | null;
-}
 
 export type ChamberType = {
   id: string;
@@ -28,69 +22,45 @@ export type ChamberType = {
   category: string;
 };
 
-const ChambersList: React.FC<ChamberProps> = ({ userId }) => {
+const ChambersList: React.FC = () => {
   const params = useSearchParams();
   const searchModal = useSearchModal();
-  const wing = searchModal.query.wing;
-  const numGuests = searchModal.query.guests;
-  const numBeds = searchModal.query.beds;
-  const numBedrooms = searchModal.query.bedrooms;
-  const numBathrooms = searchModal.query.bathrooms;
-  const checkinDate = searchModal.query.checkIn;
-  const checkoutDate = searchModal.query.checkOut;
-  const category = searchModal.query.category;
-
   const [chambers, setChambers] = useState<ChamberType[]>([]);
 
-  const getChambers = async () => {
-    let url = "/api/rooms/";
+  const fetchChambers = async () => {
+    try {
+      const queryParams = new URLSearchParams();
+      const {
+        wing,
+        guests,
+        beds,
+        bedrooms,
+        bathrooms,
+        checkIn,
+        checkOut,
+        category,
+      } = searchModal.query;
 
-    let urlQuery = "";
+      if (wing) queryParams.append("wing", wing);
+      if (guests) queryParams.append("numGuests", guests.toString());
+      if (beds) queryParams.append("numBeds", beds.toString());
+      if (bedrooms) queryParams.append("numBedrooms", bedrooms.toString());
+      if (bathrooms) queryParams.append("numBathrooms", bathrooms.toString());
+      if (checkIn) queryParams.append("checkin", format(checkIn, "yyyy-MM-dd"));
+      if (checkOut)
+        queryParams.append("checkout", format(checkOut, "yyyy-MM-dd"));
+      if (category) queryParams.append("category", category);
 
-    if (wing) {
-      urlQuery += "&wing=" + wing;
+      const chambersData = await apiService.getChambers(`?${queryParams}`);
+      setChambers(chambersData);
+    } catch (error) {
+      console.error("Failed to fetch chambers:", error);
     }
-    if (numGuests) {
-      urlQuery += "&numGuests=" + numGuests;
-    }
-    if (numBeds) {
-      urlQuery += "&numBeds=" + numBeds;
-    }
-    if (numBedrooms) {
-      urlQuery += "&numBedrooms=" + numBedrooms;
-    }
-    if (numBathrooms) {
-      urlQuery += "&numBathrooms=" + numBathrooms;
-    }
-    if (checkinDate) {
-      urlQuery += "&checkin=" + format(checkinDate, "yyyy-MM-dd");
-    }
-    if (checkoutDate) {
-      urlQuery += "&checkout=" + format(checkoutDate, "yyyy-MM-dd");
-    }
-    if (category) {
-      urlQuery += "&category=" + category;
-    }
-    if (urlQuery.length) {
-      urlQuery = "?" + urlQuery.substring(1);
-
-      url += urlQuery;
-    }
-
-    const tmpChambers = await apiService.get(url);
-
-    setChambers(
-      tmpChambers.data.map((chamber: ChamberType) => {
-        return chamber;
-      })
-    );
   };
 
   useEffect(() => {
-    getChambers();
-  }, [wing, searchModal.query, params]);
-
-  console.log(userId);
+    fetchChambers();
+  }, [searchModal.query, params]);
 
   return (
     <MotionDiv
@@ -100,12 +70,9 @@ const ChambersList: React.FC<ChamberProps> = ({ userId }) => {
       viewport={{ once: true }}
       className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 rounded-xl gap-8 lg:gap-10 xl:gap-12 sm:w-[90%] max-w-[90%]'
     >
-      {chambers.map((chamber) => {
-        const index = chambers.indexOf(chamber);
-        return (
-          <ChambersListItem key={chamber.id} chamber={chamber} index={index} />
-        );
-      })}
+      {chambers.map((chamber, index) => (
+        <ChambersListItem key={chamber.id} chamber={chamber} index={index} />
+      ))}
     </MotionDiv>
   );
 };

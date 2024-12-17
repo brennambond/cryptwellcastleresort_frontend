@@ -10,20 +10,21 @@ interface ChamberProps {
   index: number;
 }
 
-const ChambersListItem: React.FC<ChamberProps> = ({ chamber, index }) => {
-  var chamberTitle = chamber.title.split(" ")[0].toString();
+const getChamberColor = (title: string): string => {
+  if (title.startsWith("Bloodborn")) return "text-red-700 hover:text-red-900";
+  if (title.startsWith("Haunted")) return "text-cyan-700 hover:text-cyan-900";
+  if (title.startsWith("Reborn"))
+    return "text-emerald-700 hover:text-emerald-900";
+  return "text-purple-700 hover:text-purple-900";
+};
 
-  const colorStyle = [
-    chamberTitle === "Bloodborn"
-      ? "text-red-700 hover:text-red-900"
-      : chamberTitle === "Haunted"
-      ? "text-cyan-700 hover:text-cyan-900"
-      : chamberTitle === "Reborn"
-      ? "text-emerald-700 hover:text-emerald-900"
-      : "text-purple-700 hover:text-purple-900",
-  ];
-  const chamber_imageurl =
-    "https://hauntedhotel-backend-bucket" + chamber.image_url.slice(17);
+const buildImageUrl = (image_url: string) => {
+  return `https://hauntedhotel-backend-bucket${image_url.slice(17)}`;
+};
+
+const ChambersListItem: React.FC<ChamberProps> = ({ chamber, index }) => {
+  const colorStyle = getChamberColor(chamber.title);
+  const chamberImageUrl = buildImageUrl(chamber.image_url);
 
   return (
     <MotionDiv
@@ -34,9 +35,9 @@ const ChambersListItem: React.FC<ChamberProps> = ({ chamber, index }) => {
       className='bg-white-main rounded-xl flex flex-col gap-2'
     >
       <Image
-        src={chamber_imageurl}
+        src={chamberImageUrl}
         className='object-cover object-center overflow-hidden aspect-square rounded-t-xl max-h-[250px]'
-        alt='Hotel Picture'
+        alt={chamber.title}
         height={1000}
         width={1000}
       />
@@ -47,10 +48,10 @@ const ChambersListItem: React.FC<ChamberProps> = ({ chamber, index }) => {
           className={`cursor-pointer text-lg flex-center gap-1 ${colorStyle}`}
         >
           <HiMiniArrowRightCircle className='w-6 h-6' />
-          <h3 className=' font-germania'>{chamber.title}</h3>
+          <h3 className='font-germania'>{chamber.title}</h3>
         </Link>
 
-        <div className='flex justify-between items-center  w-full text-gray-500'>
+        <div className='flex justify-between items-center w-full text-gray-500'>
           <p>
             <strong>${chamber.price_per_night}</strong> per night
           </p>

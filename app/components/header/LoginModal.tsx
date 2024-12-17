@@ -1,13 +1,11 @@
 "use client";
 
 import Modal from "../Modal";
-
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import useLoginModal from "../../hooks/useLoginModal";
 import CustomButton from "../CustomButton";
-import { handleLogin } from "../../lib/actions";
-import apiService from "../../services/apiService";
+import { login } from "@/app/lib/actions";
 
 const LoginModal = () => {
   const router = useRouter();
@@ -15,70 +13,73 @@ const LoginModal = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState<string[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
 
-  const submitLogin = async () => {
-    const formData = {
-      email: email,
-      password: password,
-    };
+  const submitLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setErrors([]);
 
-    const response = await apiService.postWithoutToken(
-      "/api/auth/login/",
-      JSON.stringify(formData)
-    );
+    try {
+      const response = await login(email, password);
 
-    if (response.access) {
-      handleLogin(response.user.pk, response.access, response.refresh);
+      if (response.user_id) {
+        localStorage.setItem("user_id", response.user_id);
+        if (response.access)
+          localStorage.setItem("accessToken", response.access);
+        if (response.refresh)
+          localStorage.setItem("refreshToken", response.refresh);
 
-      loginModal.close();
-
-      router.refresh();
-    } else {
-      setErrors(response.non_field_errors);
+        loginModal.close();
+        router.refresh();
+      } else {
+        setErrors(["Invalid email or password. Please try again."]);
+      }
+    } catch (error: any) {
+      console.error("Login failed:", error);
+      setErrors([error.message || "An unexpected error occurred."]);
+    } finally {
+      setLoading(false);
     }
   };
 
-  const content = (
-    <>
-      <form action={submitLogin} className='space-y-4 font-cormorant'>
-        <input
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder='Your email address'
-          type='email'
-          className='w-full h-[54px] border border-gray-300 px-4 rounded-xl'
-        />
-        <input
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder='Your password'
-          type='password'
-          className='w-full h-[54px] border border-gray-300 px-4 rounded-xl'
-        />
-
-        {errors.map((error, index) => {
-          return (
-            <div
-              key={`error_${index}`}
-              className='p-5 bg-airbnb text-white rounded-xl opacity-80'
-            >
-              {error}
-            </div>
-          );
-        })}
-
-        <CustomButton
-          className='button-main'
-          label='Submit'
-          onClick={submitLogin}
-        />
-      </form>
-    </>
-  );
   return (
     <Modal
       isOpen={loginModal.isOpen}
       close={loginModal.close}
       label='Log in'
-      content={content}
+      content={
+        <form onSubmit={submitLogin} className='space-y-4 font-cormorant'>
+          <input
+            onChange={(e) => setEmail(e.target.value)}
+            value={email}
+            placeholder='Your email address'
+            type='email'
+            className='w-full h-[54px] border border-gray-300 px-4 rounded-xl'
+            required
+          />
+          <input
+            onChange={(e) => setPassword(e.target.value)}
+            value={password}
+            placeholder='Your password'
+            type='password'
+            className='w-full h-[54px] border border-gray-300 px-4 rounded-xl'
+            required
+          />
+          {errors.length > 0 && (
+            <div className='p-4 bg-red-500 text-white rounded-xl'>
+              {errors.map((error, index) => (
+                <div key={`error_${index}`}>{error}</div>
+              ))}
+            </div>
+          )}
+          <CustomButton
+            label={loading ? "Logging in..." : "Submit"}
+            disabled={loading}
+            onClick={submitLogin}
+          />
+        </form>
+      }
     />
   );
 };

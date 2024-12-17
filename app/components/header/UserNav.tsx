@@ -20,10 +20,13 @@ const UserNav: React.FC<UserNavProps> = ({ userId }) => {
   const signupModal = useSignupModal();
   const [isOpen, setIsOpen] = useState(false);
 
+  const toggleMenu = () => setIsOpen((prev) => !prev);
+  const closeMenu = () => setIsOpen(false);
+
   return (
     <div className='h-8 relative flex items-center justify-center rounded-full shadow-2xl'>
       <button
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={toggleMenu}
         className='flex items-center justify-between gap-2 text-purple-950'
       >
         <span className='rounded-full bg-white-main h-10 w-10 md:h-11 md:w-11 xl:h-12 xl:w-12 flex-center'>
@@ -39,11 +42,11 @@ const UserNav: React.FC<UserNavProps> = ({ userId }) => {
                 className='px-5 py-4 cursor-pointer hover:bg-gray-100 transition rounded-xl text-purple-main '
                 label='My Reservations'
                 onClick={() => {
-                  setIsOpen(false);
+                  closeMenu();
                   router.push("/myreservations");
                 }}
               />
-              <LogoutButton />
+              <LogoutButton closeMenu={closeMenu} />
             </>
           ) : (
             <>
@@ -51,16 +54,15 @@ const UserNav: React.FC<UserNavProps> = ({ userId }) => {
                 className='px-5 py-4 cursor-pointer hover:bg-gray-100 transition rounded-xl text-purple-main '
                 label='Log in'
                 onClick={() => {
-                  setIsOpen(false);
+                  closeMenu();
                   loginModal.open();
-                  router.refresh();
                 }}
               />
               <MenuLink
                 className='px-5 py-4 cursor-pointer hover:bg-gray-100 transition rounded-xl text-purple-main '
                 label='Sign up'
                 onClick={() => {
-                  setIsOpen(false);
+                  closeMenu();
                   signupModal.open();
                 }}
               />

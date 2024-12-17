@@ -1,8 +1,9 @@
 interface CustomButtonProps {
   label: string;
-  onClick: () => void;
+  onClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
   className?: string;
   onSubmit?: () => void;
+  disabled?: boolean;
 }
 
 const CustomButton: React.FC<CustomButtonProps> = ({
@@ -10,6 +11,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({
   onClick,
   className,
   onSubmit,
+  disabled,
 }) => {
   return (
     <div

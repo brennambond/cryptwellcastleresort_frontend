@@ -2,23 +2,30 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { fadeIn } from "@/utils/motion";
-
 import UserNav from "./UserNav";
-
 import { getUserId } from "../../lib/actions";
 import NavLinks from "./NavLinks";
 import MobileNav from "./MobileNav";
 import MotionNav from "@/components/motion/MotionNav";
 
 const Header = async () => {
-  const userId = await getUserId();
+  let userId = null;
+
+  if (typeof window !== "undefined") {
+    try {
+      userId = await getUserId();
+    } catch (error) {
+      console.error("Error fetching userId:", error);
+    }
+  }
+
   return (
     <MotionNav
       variants={fadeIn("down", "tween", 0.3, 0.7)}
       initial='hidden'
       whileInView='show'
       viewport={{ once: true }}
-      className=' bg-gray-800 font-cormorant w-full relative z-[99]'
+      className='bg-gray-800 font-cormorant w-full relative z-[99]'
     >
       <div className='mini-wrapper flex-between h-full'>
         <div id='header-right' className='flex-between h-full xl:px-8 xl:py-2'>
@@ -47,7 +54,7 @@ const Header = async () => {
           id='header-left'
           className='flex px-8 py-2 justify-end link-hover h-full'
         >
-          <div className='flex items-center justify-center text-white-main '>
+          <div className='flex items-center justify-center text-white-main'>
             <UserNav userId={userId} />
           </div>
         </div>

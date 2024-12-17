@@ -1,17 +1,25 @@
 "use client";
 
-import useSearchModal from "../../hooks/useSearchModal";
-import { PiMagnifyingGlassDuotone } from "react-icons/pi";
+import { motion } from "framer-motion";
+import useSearchModal, { SearchQuery } from "../../hooks/useSearchModal";
 
-const SearchFilters = () => {
+interface SearchFiltersProps {
+  defaultField?: keyof SearchQuery; // Update the type to match keyof SearchQuery
+}
+
+const SearchFilters: React.FC<SearchFiltersProps> = ({
+  defaultField = "checkIn",
+}) => {
   const searchModal = useSearchModal();
+
   return (
-    <span
-      onClick={() => searchModal.open("checkin")}
-      className='p-bold-18 md:p-bold-20 xl:max-w-[90%] cursor-pointer underline transition-colors hover:text-purple-500 '
+    <motion.span
+      whileHover={{ scale: 1.1 }}
+      onClick={() => searchModal.open(defaultField)}
+      className='p-bold-18 md:p-bold-20 xl:max-w-[90%] cursor-pointer underline transition-colors hover:text-purple-500'
     >
       Search Now:
-    </span>
+    </motion.span>
   );
 };
 
