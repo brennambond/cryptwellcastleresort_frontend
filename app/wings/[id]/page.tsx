@@ -3,7 +3,7 @@ import BloodbornServices from "@/app/components/services/BloodbornServices";
 import HauntedServices from "@/app/components/services/HauntedServices";
 import RebornServices from "@/app/components/services/RebornServices";
 import WingChambersList from "@/app/components/WingChambersList";
-import { getUserId } from "@/app/lib/actions";
+
 import apiService from "@/app/services/apiService";
 import MotionDiv from "@/components/motion/MotionDiv";
 import { fadeIn } from "@/utils/motion";
@@ -17,7 +17,8 @@ export type SearchParamProps = {
 };
 
 const WingDetailPage = async ({ params }: { params: { id: string } }) => {
-  const wing = await apiService.get(`/api/rooms/wings/${params.id}`);
+  const wing = await apiService.get(`/rooms/wings/${params.id}`);
+
   const backgroundStyle = [
     wing.name === "Bloodborn"
       ? "bg-[url('../public/background-red.png')]"
@@ -27,9 +28,6 @@ const WingDetailPage = async ({ params }: { params: { id: string } }) => {
       ? "bg-[url('../public/background-2.png')]"
       : "bg-[url('../public/background-purple.png')]",
   ];
-
-  const wing_imageurl =
-    "https://hauntedhotel-backend-bucket" + wing.image_url.slice(17);
 
   return (
     <main className={`wrapper-main ${backgroundStyle} gap-20`}>
@@ -43,7 +41,7 @@ const WingDetailPage = async ({ params }: { params: { id: string } }) => {
         <Image
           width={1000}
           height={1000}
-          src={wing_imageurl}
+          src={wing.image_url}
           alt={wing.name}
           className='object-cover object-center rounded-xl shadow-2xl overflow-hidden h-[50vh] md:h-[70vh] xl:h-[80vh]'
         />
@@ -62,7 +60,7 @@ const WingDetailPage = async ({ params }: { params: { id: string } }) => {
         <div className='p-regular-18 2xl:p-regular-20'>{wing.description}</div>
       </MotionDiv>
 
-      <WingChambersList chambersWing={wing.id} />
+      <WingChambersList />
 
       {wing.name === "Bloodborn" ? (
         <BloodbornServices />
@@ -80,7 +78,7 @@ const WingDetailPage = async ({ params }: { params: { id: string } }) => {
 export async function generateMetadata({
   params: { id },
 }: SearchParamProps): Promise<Metadata> {
-  const wing = await apiService.get(`/api/rooms/wings/${id}`);
+  const wing = await apiService.get(`/rooms/wings/${id}`);
 
   return {
     title: `Wing of the ${wing.name} | Cryptwell Castle Resort`,

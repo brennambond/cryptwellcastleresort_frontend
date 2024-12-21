@@ -1,116 +1,66 @@
-"use server";
+import apiService from "../services/apiService";
 
-// Ensure this runs only on the client side
 const isClientSide = typeof window !== "undefined";
 
-export const getUserId = async (): Promise<string | null> => {
-  try {
-    if (!isClientSide) {
-      console.error("getUserId should only be called on the client side.");
-      return null;
-    }
-
-    // Retrieve access token from localStorage
-    const accessToken = localStorage.getItem("accessToken");
-
-    if (!accessToken) {
-      console.warn("Access token is missing. Please log in again.");
-      return null;
-    }
-
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/auth/auth/user/`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${accessToken}`,
-        },
-        credentials: "include",
-      }
-    );
-
-    if (!response.ok) {
-      throw new Error(
-        `Failed to fetch user ID: ${response.status} ${response.statusText}`
-      );
-    }
-
-    const data = await response.json();
-    return data.id || null;
-  } catch (error) {
-    console.error("Error fetching user ID:", error);
-    return null;
-  }
+// AUTH
+export const getCurrentUser = async () => {
+  return await fetchWithAuth(
+    `${process.env.NEXT_PUBLIC_API_URL}/auth/current/`
+  );
 };
 
 export const login = async (email: string, password: string) => {
-  try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/auth/auth/login/`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      }
-    );
+  return await apiService.post("/api/auth/login/", { email, password });
+};
 
-    if (!response.ok) {
-      throw new Error("Login failed. Please check your credentials.");
+export const logout = async () => {
+  const accessToken = localStorage.getItem("accessToken");
+  if (!accessToken) throw new Error("No access token available for logout.");
+
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/auth/logout/`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
+      },
     }
+  );
 
-    const data = await response.json();
-
-    if (isClientSide) {
-      localStorage.setItem("accessToken", data.access);
-      localStorage.setItem("refreshToken", data.refresh);
-    }
-
-    return data;
-  } catch (error) {
-    console.error("Error during login:", error);
-    throw error;
+  if (!response.ok) {
+    throw new Error(`Logout failed: ${response.statusText}`);
   }
+
+  // Clear tokens
+  localStorage.removeItem("accessToken");
+  localStorage.removeItem("refreshToken");
+  localStorage.removeItem("user_id"); // If used
+  return true;
 };
 
 export const refreshAccessToken = async (): Promise<string | null> => {
-  try {
-    if (!isClientSide) {
-      throw new Error("refreshAccessToken should only run on the client side.");
-    }
-
-    const refreshToken = localStorage.getItem("refreshToken");
-
-    if (!refreshToken) {
-      console.warn("Refresh token is missing.");
-      return null;
-    }
-
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/auth/auth/token/refresh/`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ refresh: refreshToken }),
-      }
-    );
-
-    if (!response.ok) {
-      console.error("Failed to refresh access token:", response.statusText);
-      return null;
-    }
-
-    const data = await response.json();
-
-    if (data.access && isClientSide) {
-      localStorage.setItem("accessToken", data.access);
-    }
-
-    return data.access || null;
-  } catch (error) {
-    console.error("Error refreshing access token:", error);
-    return null;
+  const refreshToken = localStorage.getItem("refreshToken");
+  if (!refreshToken) {
+    throw new Error("Refresh token is missing.");
   }
+
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/auth/token/refresh/`,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ refresh: refreshToken }),
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error(`Failed to refresh access token: ${response.statusText}`);
+  }
+
+  const data = await response.json();
+  localStorage.setItem("accessToken", data.access);
+  return data.access;
 };
 
 export const isTokenExpired = (token: string): boolean => {
@@ -155,7 +105,7 @@ export const fetchWithAuth = async (
     });
 
     if (!response.ok) {
-      throw new Error(`Request failed: ${response.statusText}`);
+      throw new Error(`Request failed: ${response.statusText} (URL: ${url})`);
     }
 
     return await response.json();
@@ -165,14 +115,61 @@ export const fetchWithAuth = async (
   }
 };
 
-export const logout = (): void => {
-  try {
-    if (isClientSide) {
-      localStorage.removeItem("accessToken");
-      localStorage.removeItem("refreshToken");
+// RESERVATIONS
+export const getReservations = async () => {
+  return await fetchWithAuth(
+    `${process.env.NEXT_PUBLIC_API_URL}/reservations/`
+  );
+};
+
+export const getReservation = async (reservationId: string) => {
+  return await fetchWithAuth(
+    `${process.env.NEXT_PUBLIC_API_URL}/reservations/${reservationId}/`
+  );
+};
+
+export const createReservation = async (data: any) => {
+  return await fetchWithAuth(
+    `${process.env.NEXT_PUBLIC_API_URL}/reservations/create/`,
+    {
+      method: "POST",
+      body: JSON.stringify(data),
     }
-    console.log("User successfully logged out.");
-  } catch (error) {
-    console.error("Error during logout:", error);
-  }
+  );
+};
+
+export const updateReservation = async (reservationId: string, data: any) => {
+  return await fetchWithAuth(
+    `${process.env.NEXT_PUBLIC_API_URL}/reservations/${reservationId}/update/`,
+    {
+      method: "PUT",
+      body: JSON.stringify(data),
+    }
+  );
+};
+
+export const deleteReservation = async (reservationId: string) => {
+  return await fetchWithAuth(
+    `${process.env.NEXT_PUBLIC_API_URL}/reservations/${reservationId}/delete/`,
+    {
+      method: "DELETE",
+    }
+  );
+};
+
+// ROOMS
+export const getRooms = async () => {
+  return await apiService.get("/api/rooms/rooms/");
+};
+
+export const getRoom = async (roomId: string) => {
+  return await apiService.get(`/api/rooms/rooms/${roomId}/`);
+};
+
+export const getWings = async () => {
+  return await apiService.get("/api/rooms/wings/");
+};
+
+export const getWing = async (wingId: string) => {
+  return await apiService.get(`/api/rooms/wings/${wingId}/`);
 };

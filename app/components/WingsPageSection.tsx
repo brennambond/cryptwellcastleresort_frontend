@@ -11,7 +11,7 @@ import WingServices from "../components/services/WingServices";
 const WingsPageSection = () => {
   const [wings, setWings] = useState<WingSectionType[]>([]);
   const getWings = async () => {
-    const tmpWings = await apiService.get("/api/rooms/wings/");
+    const tmpWings = await apiService.get("/rooms/wings/");
 
     setWings(tmpWings.data);
   };

@@ -1,84 +1,70 @@
 "use client";
 
-import Modal from "../Modal";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import useLoginModal from "../../hooks/useLoginModal";
-import CustomButton from "../CustomButton";
+import useLoginModal from "@/app/hooks/useLoginModal";
 import { login } from "@/app/lib/actions";
+import React, { useState } from "react";
+import Modal from "../Modal";
 
-const LoginModal = () => {
-  const router = useRouter();
+const LoginModal: React.FC = () => {
   const loginModal = useLoginModal();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState<string[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState(false);
 
-  const submitLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
+  const handleLogin = async () => {
     setErrors([]);
-
+    setLoading(true);
     try {
-      const response = await login(email, password);
-
-      if (response.user_id) {
-        localStorage.setItem("user_id", response.user_id);
-        if (response.access)
-          localStorage.setItem("accessToken", response.access);
-        if (response.refresh)
-          localStorage.setItem("refreshToken", response.refresh);
-
-        loginModal.close();
-        router.refresh();
-      } else {
-        setErrors(["Invalid email or password. Please try again."]);
-      }
+      await login(email, password);
+      loginModal.close();
+      window.location.reload();
     } catch (error: any) {
-      console.error("Login failed:", error);
       setErrors([error.message || "An unexpected error occurred."]);
     } finally {
       setLoading(false);
     }
   };
 
+  if (!loginModal.isOpen) return null;
+
   return (
     <Modal
       isOpen={loginModal.isOpen}
-      close={loginModal.close}
-      label='Log in'
+      onRequestClose={loginModal.close}
+      label='Log In'
       content={
-        <form onSubmit={submitLogin} className='space-y-4 font-cormorant'>
-          <input
-            onChange={(e) => setEmail(e.target.value)}
-            value={email}
-            placeholder='Your email address'
-            type='email'
-            className='w-full h-[54px] border border-gray-300 px-4 rounded-xl'
-            required
-          />
-          <input
-            onChange={(e) => setPassword(e.target.value)}
-            value={password}
-            placeholder='Your password'
-            type='password'
-            className='w-full h-[54px] border border-gray-300 px-4 rounded-xl'
-            required
-          />
+        <div className='flex flex-col items-center justify-center'>
+          <h2 className='text-lg font-bold mb-4'>Log In</h2>
           {errors.length > 0 && (
-            <div className='p-4 bg-red-500 text-white rounded-xl'>
+            <div className='text-red-500 mb-4'>
               {errors.map((error, index) => (
-                <div key={`error_${index}`}>{error}</div>
+                <p key={index}>{error}</p>
               ))}
             </div>
           )}
-          <CustomButton
-            label={loading ? "Logging in..." : "Submit"}
-            disabled={loading}
-            onClick={submitLogin}
+          <input
+            type='email'
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder='Email'
+            className='border rounded-md p-2 mb-2 w-full'
           />
-        </form>
+          <input
+            type='password'
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder='Password'
+            className='border rounded-md p-2 mb-2 w-full'
+          />
+          <button
+            onClick={handleLogin}
+            disabled={loading}
+            className='bg-purple-500 text-white py-2 px-4 rounded-md hover:bg-purple-600'
+          >
+            {loading ? "Logging in..." : "Log In"}
+          </button>
+        </div>
       }
     />
   );

@@ -2,7 +2,6 @@
 
 import MotionDiv from "@/components/motion/MotionDiv";
 import { fadeIn, staggerContainer } from "@/utils/motion";
-import { WingType } from "./WingsList";
 import { useEffect, useState } from "react";
 import apiService from "../services/apiService";
 import WingCard from "./WingCard";
@@ -16,17 +15,30 @@ export type WingSectionType = {
 
 const WingsSection = () => {
   const [wings, setWings] = useState<WingSectionType[]>([]);
-  const getWings = async () => {
-    const tmpWings = await apiService.get("/api/rooms/wings/");
+  const [active, setActive] = useState<WingSectionType | null>(null);
 
-    setWings(tmpWings.data);
+  const fetchWings = async () => {
+    try {
+      const endpoint = "/rooms/wings/";
+      const response = await apiService.get(endpoint);
+      console.log("Raw response from API:", response);
+      setWings(response.wings || []); // Adjust this based on the actual API response structure.
+    } catch (error) {
+      console.error("Error fetching wings:", error);
+    }
   };
 
   useEffect(() => {
-    getWings();
+    fetchWings();
   }, []);
 
-  const [active, setActive] = useState(wings[1]);
+  useEffect(() => {
+    if (wings.length > 0) {
+      setActive(wings[0]);
+    }
+  }, [wings]);
+
+  console.log(wings);
 
   return (
     <section className="bg-[url('../public/background-red.png')] bg-cover bg-center py-20 lg:py-40">
@@ -62,8 +74,7 @@ const WingsSection = () => {
             </MotionDiv>
 
             <div className='mt-[50px] flex lg:flex-row flex-col min-h-[70vh] gap-2'>
-              {wings.map((wing) => {
-                const index = wings.indexOf(wing);
+              {wings.map((wing, index) => {
                 return (
                   <WingCard
                     key={wing.id}

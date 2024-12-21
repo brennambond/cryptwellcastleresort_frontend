@@ -21,10 +21,11 @@ const DatePicker: React.FC<DatePickerProps> = ({
       onChange={onChange}
       minDate={new Date()}
       disabledDates={bookedDates}
+      date={new Date()}
       rangeColors={["#1f2937"]}
       direction='vertical'
       showDateDisplay={false}
-      className='w-full border rounded'
+      className='w-[90%] lg:w-[80%] xl:w-[60%] border border-gray-400 rounded-xl mb-4 flex-center flex-col '
     />
   );
 };

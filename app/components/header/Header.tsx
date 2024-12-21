@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -8,16 +11,21 @@ import NavLinks from "./NavLinks";
 import MobileNav from "./MobileNav";
 import MotionNav from "@/components/motion/MotionNav";
 
-const Header = async () => {
-  let userId = null;
+const Header = () => {
+  const [userId, setUserId] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
 
-  if (typeof window !== "undefined") {
-    try {
-      userId = await getUserId();
-    } catch (error) {
-      console.error("Error fetching userId:", error);
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const fetchUserId = async () => {
+        const id = await getUserId();
+        setUserId(id);
+        setLoading(false);
+      };
+
+      fetchUserId();
     }
-  }
+  }, []);
 
   return (
     <MotionNav
@@ -55,7 +63,11 @@ const Header = async () => {
           className='flex px-8 py-2 justify-end link-hover h-full'
         >
           <div className='flex items-center justify-center text-white-main'>
-            <UserNav userId={userId} />
+            {loading ? (
+              <div className='text-gray-400'>Loading...</div>
+            ) : (
+              <UserNav userId={userId} />
+            )}
           </div>
         </div>
       </div>

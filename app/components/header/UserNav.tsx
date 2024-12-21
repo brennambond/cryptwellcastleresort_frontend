@@ -1,27 +1,42 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-
+import React, { useState, useEffect } from "react";
 import { HiUser } from "react-icons/hi2";
+import { useRouter } from "next/navigation";
+import useLoginModal from "@/app/hooks/useLoginModal";
+import useSignupModal from "@/app/hooks/useSignupModal";
 import MenuLink from "./MenuLink";
+import { logout } from "@/app/lib/actions";
 import LogoutButton from "./LogoutButton";
 
-import useLoginModal from "../../hooks/useLoginModal";
-import useSignupModal from "../../hooks/useSignupModal";
-
 interface UserNavProps {
-  userId?: string | null;
+  userId: string | null;
 }
 
-const UserNav: React.FC<UserNavProps> = ({ userId }) => {
-  const router = useRouter();
+const UserNav: React.FC = () => {
   const loginModal = useLoginModal();
   const signupModal = useSignupModal();
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
+  const [userId, setUserId] = useState<string | null>(null);
 
-  const toggleMenu = () => setIsOpen((prev) => !prev);
+  const toggleMenu = () => setIsOpen(!isOpen);
   const closeMenu = () => setIsOpen(false);
+
+  useEffect(() => {
+    const storedUserId = localStorage.getItem("user_id");
+    setUserId(storedUserId);
+  }, []);
+
+  // Optional: Listen to storage events to detect logout/login from other tabs
+  useEffect(() => {
+    const handleStorageChange = () => {
+      const storedUserId = localStorage.getItem("user_id");
+      setUserId(storedUserId);
+    };
+    window.addEventListener("storage", handleStorageChange);
+    return () => window.removeEventListener("storage", handleStorageChange);
+  }, []);
 
   return (
     <div className='h-8 relative flex items-center justify-center rounded-full shadow-2xl'>
@@ -39,33 +54,40 @@ const UserNav: React.FC<UserNavProps> = ({ userId }) => {
           {userId ? (
             <>
               <MenuLink
-                className='px-5 py-4 cursor-pointer hover:bg-gray-100 transition rounded-xl text-purple-main '
+                className='px-5 py-4 cursor-pointer hover:bg-gray-100 transition rounded-xl text-purple-main'
                 label='My Reservations'
                 onClick={() => {
-                  closeMenu();
+                  closeMenu?.();
                   router.push("/myreservations");
                 }}
               />
-              <LogoutButton closeMenu={closeMenu} />
+              <LogoutButton
+                closeMenu={closeMenu}
+                onClick={() => {
+                  router.refresh();
+                }}
+              />
             </>
           ) : (
             <>
-              <MenuLink
-                className='px-5 py-4 cursor-pointer hover:bg-gray-100 transition rounded-xl text-purple-main '
-                label='Log in'
+              <button
                 onClick={() => {
-                  closeMenu();
+                  closeMenu?.();
                   loginModal.open();
                 }}
-              />
-              <MenuLink
-                className='px-5 py-4 cursor-pointer hover:bg-gray-100 transition rounded-xl text-purple-main '
-                label='Sign up'
+                className='px-5 py-4 cursor-pointer hover:bg-gray-100 transition rounded-xl text-purple-main'
+              >
+                Log in
+              </button>
+              <button
                 onClick={() => {
-                  closeMenu();
+                  closeMenu?.();
                   signupModal.open();
                 }}
-              />
+                className='px-5 py-4 cursor-pointer hover:bg-gray-100 transition rounded-xl text-purple-main'
+              >
+                Sign up
+              </button>
             </>
           )}
         </div>

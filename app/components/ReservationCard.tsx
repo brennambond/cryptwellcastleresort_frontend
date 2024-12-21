@@ -13,29 +13,25 @@ const ReservationCard: React.FC<ReservationProps> = ({
   reservation,
   index,
 }) => {
-  var reservationWingTitle = reservation.room.title.split(" ")[0].toString();
   const colorStyle = [
-    reservationWingTitle === "Bloodborn"
+    reservation.wing === "Bloodborn"
       ? "text-red-900"
-      : reservationWingTitle === "Haunted"
+      : reservation.wing === "Haunted"
       ? "text-cyan-900"
-      : reservationWingTitle === "Reborn"
+      : reservation.wing === "Reborn"
       ? "text-emerald-900"
       : "text-fuchsia-900",
   ];
 
   const buttonColorStyle = [
-    reservationWingTitle === "Bloodborn"
+    reservation.wing === "Bloodborn"
       ? "bg-red-900 hover:bg-red-800"
-      : reservationWingTitle === "Haunted"
+      : reservation.wing === "Haunted"
       ? "bg-cyan-900 hover:bg-cyan-800"
-      : reservationWingTitle === "Reborn"
+      : reservation.wing === "Reborn"
       ? "bg-emerald-900 hover:bg-emerald-800"
       : "bg-fuchsia-950 hover:bg-fuchsia-900",
   ];
-  const chamber_imageurl =
-    "https://hauntedhotel-backend-bucket" +
-    reservation.room.image_url.slice(17);
 
   return (
     <MotionDiv
@@ -47,7 +43,7 @@ const ReservationCard: React.FC<ReservationProps> = ({
       key={reservation.id}
     >
       <Image
-        src={chamber_imageurl}
+        src={reservation.room.image_url}
         width={1000}
         height={1000}
         className='object-cover object-center overflow-hidden aspect-square rounded-t-xl max-h-[250px]'
@@ -85,7 +81,7 @@ const ReservationCard: React.FC<ReservationProps> = ({
           href={`/chambers/${reservation.room.id}`}
           className={`button-main-nobg xl:my-4 self-center ${buttonColorStyle}`}
         >
-          Go to room
+          View Chamber
         </Link>
       </div>
     </MotionDiv>

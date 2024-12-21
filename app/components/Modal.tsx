@@ -1,23 +1,22 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
+import { createPortal } from "react-dom";
 
 interface ModalProps {
-  label: string;
-  close: () => void;
-  content: React.ReactElement;
   isOpen: boolean;
-  onClick?: () => void;
+  onRequestClose: () => void;
+  label: string;
+  content: React.ReactNode;
 }
 
 import { HiOutlineX } from "react-icons/hi";
 
 const Modal: React.FC<ModalProps> = ({
+  isOpen,
+  onRequestClose,
   label,
   content,
-  isOpen,
-  close,
-  onClick,
 }) => {
   const [showModal, setShowModal] = useState(isOpen);
 
@@ -25,13 +24,13 @@ const Modal: React.FC<ModalProps> = ({
     setShowModal(isOpen);
   }, [isOpen]);
 
-  const handleClose = useCallback(() => {
-    setShowModal(false);
+  // const handleClose = useCallback(() => {
+  //   setShowModal(false);
 
-    setTimeout(() => {
-      close();
-    }, 100);
-  }, [close]);
+  //   setTimeout(() => {
+  //     close();
+  //   }, 100);
+  // }, [close]);
 
   if (!isOpen) {
     return null;
@@ -53,7 +52,7 @@ const Modal: React.FC<ModalProps> = ({
           <div className='w-full h-auto rounded-xl relative flex flex-col bg-white-main'>
             <header className='h-[60px] flex items-center p-6 rounded-t justify-center relative border-b bg-gray-800'>
               <div
-                onClick={handleClose}
+                onClick={onRequestClose}
                 className='p-3 absolute left-3 hover:bg-gray-900 rounded-full cursor-pointer'
               >
                 <HiOutlineX />
@@ -64,9 +63,7 @@ const Modal: React.FC<ModalProps> = ({
               </h2>
             </header>
 
-            <section onClick={onClick} className='p-6 text-gray-800'>
-              {content}
-            </section>
+            <section className='p-6 text-gray-800'>{content}</section>
           </div>
         </div>
       </div>

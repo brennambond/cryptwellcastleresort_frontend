@@ -1,126 +1,79 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-
 import useSignupModal from "@/app/hooks/useSignupModal";
-import { login } from "@/app/lib/actions";
-import CustomButton from "../CustomButton";
+import { register } from "@/app/lib/actions";
+import React, { useState } from "react";
 import Modal from "../Modal";
 
-const SignupModal = () => {
-  const router = useRouter();
+const SignupModal: React.FC = () => {
   const signupModal = useSignupModal();
-
   const [email, setEmail] = useState("");
   const [password1, setPassword1] = useState("");
   const [password2, setPassword2] = useState("");
   const [errors, setErrors] = useState<string[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState(false);
 
-  const submitSignup = async (e: React.FormEvent) => {
-    e.preventDefault(); // Prevent form reload
-    setLoading(true);
+  const handleSignup = async () => {
     setErrors([]);
-
+    setLoading(true);
     try {
-      const formData = {
-        email: email,
-        password1: password1,
-        password2: password2,
-      };
-
-      // Call backend to register user
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/auth/auth/register/`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(formData),
-        }
-      );
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        // If registration fails, collect errors
-        const tmpErrors: string[] = Object.values(data)
-          .map((item) => (Array.isArray(item) ? item : [item])) // Ensure each item is an array
-          .flat()
-          .filter((item): item is string => typeof item === "string");
-        setErrors(tmpErrors);
-        return;
-      }
-
-      // Handle successful registration
-      if (data.access) {
-        localStorage.setItem("user_id", data.user_id);
-        localStorage.setItem("accessToken", data.access);
-        localStorage.setItem("refreshToken", data.refresh);
-
-        signupModal.close(); // Close modal
-        router.push("/"); // Redirect to home
-        router.refresh();
-      }
+      await register(email, password1, password2);
+      signupModal.close();
+      window.location.reload();
     } catch (error: any) {
-      console.error("Signup failed:", error);
-      setErrors(["An unexpected error occurred. Please try again."]);
+      setErrors([error.message || "An unexpected error occurred."]);
     } finally {
       setLoading(false);
     }
   };
 
-  const content = (
-    <form onSubmit={submitSignup} className='space-y-4'>
-      <input
-        onChange={(e) => setEmail(e.target.value)}
-        value={email}
-        placeholder='Your email address'
-        type='email'
-        className='w-full h-[54px] border border-gray-300 px-4 rounded-xl'
-        required
-      />
-
-      <input
-        onChange={(e) => setPassword1(e.target.value)}
-        value={password1}
-        placeholder='Your password'
-        type='password'
-        className='w-full h-[54px] border border-gray-300 px-4 rounded-xl'
-        required
-      />
-
-      <input
-        onChange={(e) => setPassword2(e.target.value)}
-        value={password2}
-        placeholder='Repeat password'
-        type='password'
-        className='w-full h-[54px] border border-gray-300 px-4 rounded-xl'
-        required
-      />
-
-      {errors.length > 0 && (
-        <div className='p-4 bg-red-500 text-white rounded-xl'>
-          {errors.map((error, index) => (
-            <div key={`error_${index}`}>{error}</div>
-          ))}
-        </div>
-      )}
-
-      <CustomButton
-        label={loading ? "Signing up..." : "Submit"}
-        disabled={loading}
-        onClick={() => {}} // Prevents extra calls
-      />
-    </form>
-  );
+  if (!signupModal.isOpen) return null;
 
   return (
     <Modal
       isOpen={signupModal.isOpen}
-      close={signupModal.close}
-      label='Sign up'
-      content={content}
+      onRequestClose={signupModal.close}
+      label='Sign Up'
+      content={
+        <div className='flex flex-col items-center justify-center'>
+          <h2 className='text-lg font-bold mb-4'>Sign Up</h2>
+          {errors.length > 0 && (
+            <div className='text-red-500 mb-4'>
+              {errors.map((error, index) => (
+                <p key={index}>{error}</p>
+              ))}
+            </div>
+          )}
+          <input
+            type='email'
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder='Email'
+            className='border rounded-md p-2 mb-2 w-full'
+          />
+          <input
+            type='password'
+            value={password1}
+            onChange={(e) => setPassword1(e.target.value)}
+            placeholder='Password'
+            className='border rounded-md p-2 mb-2 w-full'
+          />
+          <input
+            type='password'
+            value={password2}
+            onChange={(e) => setPassword2(e.target.value)}
+            placeholder='Confirm Password'
+            className='border rounded-md p-2 mb-2 w-full'
+          />
+          <button
+            onClick={handleSignup}
+            disabled={loading}
+            className='bg-purple-500 text-white py-2 px-4 rounded-md hover:bg-purple-600'
+          >
+            {loading ? "Signing up..." : "Sign Up"}
+          </button>
+        </div>
+      }
     />
   );
 };

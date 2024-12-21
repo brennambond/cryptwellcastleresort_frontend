@@ -5,16 +5,43 @@ import MenuLink from "./MenuLink";
 import { logout } from "../../lib/actions";
 
 interface LogoutButtonProps {
-  closeMenu?: () => void;
+  onClick?: () => void;
+  closeMenu: () => void;
 }
 
-const LogoutButton: React.FC<LogoutButtonProps> = ({ closeMenu }) => {
+const LogoutButton: React.FC<LogoutButtonProps> = ({ onClick, closeMenu }) => {
   const router = useRouter();
 
-  const submitLogout = () => {
-    logout();
-    closeMenu?.();
-    router.push("/");
+  // const submitLogout = async () => {
+  //   try {
+  //     await logout();
+  //     console.log("Calling router.refresh()");
+  //     router.push("/"); // Attempt to refresh the page
+  //     console.log("router.refresh() called");
+  //   } catch (error) {
+  //     console.error("Error during logout:", error);
+  //   }
+  //   console.log("SubmitLogout triggered");
+  // };
+
+  const submitLogout = async () => {
+    try {
+      if (typeof window === "undefined") return;
+
+      await logout(); // Perform the logout operation
+      closeMenu(); // Optionally refresh the page
+      // Clear user data from localStorage
+      localStorage.removeItem("user_id");
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
+
+      // Notify UserNav of the change
+      window.dispatchEvent(new Event("storage"));
+
+      window.location.reload();
+    } catch (error) {
+      console.error("Error during logout:", error);
+    }
   };
 
   return (

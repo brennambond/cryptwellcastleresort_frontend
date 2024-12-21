@@ -1,26 +1,29 @@
 interface CustomButtonProps {
   label: string;
-  onClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
   className?: string;
-  onSubmit?: () => void;
   disabled?: boolean;
+  type?: "button" | "submit" | "reset";
 }
 
 const CustomButton: React.FC<CustomButtonProps> = ({
   label,
   onClick,
   className,
-  onSubmit,
-  disabled,
+  disabled = false,
+  type = "button",
 }) => {
   return (
-    <div
+    <button
+      type={type}
       onClick={onClick}
-      onSubmit={onSubmit}
-      className={`w-full py-4 bg-gray-800 text-white rounded-xl transition cursor-pointer text-center ${className}`}
+      className={`w-full py-4 bg-gray-800 text-white rounded-xl transition cursor-pointer text-center ${
+        disabled ? "opacity-50 cursor-not-allowed" : ""
+      } ${className}`}
+      disabled={disabled}
     >
       {label}
-    </div>
+    </button>
   );
 };
 

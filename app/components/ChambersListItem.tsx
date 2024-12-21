@@ -1,9 +1,9 @@
 import MotionDiv from "@/components/motion/MotionDiv";
-import { ChamberType } from "./ChambersList";
 import { fadeIn } from "@/utils/motion";
 import Image from "next/image";
 import Link from "next/link";
 import { HiMiniArrowRightCircle } from "react-icons/hi2";
+import { ChamberType } from "./WingChambersList";
 
 interface ChamberProps {
   chamber: ChamberType;
@@ -18,13 +18,12 @@ const getChamberColor = (title: string): string => {
   return "text-purple-700 hover:text-purple-900";
 };
 
-const buildImageUrl = (image_url: string) => {
-  return `https://hauntedhotel-backend-bucket${image_url.slice(17)}`;
-};
-
 const ChambersListItem: React.FC<ChamberProps> = ({ chamber, index }) => {
+  if (!chamber || !chamber.title || !chamber.image_url) {
+    console.warn("Missing chamber data:", chamber);
+    return null; // Skip rendering if chamber data is incomplete
+  }
   const colorStyle = getChamberColor(chamber.title);
-  const chamberImageUrl = buildImageUrl(chamber.image_url);
 
   return (
     <MotionDiv
@@ -35,7 +34,7 @@ const ChambersListItem: React.FC<ChamberProps> = ({ chamber, index }) => {
       className='bg-white-main rounded-xl flex flex-col gap-2'
     >
       <Image
-        src={chamberImageUrl}
+        src={chamber.image_url}
         className='object-cover object-center overflow-hidden aspect-square rounded-t-xl max-h-[250px]'
         alt={chamber.title}
         height={1000}
