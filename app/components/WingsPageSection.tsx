@@ -10,17 +10,26 @@ import WingServices from "../components/services/WingServices";
 
 const WingsPageSection = () => {
   const [wings, setWings] = useState<WingSectionType[]>([]);
-  const getWings = async () => {
-    const tmpWings = await apiService.get("/rooms/wings/");
+  const [active, setActive] = useState<WingSectionType | null>(null);
 
-    setWings(tmpWings.data);
+  const getWings = async () => {
+    try {
+      const response = await apiService.get("/rooms/wings/");
+      setWings(response); // Adjust based on API response structure
+    } catch (error) {
+      console.error("Error fetching wings:", error);
+    }
   };
 
   useEffect(() => {
     getWings();
   }, []);
 
-  const [active, setActive] = useState(wings[1]);
+  useEffect(() => {
+    if (wings.length > 0) {
+      setActive(wings[0]); // Safely set the first wing as active
+    }
+  }, [wings]);
   return (
     <MotionDiv
       variants={staggerContainer}

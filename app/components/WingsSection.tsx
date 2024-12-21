@@ -19,10 +19,8 @@ const WingsSection = () => {
 
   const fetchWings = async () => {
     try {
-      const endpoint = "/rooms/wings/";
-      const response = await apiService.get(endpoint);
-      console.log("Raw response from API:", response);
-      setWings(response.wings || []); // Adjust this based on the actual API response structure.
+      const response = await apiService.get("/rooms/wings/");
+      setWings(response);
     } catch (error) {
       console.error("Error fetching wings:", error);
     }
@@ -37,8 +35,6 @@ const WingsSection = () => {
       setActive(wings[0]);
     }
   }, [wings]);
-
-  console.log(wings);
 
   return (
     <section className="bg-[url('../public/background-red.png')] bg-cover bg-center py-20 lg:py-40">
@@ -62,29 +58,21 @@ const WingsSection = () => {
                 Wings
               </h2>
               <p className='p-semibold-20 lg:p-regular-24 font-cormorant backdrop-blur-[2px]'>
-                Each corner of our resort invities you to enter a uniquely
-                chilling realm from Gothic lore. Choose your fate and book a
-                stay in one of our four unnaturally dreadful wings: The Wing of
-                the Bloodborn, a crimson sanctuary for the eternally nocturnal;
-                The Wing of the Haunted, where restless spirits endlessly roam;
-                The Wing of the Arcane, a realm of eldritch enchantments and
-                forbidden witchcraft; and The Wing of the Reborn, where a mad
-                labratory of horrors defies death itself.
+                Each corner of our resort invites you to enter a uniquely
+                chilling realm from Gothic lore.
               </p>
             </MotionDiv>
 
             <div className='mt-[50px] flex lg:flex-row flex-col min-h-[70vh] gap-2'>
-              {wings.map((wing, index) => {
-                return (
-                  <WingCard
-                    key={wing.id}
-                    wing={wing}
-                    active={active}
-                    handleClick={setActive}
-                    index={index}
-                  />
-                );
-              })}
+              {wings.map((wing, index) => (
+                <WingCard
+                  key={wing.id}
+                  wing={wing}
+                  active={active}
+                  handleClick={setActive}
+                  index={index}
+                />
+              ))}
             </div>
           </MotionDiv>
         </div>
