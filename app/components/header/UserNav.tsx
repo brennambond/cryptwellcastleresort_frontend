@@ -6,8 +6,8 @@ import { useRouter } from "next/navigation";
 import useLoginModal from "@/app/hooks/useLoginModal";
 import useSignupModal from "@/app/hooks/useSignupModal";
 import MenuLink from "./MenuLink";
-import { logout } from "@/app/lib/actions";
 import LogoutButton from "./LogoutButton";
+import { getCurrentUser } from "../../lib/actions";
 
 interface UserNavProps {
   userId: string | null;
@@ -24,8 +24,17 @@ const UserNav: React.FC = () => {
   const closeMenu = () => setIsOpen(false);
 
   useEffect(() => {
-    const storedUserId = localStorage.getItem("user_id");
-    setUserId(storedUserId);
+    const fetchUser = async () => {
+      try {
+        const user = await getCurrentUser(); // Use actions.ts function
+        setUserId(user.id); // Update state with user ID from backend
+      } catch (error) {
+        console.error("Error fetching user:", error);
+        setUserId(null); // Clear user state if backend validation fails
+      }
+    };
+
+    fetchUser();
   }, []);
 
   // Optional: Listen to storage events to detect logout/login from other tabs

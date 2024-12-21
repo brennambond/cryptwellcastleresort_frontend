@@ -6,25 +6,26 @@ import Link from "next/link";
 
 import { fadeIn } from "@/utils/motion";
 import UserNav from "./UserNav";
-import { getUserId } from "../../lib/actions";
+import { getCurrentUser } from "../../lib/actions";
 import NavLinks from "./NavLinks";
 import MobileNav from "./MobileNav";
 import MotionNav from "@/components/motion/MotionNav";
 
 const Header = () => {
-  const [userId, setUserId] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      const fetchUserId = async () => {
-        const id = await getUserId();
-        setUserId(id);
-        setLoading(false);
-      };
+    const fetchUser = async () => {
+      try {
+        await getCurrentUser(); // Verify user session from backend
+      } catch (error) {
+        console.error("Error fetching user session:", error);
+      } finally {
+        setLoading(false); // Stop showing the loading indicator
+      }
+    };
 
-      fetchUserId();
-    }
+    fetchUser();
   }, []);
 
   return (
@@ -66,7 +67,7 @@ const Header = () => {
             {loading ? (
               <div className='text-gray-400'>Loading...</div>
             ) : (
-              <UserNav userId={userId} />
+              <UserNav />
             )}
           </div>
         </div>

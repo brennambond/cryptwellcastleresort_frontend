@@ -16,6 +16,11 @@ const SignupModal: React.FC = () => {
   const handleSignup = async () => {
     setErrors([]);
     setLoading(true);
+    if (password1 !== password2) {
+      setErrors(["Passwords do not match."]);
+      setLoading(false);
+      return;
+    }
     try {
       await register(email, password1, password2);
       signupModal.close();

@@ -12,24 +12,12 @@ interface LogoutButtonProps {
 const LogoutButton: React.FC<LogoutButtonProps> = ({ onClick, closeMenu }) => {
   const router = useRouter();
 
-  // const submitLogout = async () => {
-  //   try {
-  //     await logout();
-  //     console.log("Calling router.refresh()");
-  //     router.push("/"); // Attempt to refresh the page
-  //     console.log("router.refresh() called");
-  //   } catch (error) {
-  //     console.error("Error during logout:", error);
-  //   }
-  //   console.log("SubmitLogout triggered");
-  // };
-
   const submitLogout = async () => {
     try {
       if (typeof window === "undefined") return;
 
       await logout(); // Perform the logout operation
-      closeMenu(); // Optionally refresh the page
+      closeMenu(); // Close the menu
       // Clear user data from localStorage
       localStorage.removeItem("user_id");
       localStorage.removeItem("accessToken");

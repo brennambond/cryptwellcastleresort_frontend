@@ -9,13 +9,79 @@ export const getCurrentUser = async () => {
   );
 };
 
+export const register = async (
+  email: string,
+  password1: string,
+  password2: string
+) => {
+  if (password1 !== password2) {
+    throw new Error("Passwords do not match.");
+  }
+
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/auth/register/`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email,
+        password: password1, // Send only one password field
+      }),
+    }
+  );
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.detail || "Registration failed.");
+  }
+
+  const data = await response.json();
+
+  // Store tokens in localStorage
+  if (isClientSide) {
+    localStorage.setItem("accessToken", data.access);
+    localStorage.setItem("refreshToken", data.refresh);
+  }
+
+  return data;
+};
+
 export const login = async (email: string, password: string) => {
-  return await apiService.post("/api/auth/login/", { email, password });
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/auth/login/`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, password }),
+    }
+  );
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.detail || "Login failed.");
+  }
+
+  const data = await response.json();
+
+  // Store tokens in localStorage
+  if (typeof window !== "undefined") {
+    localStorage.setItem("accessToken", data.access);
+    localStorage.setItem("refreshToken", data.refresh);
+  }
+
+  return data;
 };
 
 export const logout = async () => {
   const accessToken = localStorage.getItem("accessToken");
+  const refreshToken = localStorage.getItem("refreshToken");
+
   if (!accessToken) throw new Error("No access token available for logout.");
+  if (!refreshToken) throw new Error("No refresh token available for logout.");
 
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/auth/logout/`,
@@ -25,6 +91,7 @@ export const logout = async () => {
         "Content-Type": "application/json",
         Authorization: `Bearer ${accessToken}`,
       },
+      body: JSON.stringify({ refresh: refreshToken }),
     }
   );
 
@@ -32,7 +99,7 @@ export const logout = async () => {
     throw new Error(`Logout failed: ${response.statusText}`);
   }
 
-  // Clear tokens
+  // Clear tokens from localStorage
   localStorage.removeItem("accessToken");
   localStorage.removeItem("refreshToken");
   localStorage.removeItem("user_id"); // If used
@@ -92,7 +159,8 @@ export const fetchWithAuth = async (
     }
 
     if (!accessToken) {
-      throw new Error("No valid access token. Please log in again.");
+      console.warn("No valid access token available. User may need to log in.");
+      throw new Error("No valid access token."); // Optionally rethrow to handle this elsewhere
     }
 
     const response = await fetch(url, {
@@ -110,7 +178,10 @@ export const fetchWithAuth = async (
 
     return await response.json();
   } catch (error) {
-    console.error("Error in fetchWithAuth:", error);
+    // Log unexpected errors
+    if (error !== "No valid access token.") {
+      console.error("Error in fetchWithAuth:", error);
+    }
     throw error;
   }
 };

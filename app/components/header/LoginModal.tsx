@@ -20,7 +20,11 @@ const LoginModal: React.FC = () => {
       loginModal.close();
       window.location.reload();
     } catch (error: any) {
-      setErrors([error.message || "An unexpected error occurred."]);
+      setErrors(
+        Array.isArray(error.message)
+          ? error.message
+          : [error.message || "An unexpected error occurred."]
+      );
     } finally {
       setLoading(false);
     }
