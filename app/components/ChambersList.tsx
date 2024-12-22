@@ -30,44 +30,35 @@ const ChambersList: React.FC = () => {
   const fetchChambers = useCallback(async () => {
     setLoading(true);
     try {
-      let queryParams = "";
+      const queryParams = new URLSearchParams();
+      const {
+        wing,
+        guests,
+        beds,
+        bedrooms,
+        bathrooms,
+        checkIn,
+        checkOut,
+        category,
+      } = searchModal.query;
 
-      // Build query parameters if search filters exist
-      if (searchModal.query) {
-        const params = new URLSearchParams();
-        const {
-          wing,
-          guests,
-          beds,
-          bedrooms,
-          bathrooms,
-          checkIn,
-          checkOut,
-          category,
-        } = searchModal.query;
+      if (wing) queryParams.append("wing", wing);
+      if (guests) queryParams.append("guests", guests.toString());
+      if (beds) queryParams.append("beds", beds.toString());
+      if (bedrooms) queryParams.append("bedrooms", bedrooms.toString());
+      if (bathrooms) queryParams.append("bathrooms", bathrooms.toString());
+      if (checkIn) queryParams.append("checkIn", format(checkIn, "yyyy-MM-dd"));
+      if (checkOut)
+        queryParams.append("checkOut", format(checkOut, "yyyy-MM-dd"));
+      if (category) queryParams.append("category", category);
 
-        if (wing) params.append("wing", wing);
-        if (guests) params.append("numGuests", guests.toString());
-        if (beds) params.append("numBeds", beds.toString());
-        if (bedrooms) params.append("numBedrooms", bedrooms.toString());
-        if (bathrooms) params.append("numBathrooms", bathrooms.toString());
-        if (checkIn) params.append("checkin", format(checkIn, "yyyy-MM-dd"));
-        if (checkOut) params.append("checkout", format(checkOut, "yyyy-MM-dd"));
-        if (category) params.append("category", category);
+      const response = await apiService.get(
+        `/rooms/rooms/?${queryParams.toString()}`
+      );
 
-        queryParams = `?${params}`;
-      }
+      console.log("Chambers API Response:", response);
 
-      // Log the full API URL
-      const url = `${process.env.NEXT_PUBLIC_API_URL}/rooms/rooms${queryParams}`;
-
-      // Fetch chambers
-      const chambersData = await apiService.getChambers(queryParams);
-
-      // Log the API response
-      console.log("Final API URL:", url);
-
-      setChambers(chambersData.results || []); // Handle paginated response
+      setChambers(response); // Directly set the response if it's an array
     } catch (error) {
       console.error("Failed to fetch chambers:", error);
     } finally {

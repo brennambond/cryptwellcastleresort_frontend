@@ -64,19 +64,27 @@ const apiService = {
     return await fetchWithAuth(url);
   },
 
+  getUserReservations: async () => {
+    const url = `${process.env.NEXT_PUBLIC_API_URL}/reservations/`;
+    return await apiService.get(url);
+  },
+
+  getReservationsByRoom: async (roomId: string) => {
+    const url = `${process.env.NEXT_PUBLIC_API_URL}/rooms/rooms/${roomId}/reservations/`;
+    return await apiService.get(url);
+  },
+
   // Create a new reservation
   createReservation: async (body: any) => {
     const url = `${process.env.NEXT_PUBLIC_API_URL}/reservations/create/`;
     return await apiService.post(url, body);
   },
 
-  // Update an existing reservation
   updateReservation: async (reservationId: string, body: any) => {
     const url = `${process.env.NEXT_PUBLIC_API_URL}/reservations/${reservationId}/update/`;
     return await apiService.put(url, body);
   },
 
-  // Delete a reservation
   deleteReservation: async (reservationId: string) => {
     const url = `${process.env.NEXT_PUBLIC_API_URL}/reservations/${reservationId}/delete/`;
     return await apiService.delete(url);

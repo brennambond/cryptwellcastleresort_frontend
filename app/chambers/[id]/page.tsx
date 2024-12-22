@@ -6,7 +6,7 @@ import apiService from "@/app/services/apiService";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import ReservationSidebar from "@/app/components/ReservationSidebar";
-import { getUserId } from "@/app/lib/actions";
+import { getCurrentUser } from "@/app/lib/actions";
 import ChamberServices from "@/app/components/services/ChamberServices";
 import { useRouter } from "next/navigation";
 
@@ -22,14 +22,16 @@ const ChamberDetailPage: React.FC<SearchParamProps> = ({ params }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        // Fetch chamber data
         const chamberData = await apiService.get(
           `${process.env.NEXT_PUBLIC_API_URL}/rooms/rooms/${params.id}`
         );
         setChamber(chamberData);
 
-        const id = await getUserId();
-        console.log("Fetched userId in ChamberDetailPage:", id);
-        setUserId(id);
+        // Fetch user data securely
+        const user = await getCurrentUser();
+        console.log("Fetched user in ChamberDetailPage:", user);
+        setUserId(user?.id || null);
       } catch (error) {
         console.error("Error fetching data:", error);
         router.push("/404"); // Redirect to a 404 page if the chamber doesn't exist
@@ -43,15 +45,17 @@ const ChamberDetailPage: React.FC<SearchParamProps> = ({ params }) => {
     return <div>Loading...</div>; // Show a loading state while fetching data
   }
 
-  const backgroundStyle = [
-    chamber.wing_name === "Bloodborn"
-      ? "bg-[url('../public/background-red.png')]"
-      : chamber.wing_name === "Haunted"
-      ? "bg-[url('../public/background-blue.png')]"
-      : chamber.wing_name === "Reborn"
-      ? "bg-[url('../public/background-2.png')]"
-      : "bg-[url('../public/background-purple.png')]",
-  ];
+  const getBackgroundStyle = (title: string): string => {
+    if (title.startsWith("Bloodborn"))
+      return "bg-[url('../public/background-red.png')]";
+    if (title.startsWith("Haunted"))
+      return "bg-[url('../public/background-blue.png')]";
+    if (title.startsWith("Reborn"))
+      return "bg-[url('../public/background-2.png')]";
+    return "bg-[url('../public/background-purple.png')]"; // Default background
+  };
+
+  const backgroundStyle = getBackgroundStyle(chamber.title);
 
   return (
     <main

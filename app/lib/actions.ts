@@ -199,14 +199,36 @@ export const getReservation = async (reservationId: string) => {
   );
 };
 
-export const createReservation = async (data: any) => {
-  return await fetchWithAuth(
+export const createReservation = async (data: {
+  room: string;
+  guests: number;
+  check_in: string;
+  check_out: string;
+}) => {
+  const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/reservations/create/`,
     {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
       body: JSON.stringify(data),
     }
   );
+
+  if (!response.ok) {
+    let errorMessage = "Failed to create reservation.";
+    try {
+      const errorData = await response.json(); // Read the response body
+      errorMessage = errorData.error || errorMessage;
+    } catch (err) {
+      console.error("Failed to parse error response:", err);
+    }
+    throw new Error(errorMessage);
+  }
+
+  return await response.json(); // Read the body once
 };
 
 export const updateReservation = async (reservationId: string, data: any) => {

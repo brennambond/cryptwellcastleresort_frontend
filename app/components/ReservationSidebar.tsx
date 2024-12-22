@@ -5,11 +5,12 @@ import { Range } from "react-date-range";
 
 import DatePicker from "./Calendar";
 
-import apiService from "../services/apiService";
+import { createReservation } from "../lib/actions";
 import useLoginModal from "../hooks/useLoginModal";
 import { differenceInDays, eachDayOfInterval, format } from "date-fns";
 import CheckoutModal from "./CheckoutModal";
 import { useRouter } from "next/navigation";
+import apiService from "../services/apiService";
 
 const initialDateRange = {
   startDate: new Date(),
@@ -48,50 +49,45 @@ const ReservationSidebar: React.FC<ReservationSidebarProps> = ({
     (_, index) => index + 1
   );
 
-  console.log(chamber.title);
+  // Dynamic styling based on chamber title
+  const backgroundColorStyle = chamber.title.startsWith("Bloodborn")
+    ? "bg-red-900"
+    : chamber.title.startsWith("Haunted")
+    ? "bg-cyan-900"
+    : chamber.title.startsWith("Reborn")
+    ? "bg-emerald-900"
+    : "bg-fuchsia-950";
 
-  const backgroundColorStyle = [
-    chamber.title.startsWith("Bloodborn")
-      ? "bg-red-900"
-      : chamber.title.startsWith("Haunted")
-      ? "bg-cyan-900"
-      : chamber.title.startsWith("Reborn")
-      ? "bg-emerald-900"
-      : "bg-fuchsia-950",
-  ];
-
-  const buttonColorStyle = [
-    chamber.title === "Bloodborn"
-      ? "bg-red-900 hover:bg-red-800"
-      : chamber.title === "Haunted"
-      ? "bg-cyan-900 hover:bg-cyan-800"
-      : chamber.title === "Reborn"
-      ? "bg-emerald-900 hover:bg-emerald-800"
-      : "bg-fuchsia-950 hover:bg-fuchsia-900",
-  ];
+  const buttonColorStyle = chamber.title.startsWith("Bloodborn")
+    ? "bg-red-900 hover:bg-red-800"
+    : chamber.title.startsWith("Haunted")
+    ? "bg-cyan-900 hover:bg-cyan-800"
+    : chamber.title.startsWith("Reborn")
+    ? "bg-emerald-900 hover:bg-emerald-800"
+    : "bg-fuchsia-950 hover:bg-fuchsia-900";
 
   const performBooking = async () => {
     if (userId) {
       if (dateRange.startDate && dateRange.endDate) {
-        // Format the dates to ISO strings
         const formattedStartDate = format(dateRange.startDate, "yyyy-MM-dd");
         const formattedEndDate = format(dateRange.endDate, "yyyy-MM-dd");
 
         const requestBody = {
-          guests: parseInt(guests, 10), // Ensure guests is a number
-          start_date: formattedStartDate,
-          end_date: formattedEndDate,
-          number_of_nights: nights,
-          total_price: totalPrice,
+          room: chamber.id,
+          guests: parseInt(guests, 10) || 1,
+          check_in: formattedStartDate,
+          check_out: formattedEndDate,
         };
 
-        console.log("Performing booking with body:", requestBody);
+        console.log("Request payload:", requestBody); // Debugging log
 
         try {
-          await apiService.bookChamber(chamber.id, requestBody);
-          console.log("Booking successful");
-        } catch (error) {
-          console.error("Error during booking:", error);
+          const result = await createReservation(requestBody);
+          console.log("Booking successful:", result); // Log successful response
+          router.refresh(); // Refresh or redirect as needed
+        } catch (error: any) {
+          console.error("Error during booking:", error.message);
+          alert(error.message || "Booking failed. Please try again.");
         }
       }
     } else {
@@ -101,9 +97,12 @@ const ReservationSidebar: React.FC<ReservationSidebarProps> = ({
 
   const getReservations = async () => {
     try {
-      const reservations = await apiService.get(
-        `/rooms/rooms/${chamber.id}/reservations/`
-      );
+      const reservations = await apiService.getReservationsByRoom(chamber.id);
+      if (!Array.isArray(reservations)) {
+        console.warn("Unexpected response format:", reservations);
+        return;
+      }
+
       const dates = reservations.flatMap((reservation: any) =>
         eachDayOfInterval({
           start: new Date(reservation.start_date),
@@ -118,6 +117,10 @@ const ReservationSidebar: React.FC<ReservationSidebarProps> = ({
 
   useEffect(() => {
     getReservations();
+    return () => setBookedDates([]);
+  }, []);
+
+  useEffect(() => {
     const dayCount = differenceInDays(
       dateRange.endDate as Date,
       dateRange.startDate as Date
@@ -146,12 +149,9 @@ const ReservationSidebar: React.FC<ReservationSidebarProps> = ({
 
       <div className='w-[90%] lg:w-[80%] xl:w-[60%] flex-center flex-col border border-gray-400 rounded-xl bg-white p-semibold-18'>
         <div className='flex-center flex-col lg:grid lg:grid-cols-3 w-full'>
-          <div
-            id='guests-div'
-            className={`flex flex-col lg:col-span-1 text-gray-700 lg:border-b rounded-t-xl lg:rounded-tr-none lg:rounded-tl-xl lg:border-gray-400 w-full lg:h-full`}
-          >
+          <div className='text-gray-700 lg:border-b rounded-t-xl w-full'>
             <label
-              className={`${backgroundColorStyle} text-white-main w-full p-bold-20 rounded-t-xl lg:rounded-tr-none lg:rounded-tl-xl text-center py-1`}
+              className={`${backgroundColorStyle} text-white-main w-full p-bold-20 rounded-t-xl text-center py-1`}
             >
               Guests
             </label>
@@ -159,7 +159,7 @@ const ReservationSidebar: React.FC<ReservationSidebarProps> = ({
             <select
               value={guests}
               onChange={(e) => setGuests(e.target.value)}
-              className='mx-8 md:mx-10 lg:mx-4 my-2 lg:my-4'
+              className='mx-8 my-2'
             >
               {guestsRange.map((number) => (
                 <option key={number} value={number}>
@@ -169,40 +169,32 @@ const ReservationSidebar: React.FC<ReservationSidebarProps> = ({
             </select>
           </div>
 
-          <div
-            id='nights-div'
-            className={`flex-center flex-col lg:col-span-2 text-gray-700 text-center lg:rounded-tr-xl lg:border-l lg:border-gray-400 w-full`}
-          >
+          <div className='flex-center flex-col text-gray-700 text-center lg:rounded-tr-xl lg:border-l w-full'>
             <label
-              className={`${backgroundColorStyle} text-white-main w-full p-bold-20 lg:rounded-tr-xl  py-1`}
+              className={`${backgroundColorStyle} text-white-main w-full p-bold-20 lg:rounded-tr-xl py-1`}
             >
               Costs
             </label>
-            <p className='border-b border-gray-400 w-full py-2'>
+            <p className='border-b w-full py-2'>
               Chamber Price x {nights} {nights > 1 ? "Nights" : "Night"}: $
               {chamber.price_per_night * nights}
             </p>
 
-            <p
-              className={` w-full text-gray-700 py-2 border-b border-gray-400`}
-            >
-              Resort Fee: ${fee}
-            </p>
+            <p className='py-2 border-b w-full'>Resort Fee: ${fee}</p>
           </div>
         </div>
 
-        <div
-          id='total-div'
-          className={`mb-4 flex justify-between items-center mt-4 p-bold-24 text-gray-700`}
-        >
+        <div className='mb-4 flex justify-between items-center mt-4 p-bold-24 text-gray-700'>
           <p>Total: ${totalPrice}</p>
         </div>
       </div>
       {userId ? (
-        <CheckoutModal
+        <button
           onClick={performBooking}
           className={`button-main-nobg xl:mt-4 ${buttonColorStyle}`}
-        />
+        >
+          Book Now
+        </button>
       ) : (
         <button
           onClick={performBooking}

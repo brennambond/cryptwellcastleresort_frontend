@@ -1,21 +1,16 @@
 "use client";
 
 import apiService from "../services/apiService";
-
 import ReservationCard from "../components/ReservationCard";
 import MotionDiv from "@/components/motion/MotionDiv";
 import { fadeIn } from "@/utils/motion";
-import { Metadata } from "next";
 import { useEffect, useState } from "react";
-
-export const metadata: Metadata = {
-  title: "My Reservations | Cryptwell Castle Resort",
-};
+import { differenceInDays } from "date-fns";
 
 interface Reservation {
   id: string;
-  start_date: string;
-  end_date: string;
+  check_in: string; // Updated field name
+  check_out: string; // Updated field name
   guests: number;
   total_price: number;
   room: {
@@ -23,15 +18,41 @@ interface Reservation {
     title: string;
     image_url: string;
   };
-}
-interface MyReservationsPageProps {
-  reservations: Reservation[];
+  number_of_nights: number; // Required
 }
 
-const MyReservationsPage: React.FC<MyReservationsPageProps> = ({
-  reservations,
-}) => {
-  console.log(reservations);
+const MyReservationsPage: React.FC = () => {
+  const [reservations, setReservations] = useState<Reservation[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    const fetchReservations = async () => {
+      try {
+        const response = await apiService.getReservations();
+        console.log("Reservations API Response:", response);
+        const reservationsWithNights = response.map(
+          (reservation: Reservation) => ({
+            ...reservation,
+            number_of_nights: Math.max(
+              differenceInDays(
+                new Date(reservation.check_out),
+                new Date(reservation.check_in)
+              ),
+              1
+            ),
+          })
+        );
+        setReservations(reservationsWithNights);
+      } catch (error) {
+        console.error("Error fetching reservations:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchReservations();
+  }, []);
+
   return (
     <main className="wrapper-main bg-[url('../public/background-blue.png')]">
       <MotionDiv
@@ -44,21 +65,20 @@ const MyReservationsPage: React.FC<MyReservationsPageProps> = ({
           My Reservations
         </h1>
       </MotionDiv>
-      {reservations.length ? (
+      {loading ? (
+        <div>Loading...</div>
+      ) : reservations.length ? (
         <div className='grid grid-cols-1 rounded-xl gap-8 lg:gap-10 xl:gap-12 sm:w-[80%] md:w-[70%] lg:w-[60%] 2xl:w-[50%] pt-10 pb-20 lg:pt-20'>
-          {reservations.map((reservation) => {
-            const index = reservations.indexOf(reservation);
-            return (
-              <ReservationCard
-                key={reservation.id}
-                reservation={reservation}
-                index={index}
-              />
-            );
-          })}
+          {reservations.map((reservation, index) => (
+            <ReservationCard
+              key={reservation.id}
+              reservation={reservation}
+              index={index}
+            />
+          ))}
         </div>
       ) : (
-        <div>You don't have any reservations</div>
+        <div>You don't have any reservations.</div>
       )}
     </main>
   );
