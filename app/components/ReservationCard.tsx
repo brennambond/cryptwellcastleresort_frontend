@@ -1,3 +1,5 @@
+"use client";
+
 import MotionDiv from "@/components/motion/MotionDiv";
 import { fadeIn } from "@/utils/motion";
 import Image from "next/image";
