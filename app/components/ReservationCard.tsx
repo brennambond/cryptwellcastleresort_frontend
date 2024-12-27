@@ -62,13 +62,16 @@ const ReservationCard: React.FC<ReservationProps> = ({
       const response = await apiService.get(
         `/rooms/rooms/${reservation.room.id}/reservations/`
       );
-      const dates = response.flatMap((res: any) =>
-        eachDayOfInterval({
-          start: new Date(res.check_in),
-          end: new Date(res.check_out),
-        })
-      );
+      const dates = response.flatMap((res: any) => {
+        const checkInDate = new Date(`${res.check_in}T00:00:00`);
+        const checkOutDate = new Date(`${res.check_out}T00:00:00`);
+        return eachDayOfInterval({
+          start: checkInDate,
+          end: new Date(checkOutDate.getTime() - 24 * 60 * 60 * 1000), // Exclude the check_out date
+        });
+      });
       setBookedDates(dates);
+      console.log("Fetched Booked Dates:", dates); // Debugging
     } catch (error) {
       console.error("Failed to fetch booked dates:", error);
     }

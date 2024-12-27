@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Modal from "./Modal";
 import SuccessModal from "./SuccessModal";
 import apiService from "../services/apiService";
@@ -24,12 +24,26 @@ const EditReservationModal: React.FC<EditReservationModalProps> = ({
   bookedDates,
 }) => {
   const [dateRange, setDateRange] = useState<Range>({
-    startDate: new Date(reservation.check_in),
-    endDate: new Date(reservation.check_out),
+    startDate: new Date(`${reservation.check_in}T00:00:00`), // Normalize to local time
+    endDate: new Date(`${reservation.check_out}T00:00:00`), // Normalize to local time
     key: "selection",
   });
   const [guests, setGuests] = useState(reservation.guests);
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
+
+  const normalizedBookedDates = bookedDates.map((date) => {
+    const [year, month, day] = date.toISOString().split("T")[0].split("-");
+    return new Date(Number(year), Number(month) - 1, Number(day)); // Local date
+  });
+
+  useEffect(() => {
+    console.log("Fetched Booked Dates (Post Normalization):", bookedDates);
+    console.log(
+      "Date Range (Normalized):",
+      dateRange.startDate,
+      dateRange.endDate
+    );
+  }, [bookedDates, dateRange]);
 
   const handleSubmit = async () => {
     try {
@@ -48,8 +62,8 @@ const EditReservationModal: React.FC<EditReservationModalProps> = ({
 
   const handleSuccessClose = () => {
     setIsSuccessModalOpen(false);
-    onClose(); // Close the EditReservationModal
-    window.location.reload(); // Refresh the page
+    onClose();
+    window.location.reload();
   };
 
   const handleDateChange = (ranges: RangeKeyDict) => {
@@ -68,7 +82,7 @@ const EditReservationModal: React.FC<EditReservationModalProps> = ({
             <DatePicker
               value={dateRange}
               onChange={handleDateChange}
-              bookedDates={bookedDates}
+              bookedDates={normalizedBookedDates}
             />
             <label>
               Guests:
