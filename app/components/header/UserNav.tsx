@@ -8,20 +8,24 @@ import useSignupModal from "@/app/hooks/useSignupModal";
 import MenuLink from "./MenuLink";
 import LogoutButton from "./LogoutButton";
 import { getCurrentUser } from "../../lib/actions";
-
-interface UserNavProps {
-  userId: string | null;
-}
+import LogoutModal from "./LogoutModal";
 
 const UserNav: React.FC = () => {
   const loginModal = useLoginModal();
   const signupModal = useSignupModal();
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
   const [userId, setUserId] = useState<string | null>(null);
 
   const toggleMenu = () => setIsOpen(!isOpen);
   const closeMenu = () => setIsOpen(false);
+
+  const handleLogout = () => {
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+    window.location.reload();
+  };
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -70,37 +74,39 @@ const UserNav: React.FC = () => {
                   router.push("/myreservations");
                 }}
               />
-              <LogoutButton
-                closeMenu={closeMenu}
-                onClick={() => {
-                  router.refresh();
-                }}
+              <MenuLink
+                className='px-5 py-4 cursor-pointer hover:bg-gray-100 transition rounded-xl text-purple-main'
+                label='Log out'
+                onClick={() => setIsLogoutModalOpen(true)}
               />
             </>
           ) : (
             <>
-              <button
+              <MenuLink
+                className='px-5 py-4 cursor-pointer hover:bg-gray-100 transition rounded-xl text-purple-main'
+                label='Log in'
                 onClick={() => {
                   closeMenu?.();
                   loginModal.open();
                 }}
+              />
+              <MenuLink
                 className='px-5 py-4 cursor-pointer hover:bg-gray-100 transition rounded-xl text-purple-main'
-              >
-                Log in
-              </button>
-              <button
+                label='Sign up'
                 onClick={() => {
                   closeMenu?.();
                   signupModal.open();
                 }}
-                className='px-5 py-4 cursor-pointer hover:bg-gray-100 transition rounded-xl text-purple-main'
-              >
-                Sign up
-              </button>
+              />
             </>
           )}
         </div>
       )}
+      <LogoutModal
+        isOpen={isLogoutModalOpen}
+        onClose={() => setIsLogoutModalOpen(false)}
+        onConfirm={handleLogout}
+      />
     </div>
   );
 };
