@@ -8,9 +8,10 @@ import DatePicker from "./Calendar";
 import { createReservation } from "../lib/actions";
 import useLoginModal from "../hooks/useLoginModal";
 import { differenceInDays, eachDayOfInterval, format } from "date-fns";
-import CheckoutModal from "./CheckoutModal";
 import { useRouter } from "next/navigation";
 import apiService from "../services/apiService";
+import SuccessModal from "./SuccessModal";
+import ErrorModal from "./ErrorModal";
 
 const initialDateRange = {
   startDate: new Date(),
@@ -36,6 +37,9 @@ const ReservationSidebar: React.FC<ReservationSidebarProps> = ({
   userId,
 }) => {
   const loginModal = useLoginModal();
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
+  const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const [fee, setFee] = useState<number>(0);
   const [nights, setNights] = useState<number>(1);
@@ -79,15 +83,13 @@ const ReservationSidebar: React.FC<ReservationSidebarProps> = ({
           check_out: formattedEndDate,
         };
 
-        console.log("Request payload:", requestBody); // Debugging log
-
         try {
           const result = await createReservation(requestBody);
           console.log("Booking successful:", result); // Log successful response
-          router.refresh(); // Refresh or redirect as needed
+          setIsSuccessModalOpen(true); // Refresh or redirect as needed
         } catch (error: any) {
-          console.error("Error during booking:", error.message);
-          alert(error.message || "Booking failed. Please try again.");
+          setErrorMessage(error.message || "Booking failed. Please try again.");
+          setIsErrorModalOpen(true);
         }
       }
     } else {
@@ -189,12 +191,32 @@ const ReservationSidebar: React.FC<ReservationSidebarProps> = ({
         </div>
       </div>
       {userId ? (
-        <button
-          onClick={performBooking}
-          className={`button-main-nobg xl:mt-4 ${buttonColorStyle}`}
-        >
-          Book Now
-        </button>
+        <div>
+          <button
+            onClick={performBooking}
+            className={`button-main-nobg xl:mt-4 ${buttonColorStyle}`}
+          >
+            Book Now
+          </button>
+
+          <SuccessModal
+            isOpen={isSuccessModalOpen}
+            onClose={() => {
+              setIsSuccessModalOpen(false);
+              router.push("/myreservations"); // Redirect after closing modal
+            }}
+            title='Booking Confirmed'
+            description='Your reservation has been successfully created.'
+            linkText='View Your Reservations'
+            linkHref='/myreservations'
+          />
+          <ErrorModal
+            isOpen={isErrorModalOpen}
+            onClose={() => setIsErrorModalOpen(false)}
+            title='Booking Failed'
+            description={errorMessage}
+          />
+        </div>
       ) : (
         <button
           onClick={performBooking}

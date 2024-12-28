@@ -1,18 +1,13 @@
-"use client";
-
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogTitle,
-} from "@/components/ui/dialog";
 import React from "react";
+import Modal from "./Modal";
 
 interface SuccessModalProps {
   isOpen: boolean;
   onClose: () => void;
   title: string;
   description: string;
+  linkText?: string;
+  linkHref?: string;
 }
 
 const SuccessModal: React.FC<SuccessModalProps> = ({
@@ -20,20 +15,34 @@ const SuccessModal: React.FC<SuccessModalProps> = ({
   onClose,
   title,
   description,
+  linkText,
+  linkHref,
 }) => {
-  return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className='bg-white p-6 rounded'>
-        <DialogTitle>{title}</DialogTitle>
-        <DialogDescription>{description}</DialogDescription>
-        <button
+  const content = (
+    <div className='flex flex-col items-center justify-center gap-8 p-regular-16'>
+      <p className='text-gray-600 p-regular-18 text-center'>{description}</p>
+      {linkText && linkHref && (
+        <a
+          href={linkHref}
+          className='text-blue-500 hover:underline text-center'
           onClick={onClose}
-          className='mt-4 bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600'
         >
-          Close
-        </button>
-      </DialogContent>
-    </Dialog>
+          {linkText}
+        </a>
+      )}
+      <button onClick={onClose} className='button-main'>
+        Close
+      </button>
+    </div>
+  );
+
+  return (
+    <Modal
+      isOpen={isOpen}
+      onRequestClose={onClose}
+      label={title}
+      content={content}
+    />
   );
 };
 
