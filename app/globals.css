@@ -221,6 +221,10 @@
     @apply px-6 rounded-md h-[54px] p-medium-20 bg-gray-700 text-white transition cursor-pointer flex-center font-germania capitalize tracking-wider hover:bg-gray-600 shadow-2xl;
   }
 
+  .button-mini {
+    @apply px-5 rounded-md h-[42px] p-medium-20 text-white transition cursor-pointer flex-center font-germania capitalize tracking-wider;
+  }
+
   .button-main-secondary {
     @apply px-2 md:px-0 rounded-md h-[54px] p-medium-18 md:p-medium-20 bg-gray-700 text-white transition cursor-pointer flex-center font-germania capitalize tracking-wider hover:bg-gray-600 shadow-2xl;
   }

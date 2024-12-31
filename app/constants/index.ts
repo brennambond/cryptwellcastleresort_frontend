@@ -11,4 +11,8 @@ export const headerLinks = [
     label: "Dining",
     route: "/dining",
   },
+  {
+    label: "Reservations",
+    route: "/myreservations",
+  },
 ];

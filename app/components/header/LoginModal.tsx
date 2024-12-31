@@ -36,10 +36,9 @@ const LoginModal: React.FC = () => {
     <Modal
       isOpen={loginModal.isOpen}
       onRequestClose={loginModal.close}
-      label='Log In'
+      label='Please Log In'
       content={
-        <div className='flex flex-col items-center justify-center'>
-          <h2 className='text-lg font-bold mb-4'>Log In</h2>
+        <div className='flex flex-col items-center justify-center gap-4'>
           {errors.length > 0 && (
             <div className='text-red-500 mb-4'>
               {errors.map((error, index) => (
@@ -64,7 +63,7 @@ const LoginModal: React.FC = () => {
           <button
             onClick={handleLogin}
             disabled={loading}
-            className='bg-purple-500 text-white py-2 px-4 rounded-md hover:bg-purple-600'
+            className='bg-gray-700 text-white py-2 px-4 rounded-md hover:bg-gray-600 button-mini'
           >
             {loading ? "Logging in..." : "Log In"}
           </button>

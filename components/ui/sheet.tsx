@@ -5,12 +5,28 @@ import * as SheetPrimitive from "@radix-ui/react-dialog";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 import { Cross2Icon } from "@radix-ui/react-icons";
+import { HiOutlineX } from "react-icons/hi";
 
 const Sheet = SheetPrimitive.Root;
 
 const SheetTrigger = SheetPrimitive.Trigger;
 
-const SheetClose = SheetPrimitive.Close;
+const SheetClose = React.forwardRef<
+  React.ElementRef<typeof SheetPrimitive.Close>,
+  React.ComponentPropsWithoutRef<typeof SheetPrimitive.Close>
+>(({ className, ...props }, ref) => (
+  <SheetPrimitive.Close
+    ref={ref}
+    className={cn(
+      "absolute left-6 top-4 p-3 hover:bg-gray-900 rounded-full cursor-pointer",
+      className
+    )}
+    {...props}
+  >
+    <HiOutlineX className='text-white h-6 w-6' />
+  </SheetPrimitive.Close>
+));
+SheetClose.displayName = SheetPrimitive.Close.displayName;
 
 const SheetPortal = SheetPrimitive.Portal;
 
@@ -54,22 +70,21 @@ interface SheetContentProps
 
 const SheetContent = React.forwardRef<
   React.ElementRef<typeof SheetPrimitive.Content>,
-  SheetContentProps
->(({ side = "left", className, children, ...props }, ref) => (
-  <SheetPortal>
-    <SheetOverlay />
+  React.ComponentPropsWithoutRef<typeof SheetPrimitive.Content>
+>(({ className, children, ...props }, ref) => (
+  <SheetPrimitive.Portal>
+    <SheetPrimitive.Overlay className='fixed inset-0 z-50 bg-black/80' />
     <SheetPrimitive.Content
       ref={ref}
-      className={cn(sheetVariants({ side }), className)}
+      className={cn(
+        "fixed inset-0 bg-gray-800 z-50 p-4 focus:outline-none py-20",
+        className
+      )}
       {...props}
     >
-      <SheetPrimitive.Close className='right-4  top-4  opacity-70  transition-opacity hover:opacity-100 focus:outline-none disabled:pointer-events-none data-[state=open]:bg-zinc-100 '>
-        <Cross2Icon className='h-6 w-6 p-1  text-white-main bg-gray-800 rounded-full' />
-        <span className='sr-only'>Close</span>
-      </SheetPrimitive.Close>
       {children}
     </SheetPrimitive.Content>
-  </SheetPortal>
+  </SheetPrimitive.Portal>
 ));
 SheetContent.displayName = SheetPrimitive.Content.displayName;
 

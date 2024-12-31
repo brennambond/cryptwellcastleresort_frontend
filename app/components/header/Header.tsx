@@ -36,14 +36,14 @@ const Header = () => {
       viewport={{ once: true }}
       className='bg-gray-800 font-cormorant w-full relative z-[99]'
     >
-      <div className='mini-wrapper flex-between h-full'>
-        <div id='header-right' className='flex-between h-full xl:px-8 xl:py-2'>
+      <div className='mini-wrapper flex-between h-full md:px-0 lg:px-8'>
+        <div id='header-right' className='flex-between h-full lg:py-3'>
           <div className='px-3 flex-center link-hover h-full lg:hidden'>
             <MobileNav />
           </div>
           <Link
             href='/'
-            className='w-20 md:w-[88px] lg:w-24 px-[1.125rem] py-2'
+            className='w-20 sm:w-[88px] lg:w-24 px-[1.125rem] py-2'
           >
             <Image
               src='/hotel-logo-main.png'
@@ -64,11 +64,7 @@ const Header = () => {
           className='flex px-8 py-2 justify-end link-hover h-full'
         >
           <div className='flex items-center justify-center text-white-main'>
-            {loading ? (
-              <div className='text-gray-400'>Loading...</div>
-            ) : (
-              <UserNav />
-            )}
+            <UserNav />
           </div>
         </div>
       </div>

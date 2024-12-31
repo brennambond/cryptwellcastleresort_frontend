@@ -13,20 +13,20 @@ const LogoutModal: React.FC<LogoutModalProps> = ({
   onConfirm,
 }) => {
   const content = (
-    <div className='flex flex-col items-center justify-center gap-4 p-regular-16'>
-      <p className='text-gray-600 text-center'>
+    <div className='flex flex-col items-center justify-center gap-6 p-regular-16'>
+      <p className='text-gray-600 text-center p-medium-20'>
         Are you sure you want to log out?
       </p>
-      <div className='flex gap-4'>
+      <div className='flex gap-16'>
         <button
           onClick={onConfirm}
-          className='bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600'
+          className='bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600 button-mini'
         >
           Yes
         </button>
         <button
           onClick={onClose}
-          className='bg-gray-300 text-gray-800 py-2 px-4 rounded-md hover:bg-gray-400'
+          className='bg-gray-400 text-gray-800 py-2 px-4 rounded-md hover:bg-gray-500 button-mini'
         >
           No
         </button>
