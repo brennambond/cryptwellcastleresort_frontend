@@ -9,7 +9,7 @@ import Link from "next/link";
 const HeroSection = () => {
   const router = useRouter();
   return (
-    <section className="bg-[url('../public/background-2.png')] bg-cover bg-center py-20 lg:py-40">
+    <section className="bg-[url('../public/background-2.png')] bg-cover bg-center py-20 lg:py-40 flex-center flex-col">
       <div className='wrapper grid grid-cols-1 gap-5 lg:grid-cols-2 lg:gap-10 xl:gap-20 2xl:gap-40 text-white-main text-center'>
         <MotionDiv
           variants={fadeIn("right", "tween", 0.3, 0.7)}
@@ -29,11 +29,6 @@ const HeroSection = () => {
             three-story estate beckons you to explore its spectral halls and
             ghostly chambers.
           </p>
-          <div className='pt-6 lg:pt-10 flex-center'>
-            <Link className='button-main max-w-[60%]' href='/chambers'>
-              Explore Our Chambers
-            </Link>
-          </div>
         </MotionDiv>
 
         <MotionDiv
@@ -51,6 +46,11 @@ const HeroSection = () => {
             className='max-h-[70vh] md:max-h-[60vh] object-cover object-center rounded-lg shadow-2xl'
           />
         </MotionDiv>
+      </div>
+      <div className='pt-6 lg:pt-20 flex-center'>
+        <Link className='button-main ' href='/chambers'>
+          Explore Our Chambers
+        </Link>
       </div>
     </section>
   );

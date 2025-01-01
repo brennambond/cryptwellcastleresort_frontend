@@ -1,14 +1,16 @@
-import { useState } from "react";
 import {
   Sheet,
+  SheetClose,
   SheetContent,
   SheetTrigger,
-  SheetClose,
 } from "@/components/ui/sheet";
+import { DialogTitle, DialogDescription } from "@radix-ui/react-dialog";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import Image from "next/image";
 import NavLinks from "./NavLinks";
 import { HiBars3BottomLeft } from "react-icons/hi2";
 import { Separator } from "@/components/ui/separator";
+import { useState } from "react";
 
 const MobileNav = () => {
   const [open, setOpen] = useState(false);
@@ -26,6 +28,12 @@ const MobileNav = () => {
           />
         </SheetTrigger>
         <SheetContent className='flex flex-col gap-6 bg-gray-800 lg:hidden z-[99]'>
+          <VisuallyHidden>
+            <DialogTitle>Mobile Navigation</DialogTitle>
+            <DialogDescription>
+              Use the navigation links below to explore the site.
+            </DialogDescription>
+          </VisuallyHidden>
           <SheetClose /> {/* Styled Close Button */}
           <Image
             src='/hotel-logo-main.png'

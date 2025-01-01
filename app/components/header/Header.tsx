@@ -43,7 +43,7 @@ const Header = () => {
           </div>
           <Link
             href='/'
-            className='w-20 sm:w-[88px] lg:w-24 px-[1.125rem] py-2'
+            className='w-20 sm:w-[88px] lg:w-24 px-[1.125rem] py-2 lg:mr-8'
           >
             <Image
               src='/hotel-logo-main.png'
