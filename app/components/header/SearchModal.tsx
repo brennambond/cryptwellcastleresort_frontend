@@ -1,20 +1,29 @@
 "use client";
 
 import { useState } from "react";
-import useSearchModal, { SearchQuery } from "../../hooks/useSearchModal";
+import useSearchModal from "../../hooks/useSearchModal";
 import Modal from "../Modal";
 import { Range } from "react-date-range";
 import DatePicker from "../Calendar";
 import CustomButton from "../CustomButton";
 
-const initialDateRange = {
+const initialDateRange: Range = {
   startDate: new Date(),
   endDate: new Date(),
   key: "selection",
 };
 
-const SearchModal = () => {
-  let content = <></>;
+interface SearchModalProps {
+  isOpen: boolean;
+  onRequestClose: () => void;
+  setFilteredRooms: (query: any) => void;
+}
+
+const SearchModal: React.FC<SearchModalProps> = ({
+  isOpen,
+  onRequestClose,
+  setFilteredRooms,
+}) => {
   const searchModal = useSearchModal();
   const [numGuests, setNumGuests] = useState<string>("1");
   const [numBeds, setNumBeds] = useState<string>("0");
@@ -23,167 +32,156 @@ const SearchModal = () => {
   const [dateRange, setDateRange] = useState<Range>(initialDateRange);
 
   const closeAndSearch = () => {
-    const newSearchQuery: SearchQuery = {
-      wing: "",
-      checkIn: dateRange.startDate,
-      checkOut: dateRange.endDate,
+    const newSearchQuery = {
       guests: parseInt(numGuests),
       beds: parseInt(numBeds),
       bedrooms: parseInt(numBedrooms),
       bathrooms: parseInt(numBathrooms),
-      category: "",
+      checkIn: dateRange.startDate,
+      checkOut: dateRange.endDate,
     };
-    searchModal.setQuery(newSearchQuery);
-    searchModal.close();
+
+    console.log("Updating search query:", newSearchQuery);
+
+    setFilteredRooms(newSearchQuery);
+    console.log("Closing modal after applying filters");
+    onRequestClose(); // Close the modal properly
   };
 
   const _setDateRange = (selection: Range) => {
+    setDateRange(selection);
     if (searchModal.step === "checkin") {
       searchModal.open("checkout");
     } else if (searchModal.step === "checkout") {
       searchModal.open("details");
     }
-    setDateRange(selection);
   };
 
-  const contentCheckin = (
-    <div className='flex flex-col '>
-      <h2 className='mb-6 text-2xl self-center'>
-        When would you like to check in?
-      </h2>
-
-      <div className='flex-center'>
+  const contentMap = {
+    checkin: (
+      <div className='flex-center flex-col'>
+        <h2 className='mb-6 text-2xl self-center'>
+          When would you like to check in?
+        </h2>
         <DatePicker
           value={dateRange}
           onChange={(value) => _setDateRange(value.selection)}
+          bookedDates={[]} // Replace with actual booked dates
         />
-      </div>
-
-      <div className='mt-6 flex w-[80%] sm:w-[60%] md:w-[50%] self-center'>
         <CustomButton
           className='button-main'
           label='Continue to Check Out Date'
           onClick={() => searchModal.open("checkout")}
         />
       </div>
-    </div>
-  );
-
-  const contentCheckout = (
-    <div className='flex flex-col '>
-      <h2 className='mb-6 text-2xl self-center'>
-        When would you like to check out?
-      </h2>
-
-      <div className='flex-center'>
+    ),
+    checkout: (
+      <div className='flex-center flex-col'>
+        <h2 className='mb-6 text-2xl self-center'>
+          When would you like to check out?
+        </h2>
         <DatePicker
           value={dateRange}
           onChange={(value) => _setDateRange(value.selection)}
+          bookedDates={[]} // Replace with actual booked dates
         />
-      </div>
-
-      <div className='mt-6 flex flex-row gap-4 w-full'>
-        <CustomButton
-          className='button-main-secondary'
-          label='Back to Check In Date'
-          onClick={() => searchModal.open("checkin")}
-        />
-        <CustomButton
-          className='button-main-secondary'
-          label='Continue to Booking Details'
-          onClick={() => searchModal.open("details")}
-        />
-      </div>
-    </div>
-  );
-
-  const contentDetails = (
-    <>
-      <h2 className='mb-6 text-2xl'>Give us the details of your visit:</h2>
-
-      <div className='space-y-4'>
-        <div className='space-y-4'>
-          <label>Number of guests (max of 8):</label>
-          <input
-            type='number'
-            min='1'
-            max='8'
-            value={numGuests}
-            placeholder='Number of guests...'
-            onChange={(e) => setNumGuests(e.target.value)}
-            className='w-full h-14 px-4 border border-gray-300 rounded-xl'
+        <div className='mt-6 flex flex-row gap-4 w-full'>
+          <CustomButton
+            className='button-main-secondary'
+            label='Back to Check In Date'
+            onClick={() => searchModal.open("checkin")}
           />
-        </div>
-
-        <div className='space-y-4'>
-          <label>Number of beds (max of 3):</label>
-          <input
-            type='number'
-            min='1'
-            max='3'
-            value={numBeds}
-            placeholder='Number of beds...'
-            onChange={(e) => setNumBeds(e.target.value)}
-            className='w-full h-14 px-4 border border-gray-300 rounded-xl'
-          />
-        </div>
-
-        <div className='space-y-4'>
-          <label>Number of bedrooms (max of 2):</label>
-          <input
-            type='number'
-            min='1'
-            max='2'
-            value={numBedrooms}
-            placeholder='Number of bedrooms...'
-            onChange={(e) => setNumBedrooms(e.target.value)}
-            className='w-full h-14 px-4 border border-gray-300 rounded-xl'
-          />
-        </div>
-
-        <div className='space-y-4'>
-          <label>Number of bathrooms (max of 2):</label>
-          <input
-            type='number'
-            min='1'
-            max='2'
-            value={numBathrooms}
-            placeholder='Number of bathrooms...'
-            onChange={(e) => setNumBathrooms(e.target.value)}
-            className='w-full h-14 px-4 border border-gray-300 rounded-xl'
+          <CustomButton
+            className='button-main-secondary'
+            label='Continue to Booking Details'
+            onClick={() => searchModal.open("details")}
           />
         </div>
       </div>
+    ),
+    details: (
+      <>
+        <h2 className='mb-6 text-2xl self-center'>
+          Give us the details of your visit:
+        </h2>
+        <div className='space-y-4'>
+          <div>
+            <label>Number of guests (max of 8):</label>
+            <input
+              type='number'
+              min='1'
+              max='8'
+              value={numGuests}
+              placeholder='Number of guests...'
+              onChange={(e) => setNumGuests(e.target.value)}
+              className='w-full h-14 px-4 border border-gray-300 rounded-xl'
+            />
+          </div>
 
-      <div className='mt-6 flex flex-row gap-4'>
-        <CustomButton
-          className='button-main-secondary'
-          label='Back to Check Out Date'
-          onClick={() => searchModal.open("checkout")}
-        />
-        <CustomButton
-          className='button-main-secondary'
-          label='Search for Available Rooms'
-          onClick={closeAndSearch}
-        />
-      </div>
-    </>
-  );
+          <div>
+            <label>Number of beds (max of 3):</label>
+            <input
+              type='number'
+              min='1'
+              max='3'
+              value={numBeds}
+              placeholder='Number of beds...'
+              onChange={(e) => setNumBeds(e.target.value)}
+              className='w-full h-14 px-4 border border-gray-300 rounded-xl'
+            />
+          </div>
 
-  if (searchModal.step == "checkin") {
-    content = contentCheckin;
-  } else if (searchModal.step == "checkout") {
-    content = contentCheckout;
-  } else if (searchModal.step == "details") {
-    content = contentDetails;
-  }
+          <div>
+            <label>Number of bedrooms (max of 2):</label>
+            <input
+              type='number'
+              min='1'
+              max='2'
+              value={numBedrooms}
+              placeholder='Number of bedrooms...'
+              onChange={(e) => setNumBedrooms(e.target.value)}
+              className='w-full h-14 px-4 border border-gray-300 rounded-xl'
+            />
+          </div>
+
+          <div>
+            <label>Number of bathrooms (max of 2):</label>
+            <input
+              type='number'
+              min='1'
+              max='2'
+              value={numBathrooms}
+              placeholder='Number of bathrooms...'
+              onChange={(e) => setNumBathrooms(e.target.value)}
+              className='w-full h-14 px-4 border border-gray-300 rounded-xl'
+            />
+          </div>
+        </div>
+
+        <div className='mt-6 flex flex-row gap-4'>
+          <CustomButton
+            className='button-main-secondary'
+            label='Back to Check Out Date'
+            onClick={() => searchModal.open("checkout")}
+          />
+          <CustomButton
+            className='button-main-secondary'
+            label='Apply Filters'
+            onClick={closeAndSearch}
+          />
+        </div>
+      </>
+    ),
+  };
+
+  const selectedContent = contentMap[searchModal.step];
 
   return (
     <Modal
       label='Search'
-      content={content}
-      close={searchModal.close}
-      isOpen={searchModal.isOpen}
+      isOpen={isOpen}
+      onRequestClose={onRequestClose}
+      content={selectedContent}
     />
   );
 };

@@ -1,21 +1,20 @@
-"use client";
-
+import React from "react";
 import { motion } from "framer-motion";
-import useSearchModal, { SearchQuery } from "../../hooks/useSearchModal";
 
 interface SearchFiltersProps {
-  defaultField?: keyof SearchQuery; // Update the type to match keyof SearchQuery
+  setIsSearchModalOpen: (isOpen: boolean) => void;
 }
 
 const SearchFilters: React.FC<SearchFiltersProps> = ({
-  defaultField = "checkIn",
+  setIsSearchModalOpen,
 }) => {
-  const searchModal = useSearchModal();
-
   return (
     <motion.span
       whileHover={{ scale: 1.1 }}
-      onClick={() => searchModal.open(defaultField)}
+      onClick={() => {
+        console.log("Opening SearchModal");
+        setIsSearchModalOpen(true);
+      }}
       className='p-bold-18 md:p-bold-20 xl:max-w-[90%] cursor-pointer underline transition-colors hover:text-purple-500'
     >
       Search Now:

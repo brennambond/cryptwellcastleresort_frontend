@@ -38,7 +38,7 @@ export default function RootLayout({
         <Header />
         <div className='flex-1'>{children}</div>
         <LoginModal />
-        <SearchModal />
+
         <SignupModal />
         <Footer />
       </body>

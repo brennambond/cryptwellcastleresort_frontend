@@ -1,12 +1,10 @@
-"use client";
-
 import { useState, useEffect, useCallback } from "react";
 import ChambersListItem from "./ChambersListItem";
-import useSearchModal from "../hooks/useSearchModal";
 import { format } from "date-fns";
 import apiService from "../services/apiService";
 import { staggerContainer } from "@/utils/motion";
 import MotionDiv from "@/components/motion/MotionDiv";
+import Spinner from "./Spinner";
 
 interface Chamber {
   id: string;
@@ -22,35 +20,39 @@ interface Chamber {
   availability_status: boolean;
 }
 
-const ChambersList: React.FC = () => {
-  const searchModal = useSearchModal();
+const ChambersList: React.FC<{ searchQuery: any }> = ({ searchQuery }) => {
   const [chambers, setChambers] = useState<Chamber[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [hasFetched, setHasFetched] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const fetchChambers = useCallback(async () => {
-    setLoading(true);
+    setLoading(true); // Start loading
     try {
       const queryParams = new URLSearchParams();
-      const {
-        wing,
-        guests,
-        beds,
-        bedrooms,
-        bathrooms,
-        checkIn,
-        checkOut,
-        category,
-      } = searchModal.query;
 
-      if (wing) queryParams.append("wing", wing);
-      if (guests) queryParams.append("guests", guests.toString());
-      if (beds) queryParams.append("beds", beds.toString());
-      if (bedrooms) queryParams.append("bedrooms", bedrooms.toString());
-      if (bathrooms) queryParams.append("bathrooms", bathrooms.toString());
-      if (checkIn) queryParams.append("checkIn", format(checkIn, "yyyy-MM-dd"));
-      if (checkOut)
-        queryParams.append("checkOut", format(checkOut, "yyyy-MM-dd"));
-      if (category) queryParams.append("category", category);
+      if (searchQuery.wing) queryParams.append("wing", searchQuery.wing);
+      if (searchQuery.guests)
+        queryParams.append("guests", searchQuery.guests.toString());
+      if (searchQuery.beds)
+        queryParams.append("beds", searchQuery.beds.toString());
+      if (searchQuery.bedrooms)
+        queryParams.append("bedrooms", searchQuery.bedrooms.toString());
+      if (searchQuery.bathrooms)
+        queryParams.append("bathrooms", searchQuery.bathrooms.toString());
+      if (searchQuery.checkIn)
+        queryParams.append(
+          "checkIn",
+          format(searchQuery.checkIn, "yyyy-MM-dd")
+        );
+      if (searchQuery.checkOut)
+        queryParams.append(
+          "checkOut",
+          format(searchQuery.checkOut, "yyyy-MM-dd")
+        );
+      if (searchQuery.category)
+        queryParams.append("category", searchQuery.category);
+
+      console.log("Query parameters sent to API:", queryParams.toString());
 
       const response = await apiService.get(
         `/rooms/rooms/?${queryParams.toString()}`
@@ -58,17 +60,26 @@ const ChambersList: React.FC = () => {
 
       console.log("Chambers API Response:", response);
 
-      setChambers(response); // Directly set the response if it's an array
+      setChambers(response);
     } catch (error) {
       console.error("Failed to fetch chambers:", error);
     } finally {
-      setLoading(false);
+      setLoading(false); // Stop loading
+      setHasFetched(true);
     }
-  }, [searchModal.query]);
+  }, [searchQuery]);
 
   useEffect(() => {
     fetchChambers();
   }, [fetchChambers]);
+
+  if (loading) {
+    return (
+      <div className='flex items-center justify-center w-full h-[300px]'>
+        <Spinner size='md' color='text-gray-500' />
+      </div>
+    );
+  }
 
   return (
     <MotionDiv
@@ -78,9 +89,7 @@ const ChambersList: React.FC = () => {
       viewport={{ once: true }}
       className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 rounded-xl gap-8 lg:gap-10 xl:gap-12 sm:w-[90%] max-w-[90%]'
     >
-      {loading ? (
-        <p>Loading chambers...</p>
-      ) : chambers.length > 0 ? (
+      {chambers.length > 0 ? (
         chambers.map((chamber, index) => (
           <ChambersListItem key={chamber.id} chamber={chamber} index={index} />
         ))
