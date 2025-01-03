@@ -6,6 +6,7 @@ import MotionDiv from "@/components/motion/MotionDiv";
 import { fadeIn } from "@/utils/motion";
 import { useEffect, useState } from "react";
 import { differenceInDays } from "date-fns";
+import Spinner from "./Spinner";
 
 interface Reservation {
   id: string;
@@ -66,7 +67,7 @@ const MyReservationsPage: React.FC = () => {
         </h1>
       </MotionDiv>
       {loading ? (
-        <div>Loading...</div>
+        <Spinner size='md' color='text-gray-500' />
       ) : reservations.length ? (
         <div className='grid grid-cols-1 rounded-xl gap-8 lg:gap-10 xl:gap-12 sm:w-[80%] md:w-[70%] lg:w-[60%] 2xl:w-[50%] pt-10 pb-20 lg:pt-20'>
           {reservations.map((reservation, index) => (

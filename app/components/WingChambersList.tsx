@@ -6,6 +6,7 @@ import ChambersListItem from "./ChambersListItem";
 import MotionDiv from "@/components/motion/MotionDiv";
 import { staggerContainer } from "@/utils/motion";
 import { useParams } from "next/navigation";
+import Spinner from "./Spinner";
 
 export type ChamberType = {
   id: string;
@@ -44,7 +45,7 @@ const WingChambersList = () => {
     fetchChambers();
   }, [wingId]);
 
-  if (loading) return <div>Loading chambers...</div>;
+  if (loading) return <Spinner size='md' color='text-gray-500' />;
   if (chambers.length === 0)
     return <div>No chambers available for this wing.</div>;
 

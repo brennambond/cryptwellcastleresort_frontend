@@ -9,6 +9,7 @@ import ReservationSidebar from "@/app/components/ReservationSidebar";
 import { getCurrentUser } from "@/app/lib/actions";
 import ChamberServices from "@/app/components/services/ChamberServices";
 import { useRouter } from "next/navigation";
+import Spinner from "@/app/components/Spinner";
 
 export type SearchParamProps = {
   params: { id: string };
@@ -42,7 +43,7 @@ const ChamberDetailPage: React.FC<SearchParamProps> = ({ params }) => {
   }, [params.id, router]);
 
   if (!chamber) {
-    return <div>Loading...</div>; // Show a loading state while fetching data
+    <Spinner size='md' color='text-gray-500' />;
   }
 
   const getBackgroundStyle = (title: string): string => {
