@@ -77,11 +77,18 @@ const ReservationSidebar: React.FC<ReservationSidebarProps> = ({
         const formattedStartDate = format(dateRange.startDate, "yyyy-MM-dd");
         const formattedEndDate = format(dateRange.endDate, "yyyy-MM-dd");
 
+        const dayCount = differenceInDays(
+          new Date(formattedEndDate),
+          new Date(formattedStartDate)
+        );
+        const totalPrice = dayCount * chamber.price_per_night;
+
         const requestBody = {
           room: chamber.id,
           guests: parseInt(guests, 10) || 1,
           check_in: formattedStartDate,
           check_out: formattedEndDate,
+          total_price: totalPrice,
         };
 
         try {
