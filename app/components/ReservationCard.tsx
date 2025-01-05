@@ -41,8 +41,6 @@ const ReservationCard: React.FC<ReservationProps> = ({
 
   const wing = reservation.room.wing || "Default";
 
-  console.log("Wing:", reservation.room.wing);
-
   const colorStyle =
     wing.name === "Bloodborn"
       ? "text-red-900"
@@ -94,7 +92,7 @@ const ReservationCard: React.FC<ReservationProps> = ({
       initial='hidden'
       whileInView='show'
       viewport={{ once: true }}
-      className='bg-white-main rounded-xl flex flex-col gap-2 text-gray-800 z-[50]'
+      className='bg-white-main rounded-xl flex flex-col gap-2 text-gray-800 '
       key={reservation.id}
     >
       <Image

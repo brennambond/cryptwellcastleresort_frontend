@@ -24,8 +24,8 @@ const EditReservationModal: React.FC<EditReservationModalProps> = ({
   bookedDates,
 }) => {
   const [dateRange, setDateRange] = useState<Range>({
-    startDate: new Date(`${reservation.check_in}T00:00:00`), // Normalize to local time
-    endDate: new Date(`${reservation.check_out}T00:00:00`), // Normalize to local time
+    startDate: new Date(`${reservation.check_in}T00:00:00`),
+    endDate: new Date(`${reservation.check_out}T00:00:00`),
     key: "selection",
   });
   const [guests, setGuests] = useState(reservation.guests);
@@ -33,17 +33,15 @@ const EditReservationModal: React.FC<EditReservationModalProps> = ({
 
   const normalizedBookedDates = bookedDates.map((date) => {
     const [year, month, day] = date.toISOString().split("T")[0].split("-");
-    return new Date(Number(year), Number(month) - 1, Number(day)); // Local date
+    return new Date(Number(year), Number(month) - 1, Number(day));
   });
 
   useEffect(() => {
-    console.log("Fetched Booked Dates (Post Normalization):", bookedDates);
-    console.log(
-      "Date Range (Normalized):",
-      dateRange.startDate,
-      dateRange.endDate
-    );
-  }, [bookedDates, dateRange]);
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, []);
 
   const handleSubmit = async () => {
     try {
@@ -77,27 +75,27 @@ const EditReservationModal: React.FC<EditReservationModalProps> = ({
         onRequestClose={onClose}
         label='Edit Reservation'
         content={
-          <div className='flex flex-col gap-4'>
+          <div className='flex-center flex-col gap-4 max-h-[80vh]'>
             <h2 className='text-lg font-bold'>Edit Your Reservation</h2>
             <DatePicker
               value={dateRange}
               onChange={handleDateChange}
               bookedDates={normalizedBookedDates}
             />
-            <label>
+            <label className='flex flex-col'>
               Guests:
               <input
                 type='number'
                 value={guests}
                 min='1'
                 onChange={(e) => setGuests(Number(e.target.value))}
-                className='border p-2 rounded-md w-full'
+                className='border p-2 rounded-md '
               />
             </label>
             <button
               type='button'
               onClick={handleSubmit}
-              className='bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600'
+              className='button-main my-4 py-4'
             >
               Save Changes
             </button>

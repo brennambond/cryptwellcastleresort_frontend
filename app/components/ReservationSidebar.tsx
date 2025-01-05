@@ -12,6 +12,7 @@ import { useRouter } from "next/navigation";
 import apiService from "../services/apiService";
 import SuccessModal from "./SuccessModal";
 import ErrorModal from "./ErrorModal";
+import CustomDropdown from "./CustomDropdown";
 
 const initialDateRange = {
   startDate: new Date(),
@@ -54,7 +55,6 @@ const ReservationSidebar: React.FC<ReservationSidebarProps> = ({
     (_, index) => index + 1
   );
 
-  // Dynamic styling based on chamber title
   const backgroundColorStyle = chamber.title.startsWith("Bloodborn")
     ? "bg-red-900"
     : chamber.title.startsWith("Haunted")
@@ -71,6 +71,26 @@ const ReservationSidebar: React.FC<ReservationSidebarProps> = ({
     ? "bg-emerald-900 hover:bg-emerald-800"
     : "bg-fuchsia-950 hover:bg-fuchsia-900";
 
+  const dropdownColorStyle = chamber.title.startsWith("Bloodborn")
+    ? "bg-red-900"
+    : chamber.title.startsWith("Haunted")
+    ? "bg-cyan-900"
+    : chamber.title.startsWith("Reborn")
+    ? "bg-emerald-900"
+    : "bg-fuchsia-950";
+
+  useEffect(() => {
+    const dayCount = differenceInDays(
+      dateRange.endDate as Date,
+      dateRange.startDate as Date
+    );
+    const subtotal = dayCount * chamber.price_per_night;
+    const fee = subtotal * 0.05;
+    setFee(fee);
+    setTotalPrice(subtotal + fee);
+    setNights(dayCount || 1);
+  }, [dateRange, chamber.price_per_night]);
+
   const performBooking = async () => {
     if (userId) {
       if (dateRange.startDate && dateRange.endDate) {
@@ -81,7 +101,9 @@ const ReservationSidebar: React.FC<ReservationSidebarProps> = ({
           new Date(formattedEndDate),
           new Date(formattedStartDate)
         );
-        const totalPrice = dayCount * chamber.price_per_night;
+        const subtotal = dayCount * chamber.price_per_night;
+        const fee = subtotal * 0.05;
+        const totalPrice = subtotal + fee;
 
         const requestBody = {
           room: chamber.id,
@@ -157,82 +179,92 @@ const ReservationSidebar: React.FC<ReservationSidebarProps> = ({
         onChange={(value) => setDateRange(value.selection)}
       />
 
-      <div className='w-[90%] lg:w-[80%] xl:w-[60%] flex-center flex-col border border-gray-400 rounded-xl bg-white p-semibold-18'>
-        <div className='flex-center flex-col lg:grid lg:grid-cols-3 w-full'>
-          <div className='text-gray-700 lg:border-b rounded-t-xl w-full'>
+      <div
+        id='test'
+        className={`w-full lg:w-[80%] xl:w-[60%] flex flex-col border border-gray-400 rounded-xl bg-white shadow-md p-semibold-18`}
+      >
+        <div
+          className={`${backgroundColorStyle} block w-full p-medium-24 font-germania  tracking-wider p-4 rounded-t-xl`}
+        >
+          Confirm Booking Details:
+        </div>
+        <div className='flex flex-col px-4 py-8 gap-8'>
+          {/* Guests Selector */}
+          <div className='border border-gray-300 rounded-md shadow-md'>
             <label
-              className={`${backgroundColorStyle} text-white-main w-full p-bold-20 rounded-t-xl text-center py-1`}
+              className={`${backgroundColorStyle} block w-full p-bold-20 py-1 rounded-t-md tracking-wider border-b border-gray-400`}
             >
               Guests
             </label>
-
-            <select
+            <CustomDropdown
               value={guests}
-              onChange={(e) => setGuests(e.target.value)}
-              className='mx-8 my-2'
-            >
-              {guestsRange.map((number) => (
-                <option key={number} value={number}>
-                  {number}
-                </option>
-              ))}
-            </select>
+              options={guestsRange.map(String)}
+              onChange={(value) => setGuests(value)}
+              dropdownColorStyle={dropdownColorStyle}
+            />
           </div>
 
-          <div className='flex-center flex-col text-gray-700 text-center lg:rounded-tr-xl lg:border-l w-full'>
+          <div className='border border-gray-300 rounded-md shadow-md'>
             <label
-              className={`${backgroundColorStyle} text-white-main w-full p-bold-20 lg:rounded-tr-xl py-1`}
+              className={`${backgroundColorStyle} block w-full p-bold-20 py-1 rounded-t-md tracking-wider border-b border-gray-400`}
             >
-              Costs
+              Pricing Details
             </label>
-            <p className='border-b w-full py-2'>
-              Chamber Price x {nights} {nights > 1 ? "Nights" : "Night"}: $
-              {chamber.price_per_night * nights}
-            </p>
-
-            <p className='py-2 border-b w-full'>Resort Fee: ${fee}</p>
+            <div className='p-4 space-y-2 text-black'>
+              <div className='flex justify-between'>
+                <p>
+                  Chamber Price x {nights} {nights > 1 ? "nights" : "night"}:
+                </p>
+                <p className='font-bold'>${chamber.price_per_night * nights}</p>
+              </div>
+              <div className='flex justify-between'>
+                <p>Resort Fee (5%):</p>
+                <p className='font-bold'>${fee.toFixed(2)}</p>
+              </div>
+              <div className='flex justify-between bg-gray-100 p-4 rounded-md mt-4'>
+                <p className='text-lg font-bold'>Total Cost:</p>
+                <p className='text-lg font-bold'>${totalPrice.toFixed(2)}</p>
+              </div>
+            </div>
           </div>
-        </div>
 
-        <div className='mb-4 flex justify-between items-center mt-4 p-bold-24 text-gray-700'>
-          <p>Total: ${totalPrice}</p>
+          {/* Action Button */}
+          {userId ? (
+            <div className='flex-center'>
+              <button
+                onClick={performBooking}
+                className={`${buttonColorStyle} button-main-nobg shadow-md`}
+              >
+                Book Now
+              </button>
+              <SuccessModal
+                isOpen={isSuccessModalOpen}
+                onClose={() => {
+                  setIsSuccessModalOpen(false);
+                  router.push("/myreservations"); // Redirect after closing modal
+                }}
+                title='Booking Confirmed'
+                description='Your reservation has been successfully created!'
+                linkText='View Your Reservations'
+                linkHref='/myreservations'
+              />
+              <ErrorModal
+                isOpen={isErrorModalOpen}
+                onClose={() => setIsErrorModalOpen(false)}
+                title='Booking Failed'
+                description={errorMessage}
+              />
+            </div>
+          ) : (
+            <button
+              onClick={performBooking}
+              className='bg-gray-400 hover:bg-gray-500 button-main-nobg shadow-md'
+            >
+              Sign-In to Book This Room
+            </button>
+          )}
         </div>
       </div>
-      {userId ? (
-        <div>
-          <button
-            onClick={performBooking}
-            className={`button-main-nobg xl:mt-4 ${buttonColorStyle}`}
-          >
-            Book Now
-          </button>
-
-          <SuccessModal
-            isOpen={isSuccessModalOpen}
-            onClose={() => {
-              setIsSuccessModalOpen(false);
-              router.push("/myreservations"); // Redirect after closing modal
-            }}
-            title='Booking Confirmed'
-            description='Your reservation has been successfully created!'
-            linkText='View Your Reservations'
-            linkHref='/myreservations'
-          />
-          <ErrorModal
-            isOpen={isErrorModalOpen}
-            onClose={() => setIsErrorModalOpen(false)}
-            title='Booking Failed'
-            description={errorMessage}
-          />
-        </div>
-      ) : (
-        <button
-          onClick={performBooking}
-          className={`button-main-nobg xl:mt-4 ${buttonColorStyle}`}
-        >
-          Sign-In to Book This Room
-        </button>
-      )}
     </div>
   );
 };

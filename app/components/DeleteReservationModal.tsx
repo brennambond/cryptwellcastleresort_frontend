@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Modal from "./Modal";
 import SuccessModal from "./SuccessModal";
 import apiService from "../services/apiService";
@@ -16,6 +16,13 @@ const DeleteReservationModal: React.FC<DeleteReservationModalProps> = ({
 }) => {
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
 
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, []);
+
   const handleDelete = async () => {
     try {
       await apiService.deleteReservation(reservationId);
@@ -28,8 +35,8 @@ const DeleteReservationModal: React.FC<DeleteReservationModalProps> = ({
 
   const handleSuccessClose = () => {
     setIsSuccessModalOpen(false);
-    onClose(); // Close the DeleteReservationModal
-    window.location.reload(); // Refresh the page
+    onClose();
+    window.location.reload();
   };
 
   return (
@@ -39,7 +46,7 @@ const DeleteReservationModal: React.FC<DeleteReservationModalProps> = ({
         onRequestClose={onClose}
         label='Delete Reservation'
         content={
-          <div className='flex flex-col gap-4'>
+          <div className='flex flex-col gap-4 z-[99]'>
             <p>Are you sure you want to delete this reservation?</p>
             <div className='flex justify-end gap-4'>
               <button
