@@ -18,6 +18,9 @@ interface Reservation {
     id: string;
     title: string;
     image_url: string;
+    wing: {
+      name: string;
+    };
   };
   number_of_nights: number; // Required
 }
@@ -43,6 +46,7 @@ const MyReservationsPage: React.FC = () => {
             ),
           })
         );
+
         setReservations(reservationsWithNights);
       } catch (error) {
         console.error("Error fetching reservations:", error);

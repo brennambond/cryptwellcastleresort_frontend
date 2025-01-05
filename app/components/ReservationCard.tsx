@@ -23,8 +23,10 @@ interface ReservationProps {
       id: string;
       title: string;
       image_url: string;
+      wing: {
+        name: string;
+      };
     };
-    wing?: string; // Optional wing property
   };
   index: number;
 }
@@ -37,23 +39,25 @@ const ReservationCard: React.FC<ReservationProps> = ({
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [bookedDates, setBookedDates] = useState<Date[]>([]);
 
-  const wing = reservation.wing || "Default"; // Use a default if wing is missing
+  const wing = reservation.room.wing || "Default";
+
+  console.log("Wing:", reservation.room.wing);
 
   const colorStyle =
-    wing === "Bloodborn"
+    wing.name === "Bloodborn"
       ? "text-red-900"
-      : wing === "Haunted"
+      : wing.name === "Haunted"
       ? "text-cyan-900"
-      : wing === "Reborn"
+      : wing.name === "Reborn"
       ? "text-emerald-900"
       : "text-fuchsia-900";
 
   const buttonColorStyle =
-    wing === "Bloodborn"
+    wing.name === "Bloodborn"
       ? "bg-red-900 hover:bg-red-800"
-      : wing === "Haunted"
+      : wing.name === "Haunted"
       ? "bg-cyan-900 hover:bg-cyan-800"
-      : wing === "Reborn"
+      : wing.name === "Reborn"
       ? "bg-emerald-900 hover:bg-emerald-800"
       : "bg-fuchsia-950 hover:bg-fuchsia-900";
 
@@ -81,6 +85,8 @@ const ReservationCard: React.FC<ReservationProps> = ({
     await fetchBookedDates();
     setIsEditModalOpen(true);
   };
+
+  console.log("My Reservation:", reservation);
 
   return (
     <MotionDiv

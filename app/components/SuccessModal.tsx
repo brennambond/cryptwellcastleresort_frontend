@@ -24,7 +24,7 @@ const SuccessModal: React.FC<SuccessModalProps> = ({
       {linkText && linkHref && (
         <a
           href={linkHref}
-          className='text-blue-500 hover:underline text-center'
+          className='text-gray-600 p-bold-20 hover:underline text-center'
           onClick={onClose}
         >
           {linkText}

@@ -23,19 +23,16 @@ const ChamberDetailPage: React.FC<SearchParamProps> = ({ params }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Fetch chamber data
         const chamberData = await apiService.get(
           `${process.env.NEXT_PUBLIC_API_URL}/rooms/rooms/${params.id}`
         );
         setChamber(chamberData);
 
-        // Fetch user data securely
         const user = await getCurrentUser();
-        console.log("Fetched user in ChamberDetailPage:", user);
         setUserId(user?.id || null);
       } catch (error) {
         console.error("Error fetching data:", error);
-        router.push("/404"); // Redirect to a 404 page if the chamber doesn't exist
+        router.push("/404");
       }
     };
 
@@ -43,7 +40,11 @@ const ChamberDetailPage: React.FC<SearchParamProps> = ({ params }) => {
   }, [params.id, router]);
 
   if (!chamber) {
-    <Spinner size='md' color='text-gray-500' />;
+    return (
+      <div className='flex items-center justify-center w-full h-screen'>
+        <Spinner size='md' color='text-gray-500' />
+      </div>
+    );
   }
 
   const getBackgroundStyle = (title: string): string => {
@@ -76,13 +77,12 @@ const ChamberDetailPage: React.FC<SearchParamProps> = ({ params }) => {
           <Image
             width={1000}
             height={1000}
-            src={chamber.image_url} // Use valid image_url from backend
+            src={chamber.image_url}
             alt={chamber.title}
             className='object-cover object-center rounded-xl shadow-2xl overflow-hidden h-[50vh] md:h-[60vh] xl:max-h-[60vh] xl:max-w-[60vw]'
           />
         </MotionDiv>
 
-        {/* Chamber Details */}
         <MotionDiv
           variants={fadeIn("up", "tween", 0.3, 0.7)}
           initial='hidden'

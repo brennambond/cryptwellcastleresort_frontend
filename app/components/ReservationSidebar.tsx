@@ -25,6 +25,7 @@ export type Chamber = {
   price_per_night: number;
   title: string;
   image_url: string;
+  wing: string;
 };
 
 interface ReservationSidebarProps {
@@ -206,7 +207,7 @@ const ReservationSidebar: React.FC<ReservationSidebarProps> = ({
               router.push("/myreservations"); // Redirect after closing modal
             }}
             title='Booking Confirmed'
-            description='Your reservation has been successfully created.'
+            description='Your reservation has been successfully created!'
             linkText='View Your Reservations'
             linkHref='/myreservations'
           />
