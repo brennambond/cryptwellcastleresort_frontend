@@ -17,9 +17,9 @@ const CustomDropdown: React.FC<CustomDropdownProps> = ({
   dropdownColorStyle,
 }) => {
   return (
-    <div className='relative w-full'>
+    <div className='relative w-full text-black'>
       <Listbox value={value} onChange={onChange}>
-        <Listbox.Button className='w-full py-2 pl-3 pr-10 text-left bg-white border border-gray-300 rounded-b-md focus:outline-none focus:ring-1 focus:ring-gray-400 text-black'>
+        <Listbox.Button className='w-full py-2 pl-3 pr-10 text-left bg-white border border-gray-300 rounded-b-md focus:outline-none focus:ring-1 focus:ring-gray-400 '>
           {value}
         </Listbox.Button>
         <Listbox.Options className='absolute w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg z-10'>

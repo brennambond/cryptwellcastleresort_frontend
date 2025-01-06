@@ -241,6 +241,29 @@
     @apply bg-gray-300 !important;
   }
 
+  .underline-red-900 {
+    text-decoration-color: #7f1d1d;
+  }
+  .underline-cyan-900 {
+    text-decoration-color: #164e63;
+  }
+  .underline-emerald-900 {
+    text-decoration-color: #064e3b;
+  }
+  .underline-fuchsia-950 {
+    text-decoration-color: #701a75;
+  }
+
+  .rdrDayToday button {
+    color: inherit !important;
+    text-decoration: underline !important;
+    text-decoration-color: var(--rdr-today-underline-color, #000);
+  }
+
+  .rdrDayToday button:hover {
+    text-decoration-color: var(--rdr-today-underline-color-hover, #000);
+  }
+
   .custom-shape-divider-bottom-1733169569 {
     position: absolute;
     bottom: 0;

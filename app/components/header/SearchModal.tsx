@@ -4,7 +4,7 @@ import { useState } from "react";
 import useSearchModal from "../../hooks/useSearchModal";
 import Modal from "../Modal";
 import { Range } from "react-date-range";
-import DatePicker from "../Calendar";
+import Calendar from "../Calendar";
 import CustomButton from "../CustomButton";
 
 const initialDateRange: Range = {
@@ -63,7 +63,7 @@ const SearchModal: React.FC<SearchModalProps> = ({
         <h2 className='mb-6 text-2xl self-center'>
           When would you like to check in?
         </h2>
-        <DatePicker
+        <Calendar
           value={dateRange}
           onChange={(value) => _setDateRange(value.selection)}
           bookedDates={[]} // Replace with actual booked dates
@@ -80,7 +80,7 @@ const SearchModal: React.FC<SearchModalProps> = ({
         <h2 className='mb-6 text-2xl self-center'>
           When would you like to check out?
         </h2>
-        <DatePicker
+        <Calendar
           value={dateRange}
           onChange={(value) => _setDateRange(value.selection)}
           bookedDates={[]} // Replace with actual booked dates

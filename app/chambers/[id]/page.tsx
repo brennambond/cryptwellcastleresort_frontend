@@ -5,7 +5,7 @@ import { fadeIn } from "@/utils/motion";
 import apiService from "@/app/services/apiService";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import ReservationSidebar from "@/app/components/ReservationSidebar";
+import ReservationSidebar from "@/app/components/reservations/reservationsidebar/ReservationSidebar";
 import { getCurrentUser } from "@/app/lib/actions";
 import ChamberServices from "@/app/components/services/ChamberServices";
 import { useRouter } from "next/navigation";

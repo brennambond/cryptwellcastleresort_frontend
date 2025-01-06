@@ -3,16 +3,16 @@
 import { useState, useEffect } from "react";
 import { Range } from "react-date-range";
 
-import DatePicker from "./Calendar";
+import Calendar from "../../Calendar";
 
-import { createReservation } from "../lib/actions";
-import useLoginModal from "../hooks/useLoginModal";
+import { createReservation } from "../../../lib/actions";
+import useLoginModal from "../../../hooks/useLoginModal";
 import { differenceInDays, eachDayOfInterval, format } from "date-fns";
 import { useRouter } from "next/navigation";
-import apiService from "../services/apiService";
-import SuccessModal from "./SuccessModal";
-import ErrorModal from "./ErrorModal";
-import CustomDropdown from "./CustomDropdown";
+import apiService from "../../../services/apiService";
+import GuestsSelector from "./GuestsSelector";
+import PricingDetails from "./PricingDetails";
+import ActionButton from "./ActionButton";
 
 const initialDateRange = {
   startDate: new Date(),
@@ -49,7 +49,9 @@ const ReservationSidebar: React.FC<ReservationSidebarProps> = ({
   const [dateRange, setDateRange] = useState<Range>(initialDateRange);
   const [bookedDates, setBookedDates] = useState<Date[]>([]);
   const [guests, setGuests] = useState<string>("1");
+
   const router = useRouter();
+
   const guestsRange = Array.from(
     { length: chamber.guests },
     (_, index) => index + 1
@@ -173,10 +175,11 @@ const ReservationSidebar: React.FC<ReservationSidebarProps> = ({
         </h2>
       </header>
 
-      <DatePicker
+      <Calendar
         value={dateRange}
         bookedDates={bookedDates}
         onChange={(value) => setDateRange(value.selection)}
+        backgroundColorStyle={backgroundColorStyle}
       />
 
       <div
@@ -189,80 +192,34 @@ const ReservationSidebar: React.FC<ReservationSidebarProps> = ({
           Confirm Booking Details:
         </div>
         <div className='flex flex-col px-4 py-8 gap-8'>
-          {/* Guests Selector */}
-          <div className='border border-gray-300 rounded-md shadow-md'>
-            <label
-              className={`${backgroundColorStyle} block w-full p-bold-20 py-1 rounded-t-md tracking-wider border-b border-gray-400`}
-            >
-              Guests
-            </label>
-            <CustomDropdown
-              value={guests}
-              options={guestsRange.map(String)}
-              onChange={(value) => setGuests(value)}
-              dropdownColorStyle={dropdownColorStyle}
-            />
-          </div>
+          {/* GuestsSelector.tsx */}
+          <GuestsSelector
+            guests={guests}
+            guestsRange={guestsRange.map(String)}
+            onChange={(value) => setGuests(value)}
+            backgroundColorStyle={backgroundColorStyle}
+          />
 
-          <div className='border border-gray-300 rounded-md shadow-md'>
-            <label
-              className={`${backgroundColorStyle} block w-full p-bold-20 py-1 rounded-t-md tracking-wider border-b border-gray-400`}
-            >
-              Pricing Details
-            </label>
-            <div className='p-4 space-y-2 text-black'>
-              <div className='flex justify-between'>
-                <p>
-                  Chamber Price x {nights} {nights > 1 ? "nights" : "night"}:
-                </p>
-                <p className='font-bold'>${chamber.price_per_night * nights}</p>
-              </div>
-              <div className='flex justify-between'>
-                <p>Resort Fee (5%):</p>
-                <p className='font-bold'>${fee.toFixed(2)}</p>
-              </div>
-              <div className='flex justify-between bg-gray-100 p-4 rounded-md mt-4'>
-                <p className='text-lg font-bold'>Total Cost:</p>
-                <p className='text-lg font-bold'>${totalPrice.toFixed(2)}</p>
-              </div>
-            </div>
-          </div>
+          {/* PricingDetails.tsx */}
+          <PricingDetails
+            nights={nights}
+            chamberPrice={chamber.price_per_night}
+            fee={fee}
+            totalPrice={totalPrice}
+            backgroundColorStyle={backgroundColorStyle}
+          />
 
-          {/* Action Button */}
-          {userId ? (
-            <div className='flex-center'>
-              <button
-                onClick={performBooking}
-                className={`${buttonColorStyle} button-main-nobg shadow-md`}
-              >
-                Book Now
-              </button>
-              <SuccessModal
-                isOpen={isSuccessModalOpen}
-                onClose={() => {
-                  setIsSuccessModalOpen(false);
-                  router.push("/myreservations"); // Redirect after closing modal
-                }}
-                title='Booking Confirmed'
-                description='Your reservation has been successfully created!'
-                linkText='View Your Reservations'
-                linkHref='/myreservations'
-              />
-              <ErrorModal
-                isOpen={isErrorModalOpen}
-                onClose={() => setIsErrorModalOpen(false)}
-                title='Booking Failed'
-                description={errorMessage}
-              />
-            </div>
-          ) : (
-            <button
-              onClick={performBooking}
-              className='bg-gray-400 hover:bg-gray-500 button-main-nobg shadow-md'
-            >
-              Sign-In to Book This Room
-            </button>
-          )}
+          {/* ActionButton.tsx */}
+          <ActionButton
+            userId={userId}
+            performBooking={performBooking}
+            buttonColorStyle={buttonColorStyle}
+            isSuccessModalOpen={isSuccessModalOpen}
+            setIsSuccessModalOpen={setIsSuccessModalOpen}
+            isErrorModalOpen={isErrorModalOpen}
+            setIsErrorModalOpen={setIsErrorModalOpen}
+            errorMessage={errorMessage}
+          />
         </div>
       </div>
     </div>

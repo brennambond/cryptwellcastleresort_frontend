@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import Modal from "./Modal";
 import SuccessModal from "./SuccessModal";
 import apiService from "../services/apiService";
-import DatePicker from "./Calendar";
+import Calendar from "./Calendar";
 import { Range, RangeKeyDict } from "react-date-range";
 
 interface EditReservationModalProps {
@@ -77,7 +77,7 @@ const EditReservationModal: React.FC<EditReservationModalProps> = ({
         content={
           <div className='flex-center flex-col gap-4 max-h-[80vh]'>
             <h2 className='text-lg font-bold'>Edit Your Reservation</h2>
-            <DatePicker
+            <Calendar
               value={dateRange}
               onChange={handleDateChange}
               bookedDates={normalizedBookedDates}
