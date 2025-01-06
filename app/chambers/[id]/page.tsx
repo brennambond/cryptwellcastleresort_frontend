@@ -10,6 +10,7 @@ import { getCurrentUser } from "@/app/lib/actions";
 import ChamberServices from "@/app/components/services/ChamberServices";
 import { useRouter } from "next/navigation";
 import Spinner from "@/app/components/Spinner";
+import { getImageUrl } from "@/utils/config";
 
 export type SearchParamProps = {
   params: { id: string };
