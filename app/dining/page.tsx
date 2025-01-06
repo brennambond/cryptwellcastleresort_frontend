@@ -3,7 +3,6 @@ import { fadeIn } from "@/utils/motion";
 import Image from "next/image";
 import DiningServices from "../components/services/DiningServices";
 import { Metadata } from "next";
-import TestSpinner from "../components/TestSpinner";
 
 export const metadata: Metadata = {
   title: "Dining | Cryptwell Castle Resort",
