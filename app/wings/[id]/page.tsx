@@ -30,6 +30,8 @@ const WingDetailPage = async ({ params }: { params: { id: string } }) => {
       : "bg-[url('../public/background-purple.png')]",
   ];
 
+  console.log("Haunted Wing Image URL:", wing.image_url);
+
   return (
     <main className={`wrapper-main ${backgroundStyle} gap-20`}>
       <MotionDiv
