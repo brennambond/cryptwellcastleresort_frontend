@@ -8,7 +8,7 @@ interface CalendarProps {
   value: Range;
   onChange: (ranges: any) => void;
   bookedDates: Date[];
-  backgroundColorStyle: string;
+  backgroundColorStyle?: string;
 }
 
 const tailwindToHexMap: Record<string, string> = {
@@ -29,7 +29,9 @@ const Calendar: React.FC<CalendarProps> = ({
     return new Date(Number(year), Number(month) - 1, Number(day));
   });
 
-  const dynamicColor = tailwindToHexMap[backgroundColorStyle] || "#000";
+  const dynamicColor = backgroundColorStyle
+    ? tailwindToHexMap[backgroundColorStyle] || "#000"
+    : "#000";
 
   return (
     <DateRange
@@ -39,7 +41,7 @@ const Calendar: React.FC<CalendarProps> = ({
       disabledDates={disabledDates}
       rangeColors={[dynamicColor]}
       direction='vertical'
-      showDateDisplay={true}
+      showDateDisplay={false}
       className={`w-[90%] lg:w-[80%] xl:w-[60%] border border-gray-400 rounded-xl mb-4 flex-center flex-col `}
     />
   );

@@ -44,17 +44,14 @@ const WingCard: React.FC<WingProps> = ({
           {wing.name}
         </h3>
       ) : (
-        <div className='relative bottom-0 flex-center w-full h-full gap-4 xl:gap-8 flex-col bg-[rgba(0,0,0,0.5)] rounded-md wrapper-sm '>
-          <h2 className='h3-bold lg:h2-bold leading-5 text-white-main font-germania tracking-[0.04em] lg:px-4'>
+        <div className='relative flex-center h-full w-full gap-4 xl:gap-8 flex-col bg-[rgba(0,0,0,0.5)] rounded-md wrapper-sm'>
+          <h2 className='h3-bold leading-5 text-white-main font-germania tracking-[0.04em] px-4'>
             Enter the Wing of the {wing.name}
           </h2>
-          <p className='font-semibold text-[18px] xl:text-[20px] text-white font-cormorant lg:px-4 max-h-[80%] max-w-[90%] text-wrap backdrop-blur-sm'>
+          <p className='font-semibold text-[18px] xl:text-[20px] text-white font-cormorant max-w-[90%] text-wrap backdrop-blur-sm'>
             {wing.description}
           </p>
-          <Link
-            className='rounded-md h-10 lg:h-[54px] p-medium-18 md:p-medium-20 bg-gray-700 text-white transition cursor-pointer flex-center px-6 font-germania capitalize tracking-wide hover:bg-gray-600 shadow-2xl'
-            href={`/wings/${wing.id}`}
-          >
+          <Link className='button-main py-2' href={`/wings/${wing.id}`}>
             Explore further
           </Link>
         </div>

@@ -2,6 +2,7 @@ interface PricingDetailsProps {
   nights: number;
   chamberPrice: number;
   fee: number;
+  subtotal: number;
   totalPrice: number;
   backgroundColorStyle: string;
 }
@@ -12,6 +13,7 @@ const PricingDetails: React.FC<PricingDetailsProps> = ({
   fee,
   totalPrice,
   backgroundColorStyle,
+  subtotal,
 }) => (
   <div className='border border-gray-300 rounded-md shadow-md'>
     <label
@@ -22,9 +24,10 @@ const PricingDetails: React.FC<PricingDetailsProps> = ({
     <div className='p-4 space-y-2 text-black'>
       <div className='flex justify-between'>
         <p>
-          Chamber Price x {nights} {nights > 1 ? "nights" : "night"}:
+          Chamber Price (${chamberPrice}) x {nights}{" "}
+          {nights > 1 ? "nights" : "night"}:
         </p>
-        <p className='font-bold'>${chamberPrice}</p>
+        <p className='font-bold'>${subtotal}</p>
       </div>
       <div className='flex justify-between'>
         <p>Resort Fee (5%):</p>

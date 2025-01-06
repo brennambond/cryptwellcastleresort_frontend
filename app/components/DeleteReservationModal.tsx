@@ -46,18 +46,20 @@ const DeleteReservationModal: React.FC<DeleteReservationModalProps> = ({
         onRequestClose={onClose}
         label='Delete Reservation'
         content={
-          <div className='flex flex-col gap-4 z-[99]'>
-            <p>Are you sure you want to delete this reservation?</p>
-            <div className='flex justify-end gap-4'>
+          <div className='flex flex-col items-center justify-center gap-6 p-regular-16 z-[99]'>
+            <p className='text-gray-600 text-center p-medium-20'>
+              Are you sure you want to delete this reservation?
+            </p>
+            <div className='flex gap-16'>
               <button
                 onClick={onClose}
-                className='bg-gray-500 text-white py-2 px-4 rounded-md hover:bg-gray-600'
+                className='bg-gray-400 text-gray-800 py-2 px-4 rounded-md hover:bg-gray-500 button-mini'
               >
                 Cancel
               </button>
               <button
                 onClick={handleDelete}
-                className='bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600'
+                className='bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600 button-mini'
               >
                 Confirm
               </button>

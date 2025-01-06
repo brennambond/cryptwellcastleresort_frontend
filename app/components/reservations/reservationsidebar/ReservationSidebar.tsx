@@ -113,8 +113,7 @@ const ReservationSidebar: React.FC<ReservationSidebarProps> = ({
       />
 
       <div
-        id='test'
-        className={`w-full lg:w-[80%] xl:w-[60%] flex flex-col border border-gray-400 rounded-xl bg-white shadow-md p-semibold-18`}
+        className={` w-[90%] lg:w-[80%] xl:w-[60%]  flex flex-col border border-gray-400 rounded-xl bg-white shadow-md p-semibold-18`}
       >
         <div
           className={`${backgroundColorStyle} block w-full p-medium-24 font-germania  tracking-wider p-4 rounded-t-xl`}
@@ -134,6 +133,7 @@ const ReservationSidebar: React.FC<ReservationSidebarProps> = ({
           <PricingDetails
             nights={nights}
             chamberPrice={chamber.price_per_night}
+            subtotal={subtotal}
             fee={fee}
             totalPrice={totalPrice}
             backgroundColorStyle={backgroundColorStyle}
