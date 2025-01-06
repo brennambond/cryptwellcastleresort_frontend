@@ -31,7 +31,7 @@ const UserNav: React.FC = () => {
     const fetchUser = async () => {
       try {
         const user = await getCurrentUser();
-        setUserId(user.id);
+        setUserId(user?.id || null); // Safely handle null user
       } catch (error) {
         console.error("Error fetching user:", error);
         setUserId(null);

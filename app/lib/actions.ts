@@ -3,10 +3,32 @@ import apiService from "../services/apiService";
 const isClientSide = typeof window !== "undefined";
 
 // AUTH
-export const getCurrentUser = async () => {
-  return await fetchWithAuth(
-    `${process.env.NEXT_PUBLIC_API_URL}/auth/current/`
-  );
+export const getCurrentUser = async (): Promise<any | null> => {
+  const accessToken = localStorage.getItem("accessToken");
+  if (!accessToken) {
+    console.warn("No valid access token available. User may need to log in.");
+    return null;
+  }
+
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/auth/current/`,
+      {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      }
+    );
+
+    if (!response.ok) {
+      console.error("Failed to fetch user data:", response.statusText);
+      return null;
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error in fetchWithAuth:", error);
+    return null;
+  }
 };
 
 export const register = async (

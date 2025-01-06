@@ -29,10 +29,12 @@ const ChamberDetailPage: React.FC<SearchParamProps> = ({ params }) => {
         setChamber(chamberData);
 
         const user = await getCurrentUser();
-        setUserId(user?.id || null);
+        setUserId(user?.id || null); // Safely handle null user
       } catch (error) {
         console.error("Error fetching data:", error);
-        router.push("/404");
+        if (!chamber) {
+          router.push("/404"); // Redirect only if chamber data is not found
+        }
       }
     };
 
