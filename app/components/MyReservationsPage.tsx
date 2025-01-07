@@ -34,6 +34,7 @@ const MyReservationsPage: React.FC = () => {
       try {
         const response = await apiService.getReservations();
         console.log("Reservations API Response:", response);
+
         const reservationsWithNights = response.map(
           (reservation: Reservation) => ({
             ...reservation,
