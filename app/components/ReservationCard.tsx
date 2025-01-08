@@ -150,7 +150,10 @@ const ReservationCard: React.FC<ReservationProps> = ({
         <EditReservationModal
           reservation={reservation}
           onClose={() => setIsEditModalOpen(false)}
-          bookedDates={bookedDates}
+          bookedDates={bookedDates.map((date) => ({
+            startDate: date,
+            endDate: date,
+          }))}
         />
       )}
 
