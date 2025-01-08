@@ -37,14 +37,17 @@ export const performBooking = async (
   }
 
   try {
-    const days = Math.max(
+    const nights = Math.max(
       Math.ceil(
         (dateRange.endDate.getTime() - dateRange.startDate.getTime()) /
           (1000 * 60 * 60 * 24)
       ),
       1
     );
-    const totalPrice = (days * chamber.price_per_night).toFixed(2);
+
+    const subtotal = nights * chamber.price_per_night;
+    const fee = subtotal * 0.05;
+    const totalPrice = subtotal + fee;
 
     const reservationData = {
       user: userId,
@@ -52,10 +55,8 @@ export const performBooking = async (
       check_in: dateRange.startDate.toISOString().split("T")[0],
       check_out: dateRange.endDate.toISOString().split("T")[0],
       guests: parseInt(guests, 10),
-      total_price: totalPrice,
+      total_price: totalPrice.toFixed(2),
     };
-
-    console.log("Payload sent to createReservation:", reservationData);
 
     const result = await createReservation(reservationData);
     setIsSuccessModalOpen(true);

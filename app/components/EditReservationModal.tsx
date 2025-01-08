@@ -15,7 +15,7 @@ interface EditReservationModalProps {
     guests: number;
   };
   onClose: () => void;
-  bookedDates: Date[];
+  bookedDates: { startDate: Date; endDate: Date }[];
 }
 
 const EditReservationModal: React.FC<EditReservationModalProps> = ({
@@ -31,12 +31,25 @@ const EditReservationModal: React.FC<EditReservationModalProps> = ({
   const [guests, setGuests] = useState(reservation.guests);
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
 
-  // Filter out the current reservation dates from bookedDates
-  const filteredBookedDates = bookedDates.filter(
-    (date) =>
-      date.toISOString().split("T")[0] !== reservation.check_in &&
-      date.toISOString().split("T")[0] !== reservation.check_out
+  const flattenedBookedDates: Date[] = bookedDates.flatMap(
+    ({ startDate, endDate }) => {
+      const dates: Date[] = [];
+      let currentDate = new Date(startDate);
+      while (currentDate <= endDate) {
+        dates.push(new Date(currentDate));
+        currentDate.setDate(currentDate.getDate() + 1);
+      }
+      return dates;
+    }
   );
+
+  const filteredBookedDates: Date[] = flattenedBookedDates.filter((date) => {
+    const formattedDate = date.toISOString().split("T")[0];
+    return (
+      formattedDate !== reservation.check_in &&
+      formattedDate !== reservation.check_out
+    );
+  });
 
   useEffect(() => {
     document.body.style.overflow = "hidden";
