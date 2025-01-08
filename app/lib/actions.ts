@@ -130,26 +130,30 @@ export const logout = async () => {
 
 export const refreshAccessToken = async (): Promise<string | null> => {
   const refreshToken = localStorage.getItem("refreshToken");
-  if (!refreshToken) {
-    throw new Error("Refresh token is missing.");
-  }
+  if (!refreshToken) return null;
 
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/auth/token/refresh/`,
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ refresh: refreshToken }),
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/auth/token/refresh/`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ refresh: refreshToken }),
+      }
+    );
+
+    if (!response.ok) {
+      console.error("Failed to refresh token.");
+      return null;
     }
-  );
 
-  if (!response.ok) {
-    throw new Error(`Failed to refresh access token: ${response.statusText}`);
+    const data = await response.json();
+    localStorage.setItem("token", data.access); // Save new token
+    return data.access;
+  } catch (error) {
+    console.error("Error refreshing token:", error);
+    return null;
   }
-
-  const data = await response.json();
-  localStorage.setItem("accessToken", data.access);
-  return data.access;
 };
 
 export const isTokenExpired = (token: string): boolean => {
@@ -221,36 +225,73 @@ export const getReservation = async (reservationId: string) => {
   );
 };
 
-export const createReservation = async (data: {
-  room: string;
-  guests: number;
-  check_in: string;
-  check_out: string;
-}) => {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/reservations/create/`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-      },
-      body: JSON.stringify(data),
-    }
-  );
+// export const createReservation = async (data: {
+//   room: string;
+//   guests: number;
+//   check_in: string;
+//   check_out: string;
+// }) => {
+//   const response = await fetch(
+//     `${process.env.NEXT_PUBLIC_API_URL}/reservations/create/`,
+//     {
+//       method: "POST",
+//       headers: {
+//         "Content-Type": "application/json",
+//         Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+//       },
+//       body: JSON.stringify(data),
+//     }
+//   );
 
-  if (!response.ok) {
-    let errorMessage = "Failed to create reservation.";
-    try {
-      const errorData = await response.json(); // Read the response body
-      errorMessage = errorData.error || errorMessage;
-    } catch (err) {
-      console.error("Failed to parse error response:", err);
+//   if (!response.ok) {
+//     let errorMessage = "Failed to create reservation.";
+//     try {
+//       const errorData = await response.json(); // Read the response body
+//       errorMessage = errorData.error || errorMessage;
+//     } catch (err) {
+//       console.error("Failed to parse error response:", err);
+//     }
+//     throw new Error(errorMessage);
+//   }
+
+//   return await response.json(); // Read the body once
+// };
+
+export const createReservation = async (reservationData: any): Promise<any> => {
+  try {
+    let token = localStorage.getItem("accessToken");
+
+    if (token && isTokenExpired(token)) {
+      console.log("Token expired. Refreshing...");
+      token = await refreshAccessToken();
+      if (!token)
+        throw new Error("Failed to refresh token. Please log in again.");
     }
-    throw new Error(errorMessage);
+
+    console.log("Creating reservation with token:", token);
+
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/reservations/create/`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(reservationData),
+      }
+    );
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.error || "Failed to create reservation.");
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Error creating reservation:", error);
+    throw error;
   }
-
-  return await response.json(); // Read the body once
 };
 
 export const updateReservation = async (reservationId: string, data: any) => {

@@ -1,4 +1,8 @@
-import { fetchWithAuth } from "../lib/actions";
+import {
+  fetchWithAuth,
+  isTokenExpired,
+  refreshAccessToken,
+} from "../lib/actions";
 
 const apiService = {
   // Generic GET request
@@ -85,9 +89,33 @@ const apiService = {
     return await apiService.put(url, body);
   },
 
-  deleteReservation: async (reservationId: string) => {
-    const url = `${process.env.NEXT_PUBLIC_API_URL}/reservations/${reservationId}/delete/`;
-    return await apiService.delete(url);
+  deleteReservation: async (reservationId: string): Promise<void> => {
+    let token = localStorage.getItem("accessToken");
+
+    if (token && isTokenExpired(token)) {
+      console.log("Token expired. Refreshing...");
+      token = await refreshAccessToken();
+      if (!token)
+        throw new Error("Failed to refresh token. Please log in again.");
+    }
+
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/reservations/${reservationId}/delete/`,
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({})); // Handle potential JSON errors gracefully
+      throw new Error(errorData.error || "Failed to delete reservation.");
+    }
+
+    console.log("Reservation deleted successfully."); // 204 implies success
   },
 };
 

@@ -1,64 +1,70 @@
 import apiService from "@/app/services/apiService";
 import { differenceInDays, eachDayOfInterval, format } from "date-fns";
 
+export const fetchReservations = async (
+  chamberId: string
+): Promise<{ startDate: Date; endDate: Date }[]> => {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/rooms/rooms/${chamberId}/reservations/`
+    );
+    const data = await response.json();
+
+    return data.map((reservation: any) => ({
+      startDate: new Date(reservation.check_in),
+      endDate: new Date(reservation.check_out),
+    }));
+  } catch (error) {
+    console.error("Error fetching reservations:", error);
+    return [];
+  }
+};
+
 export const performBooking = async (
   userId: string | null,
-  dateRange: any,
+  dateRange: { startDate: Date; endDate: Date },
   guests: string,
   chamber: any,
   setIsSuccessModalOpen: (state: boolean) => void,
   setIsErrorModalOpen: (state: boolean) => void,
   setErrorMessage: (message: string) => void,
-  createReservation: any
+  createReservation: Function
 ) => {
-  if (!userId) return;
+  if (!userId) {
+    setIsErrorModalOpen(true);
+    setErrorMessage("You need to log in to make a reservation.");
+    return;
+  }
 
-  if (dateRange.startDate && dateRange.endDate) {
-    const formattedStartDate = format(dateRange.startDate, "yyyy-MM-dd");
-    const formattedEndDate = format(dateRange.endDate, "yyyy-MM-dd");
-
-    const dayCount = differenceInDays(
-      new Date(formattedEndDate),
-      new Date(formattedStartDate)
+  try {
+    const days = Math.max(
+      Math.ceil(
+        (dateRange.endDate.getTime() - dateRange.startDate.getTime()) /
+          (1000 * 60 * 60 * 24)
+      ),
+      1
     );
-    const subtotal = dayCount * chamber.price_per_night;
-    const fee = subtotal * 0.05;
-    const totalPrice = subtotal + fee;
+    const totalPrice = (days * chamber.price_per_night).toFixed(2);
 
-    const requestBody = {
+    const reservationData = {
+      user: userId,
       room: chamber.id,
-      guests: parseInt(guests, 10) || 1,
-      check_in: formattedStartDate,
-      check_out: formattedEndDate,
+      check_in: dateRange.startDate.toISOString().split("T")[0],
+      check_out: dateRange.endDate.toISOString().split("T")[0],
+      guests: parseInt(guests, 10),
       total_price: totalPrice,
     };
 
-    try {
-      await createReservation(requestBody);
-      setIsSuccessModalOpen(true);
-    } catch (error: any) {
-      setErrorMessage(error.message || "Booking failed. Please try again.");
-      setIsErrorModalOpen(true);
-    }
-  }
-};
+    console.log("Payload sent to createReservation:", reservationData);
 
-export const fetchReservations = async (
-  chamberId: string,
-  setBookedDates: (dates: Date[]) => void
-) => {
-  try {
-    const reservations = await apiService.getReservationsByRoom(chamberId);
-    if (!Array.isArray(reservations)) return;
-
-    const dates = reservations.flatMap((reservation: any) =>
-      eachDayOfInterval({
-        start: new Date(reservation.start_date),
-        end: new Date(reservation.end_date),
-      })
-    );
-    setBookedDates(dates);
+    const result = await createReservation(reservationData);
+    setIsSuccessModalOpen(true);
+    console.log("Reservation created successfully:", result);
   } catch (error) {
-    console.error("Error fetching reservations:", error);
+    console.error("Failed to perform booking:", error);
+    setIsErrorModalOpen(true);
+    setErrorMessage(
+      error instanceof Error ? error.message : "Failed to complete the booking."
+    );
   }
 };

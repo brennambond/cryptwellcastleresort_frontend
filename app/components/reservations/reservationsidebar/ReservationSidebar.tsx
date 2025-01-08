@@ -63,8 +63,8 @@ const ReservationSidebar: React.FC<ReservationSidebarProps> = ({
 
   const { subtotal, fee, totalPrice, nights } = useMemo(() => {
     const dayCount = differenceInDays(
-      dateRange.endDate as Date,
-      dateRange.startDate as Date
+      dateRange.endDate || new Date(),
+      dateRange.startDate || new Date()
     );
     const subtotal = dayCount * chamber.price_per_night;
     const fee = subtotal * 0.05;
@@ -79,14 +79,38 @@ const ReservationSidebar: React.FC<ReservationSidebarProps> = ({
   }, [dateRange, chamber.price_per_night]);
 
   useEffect(() => {
-    fetchReservations(chamber.id, setBookedDates);
-    return () => setBookedDates([]);
+    const loadBookedDates = async () => {
+      try {
+        const reservations = await fetchReservations(chamber.id);
+        const dates = reservations.flatMap(
+          (res: { startDate: Date; endDate: Date }) => {
+            const range: Date[] = [];
+            let currentDate = new Date(res.startDate);
+            while (currentDate <= res.endDate) {
+              range.push(new Date(currentDate));
+              currentDate.setDate(currentDate.getDate() + 1);
+            }
+            return range;
+          }
+        );
+        setBookedDates(dates);
+      } catch (error) {
+        console.error("Failed to fetch reservations:", error);
+      }
+    };
+
+    loadBookedDates();
   }, [chamber.id]);
 
-  const handleBooking = async () =>
-    performBooking(
+  const handleBooking = async () => {
+    const validDateRange = {
+      startDate: dateRange.startDate || new Date(),
+      endDate: dateRange.endDate || new Date(),
+    };
+
+    await performBooking(
       userId,
-      dateRange,
+      validDateRange,
       guests,
       chamber,
       setIsSuccessModalOpen,
@@ -94,6 +118,9 @@ const ReservationSidebar: React.FC<ReservationSidebarProps> = ({
       setErrorMessage,
       createReservation
     );
+  };
+
+  console.log(bookedDates);
 
   return (
     <div className='flex-center flex-col rounded-xl bg-white-main gap-6 pb-10 w-full sm:w-[90%] md:w-[80%] lg:w-[70%] 2xl:w-[60%]'>
