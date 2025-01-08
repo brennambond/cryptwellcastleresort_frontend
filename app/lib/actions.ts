@@ -128,9 +128,18 @@ export const logout = async () => {
   return true;
 };
 
+export const isTokenExpired = (token: string): boolean => {
+  const payload = JSON.parse(atob(token.split(".")[1]));
+  const now = Math.floor(Date.now() / 1000);
+  return payload.exp < now;
+};
+
 export const refreshAccessToken = async (): Promise<string | null> => {
   const refreshToken = localStorage.getItem("refreshToken");
-  if (!refreshToken) return null;
+  if (!refreshToken) {
+    console.warn("No refresh token found in localStorage.");
+    return null;
+  }
 
   try {
     const response = await fetch(
@@ -143,27 +152,17 @@ export const refreshAccessToken = async (): Promise<string | null> => {
     );
 
     if (!response.ok) {
-      console.error("Failed to refresh token.");
+      console.error("Failed to refresh token:", response.statusText);
       return null;
     }
 
     const data = await response.json();
-    localStorage.setItem("token", data.access); // Save new token
+    console.log("New access token received:", data.access);
+    localStorage.setItem("accessToken", data.access); // Save new token
     return data.access;
   } catch (error) {
-    console.error("Error refreshing token:", error);
+    console.error("Error refreshing access token:", error);
     return null;
-  }
-};
-
-export const isTokenExpired = (token: string): boolean => {
-  try {
-    const payload = JSON.parse(atob(token.split(".")[1]));
-    const currentTime = Math.floor(Date.now() / 1000);
-    return payload.exp < currentTime;
-  } catch (error) {
-    console.error("Error checking token expiration:", error);
-    return true; // Treat invalid tokens as expired
   }
 };
 
@@ -225,44 +224,12 @@ export const getReservation = async (reservationId: string) => {
   );
 };
 
-// export const createReservation = async (data: {
-//   room: string;
-//   guests: number;
-//   check_in: string;
-//   check_out: string;
-// }) => {
-//   const response = await fetch(
-//     `${process.env.NEXT_PUBLIC_API_URL}/reservations/create/`,
-//     {
-//       method: "POST",
-//       headers: {
-//         "Content-Type": "application/json",
-//         Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-//       },
-//       body: JSON.stringify(data),
-//     }
-//   );
-
-//   if (!response.ok) {
-//     let errorMessage = "Failed to create reservation.";
-//     try {
-//       const errorData = await response.json(); // Read the response body
-//       errorMessage = errorData.error || errorMessage;
-//     } catch (err) {
-//       console.error("Failed to parse error response:", err);
-//     }
-//     throw new Error(errorMessage);
-//   }
-
-//   return await response.json(); // Read the body once
-// };
-
 export const createReservation = async (reservationData: any): Promise<any> => {
   try {
     let token = localStorage.getItem("accessToken");
 
     if (token && isTokenExpired(token)) {
-      console.log("Token expired. Refreshing...");
+      console.warn("Access token expired. Refreshing...");
       token = await refreshAccessToken();
       if (!token)
         throw new Error("Failed to refresh token. Please log in again.");
@@ -284,6 +251,7 @@ export const createReservation = async (reservationData: any): Promise<any> => {
 
     if (!response.ok) {
       const errorData = await response.json();
+      console.error("Backend response error:", errorData);
       throw new Error(errorData.error || "Failed to create reservation.");
     }
 
