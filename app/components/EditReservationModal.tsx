@@ -6,6 +6,7 @@ import SuccessModal from "./SuccessModal";
 import apiService from "../services/apiService";
 import Calendar from "./Calendar";
 import { Range, RangeKeyDict } from "react-date-range";
+import { calculateTotalPrice } from "@/utils/reservationUtils";
 
 interface EditReservationModalProps {
   reservation: {
@@ -13,6 +14,11 @@ interface EditReservationModalProps {
     check_in: string;
     check_out: string;
     guests: number;
+    room: {
+      id: string;
+      title: string;
+      price_per_night: number;
+    };
   };
   onClose: () => void;
   bookedDates: { startDate: Date; endDate: Date }[];
@@ -30,7 +36,9 @@ const EditReservationModal: React.FC<EditReservationModalProps> = ({
   });
   const [guests, setGuests] = useState(reservation.guests);
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
+  const [totalPrice, setTotalPrice] = useState<number>(0);
 
+  // Transform bookedDates to match Calendar's expectations
   const flattenedBookedDates: Date[] = bookedDates.flatMap(
     ({ startDate, endDate }) => {
       const dates: Date[] = [];
@@ -43,11 +51,12 @@ const EditReservationModal: React.FC<EditReservationModalProps> = ({
     }
   );
 
+  // Filter out the current reservation's dates
   const filteredBookedDates: Date[] = flattenedBookedDates.filter((date) => {
     const formattedDate = date.toISOString().split("T")[0];
     return (
-      formattedDate !== reservation.check_in &&
-      formattedDate !== reservation.check_out
+      formattedDate < reservation.check_in ||
+      formattedDate > reservation.check_out
     );
   });
 
@@ -58,12 +67,31 @@ const EditReservationModal: React.FC<EditReservationModalProps> = ({
     };
   }, []);
 
+  // Calculate total price dynamically
+  useEffect(() => {
+    const startDate = dateRange.startDate || new Date();
+    const endDate = dateRange.endDate || new Date();
+
+    const nights = Math.max(
+      Math.ceil(
+        (endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24)
+      ),
+      1
+    );
+    const { total } = calculateTotalPrice(
+      nights,
+      reservation.room.price_per_night
+    );
+    setTotalPrice(total);
+  }, [dateRange, reservation.room.price_per_night]);
+
   const handleSubmit = async () => {
     try {
       const body = {
         check_in: dateRange.startDate?.toISOString().split("T")[0],
         check_out: dateRange.endDate?.toISOString().split("T")[0],
         guests,
+        total_price: totalPrice.toFixed(2),
       };
       await apiService.updateReservation(reservation.id, body);
       setIsSuccessModalOpen(true);
@@ -90,23 +118,28 @@ const EditReservationModal: React.FC<EditReservationModalProps> = ({
         onRequestClose={onClose}
         label='Edit Reservation'
         content={
-          <div className='flex-center flex-col gap-4 max-h-[80vh]'>
+          <div className='flex flex-col items-center gap-6'>
             <h2 className='text-lg font-bold'>Edit Your Reservation</h2>
             <Calendar
               value={dateRange}
               onChange={handleDateChange}
-              bookedDates={filteredBookedDates} // Pass transformed dates
+              bookedDates={filteredBookedDates}
             />
-            <label className='flex flex-col'>
-              Guests:
-              <input
-                type='number'
-                value={guests}
-                min='1'
-                onChange={(e) => setGuests(Number(e.target.value))}
-                className='border p-2 rounded-md '
-              />
-            </label>
+            <div className='flex flex-col items-start gap-4'>
+              <p>
+                Total Price: <strong>${totalPrice.toFixed(2)}</strong>
+              </p>
+              <label>
+                Guests:
+                <input
+                  type='number'
+                  value={guests}
+                  min={1}
+                  onChange={(e) => setGuests(Number(e.target.value))}
+                  className='border p-2 rounded-md'
+                />
+              </label>
+            </div>
             <button
               type='button'
               onClick={handleSubmit}

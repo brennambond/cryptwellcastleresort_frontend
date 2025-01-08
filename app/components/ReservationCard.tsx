@@ -3,13 +3,11 @@
 import MotionDiv from "@/components/motion/MotionDiv";
 import { fadeIn } from "@/utils/motion";
 import Image from "next/image";
-import Link from "next/link";
 import React, { useState } from "react";
 
 import EditReservationModal from "./EditReservationModal";
 import DeleteReservationModal from "./DeleteReservationModal";
 import apiService from "../services/apiService";
-import { eachDayOfInterval } from "date-fns";
 
 interface ReservationProps {
   reservation: {
@@ -26,6 +24,7 @@ interface ReservationProps {
       wing: {
         name: string;
       };
+      price_per_night: number; // Ensure this is included
     };
   };
   index: number;
@@ -37,7 +36,9 @@ const ReservationCard: React.FC<ReservationProps> = ({
 }) => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [bookedDates, setBookedDates] = useState<Date[]>([]);
+  const [bookedDates, setBookedDates] = useState<
+    { startDate: Date; endDate: Date }[]
+  >([]);
 
   const wing = reservation.room.wing || "Default";
 
@@ -64,14 +65,13 @@ const ReservationCard: React.FC<ReservationProps> = ({
       const response = await apiService.get(
         `/rooms/rooms/${reservation.room.id}/reservations/`
       );
-      const dates = response.flatMap((res: any) => {
-        const checkInDate = new Date(`${res.check_in}T00:00:00`);
-        const checkOutDate = new Date(`${res.check_out}T00:00:00`);
-        return eachDayOfInterval({
-          start: checkInDate,
-          end: new Date(checkOutDate.getTime() - 24 * 60 * 60 * 1000), // Exclude the check_out date
-        });
-      });
+
+      // Transform API response into ranges
+      const dates = response.map((res: any) => ({
+        startDate: new Date(`${res.check_in}T00:00:00`),
+        endDate: new Date(`${res.check_out}T00:00:00`),
+      }));
+
       setBookedDates(dates);
       console.log("Fetched Booked Dates:", dates); // Debugging
     } catch (error) {
@@ -150,7 +150,7 @@ const ReservationCard: React.FC<ReservationProps> = ({
         <EditReservationModal
           reservation={reservation}
           onClose={() => setIsEditModalOpen(false)}
-          bookedDates={bookedDates}
+          bookedDates={bookedDates} // Pass the transformed ranges
         />
       )}
 

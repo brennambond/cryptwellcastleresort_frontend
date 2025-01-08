@@ -21,6 +21,7 @@ interface Reservation {
     wing: {
       name: string;
     };
+    price_per_night: number; // Ensure this field exists
   };
   number_of_nights: number; // Required
 }
@@ -35,18 +36,20 @@ const MyReservationsPage: React.FC = () => {
         const response = await apiService.getReservations();
         console.log("Reservations API Response:", response);
 
-        const reservationsWithNights = response.map(
-          (reservation: Reservation) => ({
-            ...reservation,
-            number_of_nights: Math.max(
-              differenceInDays(
-                new Date(reservation.check_out),
-                new Date(reservation.check_in)
-              ),
-              1
+        const reservationsWithNights = response.map((reservation: any) => ({
+          ...reservation,
+          number_of_nights: Math.max(
+            differenceInDays(
+              new Date(reservation.check_out),
+              new Date(reservation.check_in)
             ),
-          })
-        );
+            1
+          ),
+          room: {
+            ...reservation.room,
+            price_per_night: reservation.room.price_per_night || 0, // Ensure price_per_night exists
+          },
+        }));
 
         setReservations(reservationsWithNights);
       } catch (error) {
@@ -58,7 +61,6 @@ const MyReservationsPage: React.FC = () => {
 
     fetchReservations();
   }, []);
-
   return (
     <main className="wrapper-main bg-[url('../public/background-blue.png')]">
       <MotionDiv

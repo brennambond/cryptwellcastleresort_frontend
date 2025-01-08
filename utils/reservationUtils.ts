@@ -20,6 +20,17 @@ export const fetchReservations = async (
   }
 };
 
+export const calculateTotalPrice = (
+  nights: number,
+  pricePerNight: number,
+  resortFeeRate: number = 0.05
+): { subtotal: number; fee: number; total: number } => {
+  const subtotal = nights * pricePerNight;
+  const fee = subtotal * resortFeeRate;
+  const total = subtotal + fee;
+  return { subtotal, fee, total };
+};
+
 export const performBooking = async (
   userId: string | null,
   dateRange: { startDate: Date; endDate: Date },
