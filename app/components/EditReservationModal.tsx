@@ -15,7 +15,7 @@ interface EditReservationModalProps {
     guests: number;
   };
   onClose: () => void;
-  bookedDates: Date[];
+  bookedDates: { startDate: Date; endDate: Date }[];
 }
 
 const EditReservationModal: React.FC<EditReservationModalProps> = ({
@@ -31,10 +31,22 @@ const EditReservationModal: React.FC<EditReservationModalProps> = ({
   const [guests, setGuests] = useState(reservation.guests);
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
 
-  const normalizedBookedDates = bookedDates.map((date) => {
-    const [year, month, day] = date.toISOString().split("T")[0].split("-");
-    return new Date(Number(year), Number(month) - 1, Number(day));
-  });
+  // Filter out the current reservation dates from bookedDates and flatten to a Date[] array
+  const filteredBookedDates: Date[] = bookedDates
+    .filter(
+      (date) =>
+        date.startDate.toISOString().split("T")[0] !== reservation.check_in &&
+        date.endDate.toISOString().split("T")[0] !== reservation.check_out
+    )
+    .flatMap((date) => {
+      const dates: Date[] = [];
+      let currentDate = new Date(date.startDate);
+      while (currentDate <= date.endDate) {
+        dates.push(new Date(currentDate));
+        currentDate.setDate(currentDate.getDate() + 1);
+      }
+      return dates;
+    });
 
   useEffect(() => {
     document.body.style.overflow = "hidden";
@@ -80,7 +92,7 @@ const EditReservationModal: React.FC<EditReservationModalProps> = ({
             <Calendar
               value={dateRange}
               onChange={handleDateChange}
-              bookedDates={normalizedBookedDates}
+              bookedDates={filteredBookedDates} // Pass transformed dates
             />
             <label className='flex flex-col'>
               Guests:
