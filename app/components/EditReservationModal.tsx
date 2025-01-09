@@ -3,10 +3,16 @@
 import React, { useEffect, useState } from "react";
 import Modal from "./Modal";
 import SuccessModal from "./SuccessModal";
+import ErrorModal from "./ErrorModal";
 import apiService from "../services/apiService";
 import Calendar from "./Calendar";
+
 import { Range, RangeKeyDict } from "react-date-range";
 import { calculateTotalPrice } from "@/utils/reservationUtils";
+import GuestsSelector from "./reservations/reservationsidebar/GuestsSelector";
+import PricingDetails from "./reservations/reservationsidebar/PricingDetails";
+import { getStylesForChamber } from "@/utils/stylingUtils";
+import Spinner from "./Spinner";
 
 interface EditReservationModalProps {
   reservation: {
@@ -34,11 +40,17 @@ const EditReservationModal: React.FC<EditReservationModalProps> = ({
     endDate: new Date(`${reservation.check_out}T00:00:00`),
     key: "selection",
   });
-  const [guests, setGuests] = useState(reservation.guests);
+  const [guests, setGuests] = useState<string>(reservation.guests.toString());
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
+  const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const [totalPrice, setTotalPrice] = useState<number>(0);
+  const [subtotal, setSubtotal] = useState<number>(0);
+  const [fee, setFee] = useState<number>(0);
+  const [loading, setLoading] = useState(false);
 
-  // Transform bookedDates to match Calendar's expectations
+  const backgroundColorStyle = "bg-gray-700";
+
   const flattenedBookedDates: Date[] = bookedDates.flatMap(
     ({ startDate, endDate }) => {
       const dates: Date[] = [];
@@ -51,7 +63,6 @@ const EditReservationModal: React.FC<EditReservationModalProps> = ({
     }
   );
 
-  // Filter out the current reservation's dates
   const filteredBookedDates: Date[] = flattenedBookedDates.filter((date) => {
     const formattedDate = date.toISOString().split("T")[0];
     return (
@@ -67,37 +78,44 @@ const EditReservationModal: React.FC<EditReservationModalProps> = ({
     };
   }, []);
 
-  // Calculate total price dynamically
   useEffect(() => {
-    const startDate = dateRange.startDate || new Date();
-    const endDate = dateRange.endDate || new Date();
-
     const nights = Math.max(
       Math.ceil(
-        (endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24)
+        (new Date(dateRange.endDate || reservation.check_out).getTime() -
+          new Date(dateRange.startDate || reservation.check_in).getTime()) /
+          (1000 * 60 * 60 * 24)
       ),
       1
     );
-    const { total } = calculateTotalPrice(
-      nights,
-      reservation.room.price_per_night
-    );
-    setTotalPrice(total);
+
+    const subtotalCalc = nights * reservation.room.price_per_night;
+    const feeCalc = subtotalCalc * 0.05; // 5% resort fee
+
+    setSubtotal(subtotalCalc);
+    setFee(feeCalc);
+    setTotalPrice(subtotalCalc + feeCalc);
   }, [dateRange, reservation.room.price_per_night]);
 
   const handleSubmit = async () => {
+    setLoading(true);
     try {
       const body = {
-        check_in: dateRange.startDate?.toISOString().split("T")[0],
-        check_out: dateRange.endDate?.toISOString().split("T")[0],
-        guests,
+        check_in: new Date(dateRange.startDate || reservation.check_in)
+          .toISOString()
+          .split("T")[0],
+        check_out: new Date(dateRange.endDate || reservation.check_out)
+          .toISOString()
+          .split("T")[0],
+        guests: Number(guests),
         total_price: totalPrice.toFixed(2),
       };
       await apiService.updateReservation(reservation.id, body);
+      setLoading(false);
       setIsSuccessModalOpen(true);
     } catch (error) {
       console.error("Failed to update reservation:", error);
-      alert("Failed to update reservation. Please try again.");
+      setErrorMessage("Failed to update reservation. Please try again.");
+      setIsErrorModalOpen(true);
     }
   };
 
@@ -118,44 +136,78 @@ const EditReservationModal: React.FC<EditReservationModalProps> = ({
         onRequestClose={onClose}
         label='Edit Reservation'
         content={
-          <div className='flex flex-col items-center gap-6'>
-            <h2 className='text-lg font-bold'>Edit Your Reservation</h2>
+          <div className='flex flex-col items-center gap-6 max-h-[80vh] overflow-y-auto w-full'>
             <Calendar
               value={dateRange}
               onChange={handleDateChange}
               bookedDates={filteredBookedDates}
+              backgroundColorStyle={backgroundColorStyle}
             />
-            <div className='flex flex-col items-start gap-4'>
-              <p>
-                Total Price: <strong>${totalPrice.toFixed(2)}</strong>
-              </p>
-              <label>
-                Guests:
-                <input
-                  type='number'
-                  value={guests}
-                  min={1}
-                  onChange={(e) => setGuests(Number(e.target.value))}
-                  className='border p-2 rounded-md'
+            <div className=' w-[90%] lg:w-[80%] xl:w-[60%] flex flex-col border border-gray-400 rounded-xl bg-white shadow-md p-semibold-18 text-center'>
+              <div
+                className={`block w-full p-medium-24 font-germania ${backgroundColorStyle} text-white tracking-wider p-4 rounded-t-xl`}
+              >
+                Confirm Booking Details:
+              </div>
+              <div className='flex flex-col px-4 py-8 gap-8'>
+                <GuestsSelector
+                  guests={guests}
+                  guestsRange={Array.from({ length: 10 }, (_, i) =>
+                    (i + 1).toString()
+                  )}
+                  onChange={(value: any) => setGuests(value)}
+                  backgroundColorStyle='bg-gray-700'
+                  className='text-white'
                 />
-              </label>
+                <PricingDetails
+                  nights={Math.max(
+                    Math.ceil(
+                      (new Date(
+                        dateRange.endDate || reservation.check_out
+                      ).getTime() -
+                        new Date(
+                          dateRange.startDate || reservation.check_in
+                        ).getTime()) /
+                        (1000 * 60 * 60 * 24)
+                    ),
+                    1
+                  )}
+                  chamberPrice={reservation.room.price_per_night}
+                  subtotal={subtotal.toFixed(2)}
+                  fee={fee.toFixed(2)}
+                  totalPrice={totalPrice}
+                  backgroundColorStyle='bg-gray-700'
+                  className='text-white'
+                />
+                <div className='flex-center'>
+                  <button
+                    onClick={handleSubmit}
+                    className='button-main my-4 py-4'
+                    disabled={loading}
+                  >
+                    {loading ? (
+                      <Spinner size='sm' color='text-white-main' />
+                    ) : (
+                      "Save Changes"
+                    )}
+                  </button>
+                  <SuccessModal
+                    isOpen={isSuccessModalOpen}
+                    onClose={handleSuccessClose}
+                    title='Reservation Updated'
+                    description='Your reservation has been successfully updated.'
+                  />
+                  <ErrorModal
+                    isOpen={isErrorModalOpen}
+                    onClose={() => setIsErrorModalOpen(false)}
+                    title='Update Failed'
+                    description={errorMessage}
+                  />
+                </div>
+              </div>
             </div>
-            <button
-              type='button'
-              onClick={handleSubmit}
-              className='button-main my-4 py-4'
-            >
-              Save Changes
-            </button>
           </div>
         }
-      />
-
-      <SuccessModal
-        isOpen={isSuccessModalOpen}
-        onClose={handleSuccessClose}
-        title='Reservation Updated'
-        description='Your reservation has been successfully updated.'
       />
     </>
   );

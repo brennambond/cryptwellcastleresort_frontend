@@ -8,6 +8,10 @@ const nextConfig = {
       },
       {
         protocol: "https",
+        hostname: "hauntedhotel-backend-bucket.s3.amazonaws.com",
+      },
+      {
+        protocol: "https",
         hostname: "**.vercel.app", // For images hosted on Vercel (optional)
       },
     ],

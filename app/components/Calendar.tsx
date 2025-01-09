@@ -16,6 +16,7 @@ const tailwindToHexMap: Record<string, string> = {
   "bg-cyan-900": "#164e63",
   "bg-emerald-900": "#064e3b",
   "bg-fuchsia-950": "#701a75",
+  "bg-gray-700": "#374151",
 };
 
 const Calendar: React.FC<CalendarProps> = ({

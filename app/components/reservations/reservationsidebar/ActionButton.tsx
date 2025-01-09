@@ -1,32 +1,36 @@
+"use client";
+
 import React, { useState } from "react";
-import ErrorModal from "../../ErrorModal";
-import SuccessModal from "../../SuccessModal";
 import Spinner from "../../Spinner";
+import SuccessModal from "../../SuccessModal";
+import ErrorModal from "../../ErrorModal";
 import useLoginModal from "@/app/hooks/useLoginModal";
 
 interface ActionButtonProps {
   userId: string | null;
   performBooking: () => Promise<void>;
-  buttonColorStyle: string;
+  button: React.ReactElement; // Custom button passed from parent
   isSuccessModalOpen: boolean;
   setIsSuccessModalOpen: (state: boolean) => void;
   isErrorModalOpen: boolean;
   setIsErrorModalOpen: (state: boolean) => void;
   errorMessage: string;
+  loading?: boolean;
 }
 
 const ActionButton: React.FC<ActionButtonProps> = ({
   userId,
   performBooking,
-  buttonColorStyle,
+  button,
   isSuccessModalOpen,
   setIsSuccessModalOpen,
   isErrorModalOpen,
   setIsErrorModalOpen,
   errorMessage,
+  loading,
 }) => {
   const loginModal = useLoginModal();
-  const [loading, setLoading] = useState(false);
+  const [_, setLoading] = useState(false);
 
   const handleBooking = async () => {
     if (!userId) {
@@ -44,25 +48,12 @@ const ActionButton: React.FC<ActionButtonProps> = ({
     }
   };
 
-  const buttonStyle = userId
-    ? `${buttonColorStyle} button-main-nobg shadow-md`
-    : "bg-gray-400 hover:bg-gray-500 text-white-main button-main-nobg shadow-md";
-
   return (
     <div className='flex-center'>
-      <button
-        onClick={handleBooking}
-        className={buttonStyle}
-        disabled={loading}
-      >
-        {loading ? (
-          <Spinner size='sm' color='text-white-main' />
-        ) : userId ? (
-          "Book Now"
-        ) : (
-          "Sign-In to Book This Chamber"
-        )}
-      </button>
+      {React.cloneElement(button, {
+        onClick: handleBooking,
+        disabled: loading,
+      })}
 
       <SuccessModal
         isOpen={isSuccessModalOpen}

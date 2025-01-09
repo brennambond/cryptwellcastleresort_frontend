@@ -6,7 +6,6 @@ import { Range } from "react-date-range";
 import Calendar from "../../Calendar";
 import GuestsSelector from "./GuestsSelector";
 import PricingDetails from "./PricingDetails";
-import ActionButton from "./ActionButton";
 
 import useLoginModal from "../../../hooks/useLoginModal";
 import { useRouter } from "next/navigation";
@@ -14,6 +13,9 @@ import { getStylesForChamber } from "@/utils/stylingUtils";
 import { differenceInDays } from "date-fns";
 import { fetchReservations, performBooking } from "@/utils/reservationUtils";
 import { createReservation } from "@/app/lib/actions";
+import Spinner from "../../Spinner";
+import SuccessModal from "../../SuccessModal";
+import ErrorModal from "../../ErrorModal";
 
 const initialDateRange = {
   startDate: new Date(),
@@ -46,6 +48,7 @@ const ReservationSidebar: React.FC<ReservationSidebarProps> = ({
   const [dateRange, setDateRange] = useState<Range>(initialDateRange);
   const [bookedDates, setBookedDates] = useState<Date[]>([]);
   const [guests, setGuests] = useState<string>("1");
+  const [loading, setLoading] = useState(false);
 
   const router = useRouter();
 
@@ -57,9 +60,11 @@ const ReservationSidebar: React.FC<ReservationSidebarProps> = ({
     [chamber.guests]
   );
 
-  const { backgroundColorStyle, buttonColorStyle } = getStylesForChamber(
-    chamber.title
-  );
+  const { backgroundColorStyle } = getStylesForChamber(chamber.title);
+
+  const buttonStyle = userId
+    ? `${backgroundColorStyle} button-main-nobg shadow-md`
+    : "bg-gray-400 hover:bg-gray-500 text-white-main button-main-nobg shadow-md";
 
   const { subtotal, fee, totalPrice, nights } = useMemo(() => {
     const dayCount = differenceInDays(
@@ -103,6 +108,11 @@ const ReservationSidebar: React.FC<ReservationSidebarProps> = ({
   }, [chamber.id]);
 
   const handleBooking = async () => {
+    if (!userId) {
+      loginModal.open();
+      return;
+    }
+    setLoading(true);
     const validDateRange = {
       startDate: dateRange.startDate || new Date(),
       endDate: dateRange.endDate || new Date(),
@@ -119,8 +129,6 @@ const ReservationSidebar: React.FC<ReservationSidebarProps> = ({
       createReservation
     );
   };
-
-  console.log(bookedDates);
 
   return (
     <div className='flex-center flex-col rounded-xl bg-white-main gap-6 pb-10 w-full sm:w-[90%] md:w-[80%] lg:w-[70%] 2xl:w-[60%]'>
@@ -148,35 +156,51 @@ const ReservationSidebar: React.FC<ReservationSidebarProps> = ({
           Confirm Booking Details:
         </div>
         <div className='flex flex-col px-4 py-8 gap-8'>
-          {/* GuestsSelector.tsx */}
           <GuestsSelector
             guests={guests}
-            guestsRange={guestsRange.map(String)}
+            guestsRange={guestsRange}
             onChange={(value) => setGuests(value)}
             backgroundColorStyle={backgroundColorStyle}
           />
 
-          {/* PricingDetails.tsx */}
           <PricingDetails
             nights={nights}
             chamberPrice={chamber.price_per_night}
-            subtotal={subtotal}
-            fee={fee}
+            subtotal={subtotal.toFixed(2)}
+            fee={fee.toFixed(2)}
             totalPrice={totalPrice}
             backgroundColorStyle={backgroundColorStyle}
           />
 
-          {/* ActionButton.tsx */}
-          <ActionButton
-            userId={userId}
-            performBooking={handleBooking}
-            buttonColorStyle={buttonColorStyle}
-            isSuccessModalOpen={isSuccessModalOpen}
-            setIsSuccessModalOpen={setIsSuccessModalOpen}
-            isErrorModalOpen={isErrorModalOpen}
-            setIsErrorModalOpen={setIsErrorModalOpen}
-            errorMessage={errorMessage}
-          />
+          <div className='flex-center'>
+            <button
+              onClick={handleBooking}
+              className={buttonStyle}
+              disabled={loading}
+            >
+              {loading ? (
+                <Spinner size='sm' color='text-white-main' />
+              ) : userId ? (
+                "Book Now"
+              ) : (
+                "Sign-In to Book This Chamber"
+              )}
+            </button>
+            <SuccessModal
+              isOpen={isSuccessModalOpen}
+              onClose={() => setIsSuccessModalOpen(false)}
+              title='Booking Confirmed'
+              description='Your reservation has been successfully created!'
+              linkText='View Your Reservations'
+              linkHref='/myreservations'
+            />
+            <ErrorModal
+              isOpen={isErrorModalOpen}
+              onClose={() => setIsErrorModalOpen(false)}
+              title='Booking Failed'
+              description={errorMessage}
+            />
+          </div>
         </div>
       </div>
     </div>
