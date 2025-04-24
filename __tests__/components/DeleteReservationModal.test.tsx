@@ -59,4 +59,21 @@ describe("DeleteReservationModal", () => {
       expect(screen.getByText("SuccessModal")).toBeInTheDocument();
     });
   });
+
+  it("shows alert when delete fails", async () => {
+    mockDelete.mockRejectedValueOnce(new Error("Delete failed"));
+    const alertSpy = jest.spyOn(window, "alert").mockImplementation(() => {});
+
+    render(<DeleteReservationModal reservationId='1' onClose={mockOnClose} />);
+
+    fireEvent.click(screen.getByText("Confirm"));
+
+    await waitFor(() => {
+      expect(alertSpy).toHaveBeenCalledWith(
+        "Failed to delete reservation. Please try again."
+      );
+    });
+
+    alertSpy.mockRestore();
+  });
 });
