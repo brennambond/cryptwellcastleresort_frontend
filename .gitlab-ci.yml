@@ -28,7 +28,10 @@ e2e-tests:
   stage: test
   script:
     - npm ci
-    - npx playwright install --with-deps # install required browser dependencies
+    - npm run build
+    - npx playwright install --with-deps
+    - npm run start & # Start your Next.js app in the background
+    - npx wait-on http://localhost:3000 # Wait until it's live
     - npm run test:e2e
   artifacts:
     when: always
