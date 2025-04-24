@@ -7,7 +7,7 @@ import React, { useState } from "react";
 
 import EditReservationModal from "./EditReservationModal";
 import DeleteReservationModal from "./DeleteReservationModal";
-import apiService from "../services/apiService";
+import apiService from "../../services/apiService";
 
 interface ReservationProps {
   reservation: {

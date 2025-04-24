@@ -1,18 +1,16 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import Modal from "./Modal";
-import SuccessModal from "./SuccessModal";
-import ErrorModal from "./ErrorModal";
-import apiService from "../services/apiService";
-import Calendar from "./Calendar";
+import Modal from "../Modal";
+import SuccessModal from "../SuccessModal";
+import ErrorModal from "../ErrorModal";
+import apiService from "../../services/apiService";
+import Calendar from "../Calendar";
 
 import { Range, RangeKeyDict } from "react-date-range";
-import { calculateTotalPrice } from "@/utils/reservationUtils";
-import GuestsSelector from "./reservations/reservationsidebar/GuestsSelector";
-import PricingDetails from "./reservations/reservationsidebar/PricingDetails";
-import { getStylesForChamber } from "@/utils/stylingUtils";
-import Spinner from "./Spinner";
+import GuestsSelector from "./reservationsidebar/GuestsSelector";
+import PricingDetails from "./reservationsidebar/PricingDetails";
+import Spinner from "../Spinner";
 
 interface EditReservationModalProps {
   reservation: {

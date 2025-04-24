@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import WingsPageSection from "../components/WingsPageSection";
+import WingsPageSection from "../components/wings/WingsPageSection";
 
 export const metadata: Metadata = {
   title: "Wings | Cryptwell Castle Resort",

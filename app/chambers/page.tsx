@@ -1,4 +1,4 @@
-import ChambersPageContent from "../components/ChambersPageContent";
+import ChambersPageContent from "../components/chambers/ChambersPageContent";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

@@ -3,10 +3,10 @@
 import MotionDiv from "@/components/motion/MotionDiv";
 import { fadeIn, staggerContainer } from "@/utils/motion";
 import { useEffect, useState } from "react";
-import { WingSectionType } from "../components/WingsSection";
-import apiService from "../services/apiService";
-import WingCard from "../components/WingCard";
-import WingServices from "../components/services/WingServices";
+import { WingSectionType } from "./WingsSection";
+import apiService from "../../services/apiService";
+import WingCard from "./WingCard";
+import WingServices from "../services/WingServices";
 
 const WingsPageSection = () => {
   const [wings, setWings] = useState<WingSectionType[]>([]);

@@ -1,10 +1,10 @@
 "use client";
 
+import apiService from "@/app/services/apiService";
 import React, { useEffect, useState } from "react";
-import Modal from "./Modal";
-import SuccessModal from "./SuccessModal";
-import Spinner from "./Spinner";
-import apiService from "../services/apiService";
+import Modal from "../Modal";
+import Spinner from "../Spinner";
+import SuccessModal from "../SuccessModal";
 
 interface DeleteReservationModalProps {
   reservationId: string;

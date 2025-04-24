@@ -1,4 +1,4 @@
-import WingsSection from "./components/WingsSection";
+import WingsSection from "./components/wings/WingsSection";
 
 import HotelIntro from "./components/HotelIntro";
 import DiningSection from "./components/DiningSection";
