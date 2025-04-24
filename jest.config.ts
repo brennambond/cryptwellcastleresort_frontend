@@ -14,8 +14,7 @@ const config: Config = {
     },
   },
   moduleNameMapper: {
-    "\\.(css|scss)$": "identity-obj-proxy",
-    "^@/(.*)$": "<rootDir>/$1",
+    "^@/(.*)$": "<rootDir>/$1", // ✅ Correct
   },
   testPathIgnorePatterns: ["/node_modules/", "/e2e/"],
 };

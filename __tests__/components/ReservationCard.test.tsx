@@ -10,10 +10,10 @@ jest.mock("next/image", () => ({
 }));
 
 // 👇 mock modals (prevent crashes during open)
-jest.mock("@/app/components/EditReservationModal", () => () => (
+jest.mock("@/app/components/reservations/EditReservationModal", () => () => (
   <div>Edit Modal</div>
 ));
-jest.mock("@/app/components/DeleteReservationModal", () => () => (
+jest.mock("@/app/components/reservations/DeleteReservationModal", () => () => (
   <div>Delete Modal</div>
 ));
 

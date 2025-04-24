@@ -17,7 +17,7 @@ jest.mock("@/app/components/Spinner", () => () => <div>Loading...</div>);
 
 const mockDelete: jest.Mock<Promise<any>, [string]> = jest.fn();
 
-jest.mock("@/services/apiService", () => ({
+jest.mock("@/app/services/apiService", () => ({
   __esModule: true,
   default: {
     deleteReservation: (id: string) => mockDelete(id),
