@@ -1,12 +1,12 @@
 "use client";
 
-import apiService from "../services/apiService";
+import apiService from "../../services/apiService";
 import { useEffect, useState } from "react";
-import ChambersListItem from "./ChambersListItem";
+import ChambersListItem from "../chambers/ChambersListItem";
 import MotionDiv from "@/components/motion/MotionDiv";
 import { staggerContainer } from "@/utils/motion";
 import { useParams } from "next/navigation";
-import Spinner from "./Spinner";
+import Spinner from "../Spinner";
 
 export type ChamberType = {
   id: string;

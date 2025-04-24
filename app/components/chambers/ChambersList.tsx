@@ -1,10 +1,10 @@
 import { useState, useEffect, useCallback } from "react";
 import ChambersListItem from "./ChambersListItem";
 import { format } from "date-fns";
-import apiService from "../services/apiService";
+import apiService from "../../services/apiService";
 import { staggerContainer } from "@/utils/motion";
 import MotionDiv from "@/components/motion/MotionDiv";
-import Spinner from "./Spinner";
+import Spinner from "../Spinner";
 
 interface Chamber {
   id: string;

@@ -2,7 +2,7 @@ import ArcaneServices from "@/app/components/services/ArcaneServices";
 import BloodbornServices from "@/app/components/services/BloodbornServices";
 import HauntedServices from "@/app/components/services/HauntedServices";
 import RebornServices from "@/app/components/services/RebornServices";
-import WingChambersList from "@/app/components/WingChambersList";
+import WingChambersList from "@/app/components/wings/WingChambersList";
 
 import apiService from "@/app/services/apiService";
 import MotionDiv from "@/components/motion/MotionDiv";

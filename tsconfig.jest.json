@@ -1,0 +1,7 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "moduleResolution": "node", // 👈 Crucial for Jest compatibility
+    "jsx": "react-jsx" // Needed if you're using React 17+
+  }
+}

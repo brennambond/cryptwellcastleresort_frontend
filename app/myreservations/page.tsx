@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import MyReservationsPage from "../components/MyReservationsPage";
+import MyReservationsPage from "../components/reservations/MyReservationsPage";
 
 export const metadata: Metadata = {
   title: "My Reservations | Cryptwell Castle Resort",

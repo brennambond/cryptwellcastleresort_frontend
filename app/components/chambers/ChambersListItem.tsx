@@ -3,7 +3,7 @@ import { fadeIn } from "@/utils/motion";
 import Image from "next/image";
 import Link from "next/link";
 import { HiMiniArrowRightCircle } from "react-icons/hi2";
-import { ChamberType } from "./WingChambersList";
+import { ChamberType } from "../wings/WingChambersList";
 
 interface ChamberProps {
   chamber: ChamberType;

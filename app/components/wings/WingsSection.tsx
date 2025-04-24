@@ -3,7 +3,7 @@
 import MotionDiv from "@/components/motion/MotionDiv";
 import { fadeIn, staggerContainer } from "@/utils/motion";
 import { useEffect, useState } from "react";
-import apiService from "../services/apiService";
+import apiService from "../../services/apiService";
 import WingCard from "./WingCard";
 
 export type WingSectionType = {

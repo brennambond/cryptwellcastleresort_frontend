@@ -1,0 +1,21 @@
+image: node:18
+
+stages:
+  - test
+
+cache:
+  paths:
+    - node_modules/
+
+test:
+  stage: test
+  script:
+    - npm ci
+    - npm run test
+
+e2e:
+  image: mcr.microsoft.com/playwright:v1.42.1-jammy
+  stage: test
+  script:
+    - npm ci
+    - npm run test:e2e

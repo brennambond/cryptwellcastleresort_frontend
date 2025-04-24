@@ -4,10 +4,10 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import MotionDiv from "@/components/motion/MotionDiv";
 import { fadeIn } from "@/utils/motion";
-import ChambersList from "../components/ChambersList";
-import SearchFilters from "../components/header/SearchFilters";
-import ChamberServices from "../components/services/ChamberServices";
-import SearchModal from "./header/SearchModal";
+import ChambersList from "./ChambersList";
+import SearchFilters from "../header/SearchFilters";
+import ChamberServices from "../services/ChamberServices";
+import SearchModal from "../header/SearchModal";
 
 const ChambersPageContent: React.FC = () => {
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
