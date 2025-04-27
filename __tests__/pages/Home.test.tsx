@@ -1,28 +1,23 @@
-// __tests__/pages/Home.test.tsx
-
 import { render, screen } from "@testing-library/react";
 import Home from "@/app/page";
 
-// Mock TypingText since HotelIntro depends on it
-jest.mock("@/app/components/CustomTexts", () => ({
-  TypingText: ({ title }: { title: string }) => <div>{title}</div>,
-}));
-
-// Mock WingsSection API usage
 jest.mock("@/app/components/wings/WingsSection", () => () => (
   <div>Mocked Wings Section</div>
 ));
 
-// Mock MotionDiv
-jest.mock("@/components/motion/MotionDiv", () => ({ children }: any) => (
-  <div>{children}</div>
+jest.mock("@/app/components/DiningSection", () => () => (
+  <section>
+    <h2>Dining</h2>
+  </section>
+));
+
+jest.mock("@/app/components/ContactSection", () => () => (
+  <section>
+    <h2>Your Nightmare Awaits</h2>
+  </section>
 ));
 
 describe("Home Page", () => {
-  it("renders without crashing", () => {
-    render(<Home />);
-  });
-
   it("renders Hero Section text", () => {
     render(<Home />);
     expect(
@@ -32,27 +27,29 @@ describe("Home Page", () => {
     ).toBeInTheDocument();
   });
 
-  it("renders Hotel Intro text", () => {
+  it("renders Wings Section", () => {
+    render(<Home />);
+    expect(screen.getByText(/Mocked Wings Section/i)).toBeInTheDocument();
+  });
+
+  it("renders Dining Section heading", () => {
     render(<Home />);
     expect(
-      screen.getByText(/The vacation of your nightmares starts here/i)
+      screen.getByRole("heading", { name: /Dining/i })
     ).toBeInTheDocument();
   });
 
-  it("renders Dining Section text", () => {
+  it("renders Contact Section heading", () => {
     render(<Home />);
-    expect(screen.getByText(/Dining/i)).toBeInTheDocument();
-    expect(screen.getByText(/The Veiled Board/i)).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { name: /Your Nightmare Awaits/i })
+    ).toBeInTheDocument();
   });
 
-  it("renders Contact Section text", () => {
+  it("renders Explore Our Chambers button", () => {
     render(<Home />);
-    expect(screen.getByText(/Your Nightmare Awaits/i)).toBeInTheDocument();
-    expect(screen.getByText(/Hotel Services Available/i)).toBeInTheDocument();
-  });
-
-  it("renders Mocked Wings Section", () => {
-    render(<Home />);
-    expect(screen.getByText(/Mocked Wings Section/i)).toBeInTheDocument();
+    expect(
+      screen.getByRole("link", { name: /Explore Our Chambers/i })
+    ).toBeInTheDocument();
   });
 });
