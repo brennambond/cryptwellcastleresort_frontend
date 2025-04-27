@@ -14,14 +14,14 @@ before_script:
 unit-tests:
   stage: test
   script:
-    - npm run test -- --coverage
+    - npm run test:coverage
   artifacts:
     when: always
     paths:
       - coverage/
     reports:
       junit: junit.xml
-  coverage: '/All files[^|]*\|[^|]*\s+([\d\.]+)%/' # optional regex for GitLab coverage tracking
+  coverage: '/All files[^|]*\|[^|]*\s+([\d\.]+)%/'
 
 e2e-tests:
   image: mcr.microsoft.com/playwright:v1.42.1-jammy
@@ -30,8 +30,8 @@ e2e-tests:
     - npm ci
     - npm run build
     - npx playwright install --with-deps
-    - npm run start & # Start your Next.js app in the background
-    - npx wait-on http://localhost:3000 # Wait until it's live
+    - npm run start &
+    - npx wait-on http://localhost:3000
     - npm run test:e2e
   artifacts:
     when: always
