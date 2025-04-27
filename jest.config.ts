@@ -17,5 +17,6 @@ const config: Config = {
     "^@/(.*)$": "<rootDir>/$1", // ✅ Correct
   },
   testPathIgnorePatterns: ["/node_modules/", "/e2e/"],
+  coveragePathIgnorePatterns: ["/node_modules/", "/__tests__/", "/coverage/"],
 };
 export default config;
