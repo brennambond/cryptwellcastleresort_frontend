@@ -4,12 +4,9 @@ import MotionDiv from "@/components/motion/MotionDiv";
 import { fadeIn } from "@/utils/motion";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import React from "react";
 
 const DiningSection = () => {
-  // Test
-  const router = useRouter();
   return (
     <section className="bg-[url('../public/background-blue.png')] bg-cover bg-center py-20">
       <div className='wrapper flex-center flex-col gap-5 lg:gap-10 xl:gap-20 text-white-main text-center'>

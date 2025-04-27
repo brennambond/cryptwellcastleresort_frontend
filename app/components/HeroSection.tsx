@@ -1,13 +1,11 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import Image from "next/image";
 import MotionDiv from "@/components/motion/MotionDiv";
 import { fadeIn } from "@/utils/motion";
 import Link from "next/link";
 
 const HeroSection = () => {
-  const router = useRouter();
   return (
     <section className="bg-[url('../public/background-2.png')] bg-cover bg-center py-20 lg:py-40 flex-center flex-col">
       <div className='wrapper grid grid-cols-1 gap-5 lg:grid-cols-2 lg:gap-10 xl:gap-20 2xl:gap-40 text-white-main text-center'>
