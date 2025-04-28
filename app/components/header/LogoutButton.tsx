@@ -16,14 +16,13 @@ const LogoutButton: React.FC<LogoutButtonProps> = ({ onClick, closeMenu }) => {
     try {
       if (typeof window === "undefined") return;
 
-      await logout(); // Perform the logout operation
-      closeMenu(); // Close the menu
-      // Clear user data from localStorage
+      await logout();
+      closeMenu();
+
       localStorage.removeItem("user_id");
       localStorage.removeItem("accessToken");
       localStorage.removeItem("refreshToken");
 
-      // Notify UserNav of the change
       window.dispatchEvent(new Event("storage"));
 
       window.location.reload();

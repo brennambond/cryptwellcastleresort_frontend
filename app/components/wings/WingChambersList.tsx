@@ -22,8 +22,8 @@ export type ChamberType = {
 };
 
 const WingChambersList = () => {
-  const { id: wingId } = useParams(); // Extract wingId from the URL
-  const [chambers, setChambers] = useState<ChamberType[]>([]); // Explicitly type as ChamberType[]
+  const { id: wingId } = useParams();
+  const [chambers, setChambers] = useState<ChamberType[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {

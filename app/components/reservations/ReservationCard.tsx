@@ -24,7 +24,7 @@ interface ReservationProps {
       wing: {
         name: string;
       };
-      price_per_night: number; // Ensure this is included
+      price_per_night: number;
     };
   };
   index: number;
@@ -66,14 +66,13 @@ const ReservationCard: React.FC<ReservationProps> = ({
         `/rooms/rooms/${reservation.room.id}/reservations/`
       );
 
-      // Transform API response into ranges
       const dates = response.map((res: any) => ({
         startDate: new Date(`${res.check_in}T00:00:00`),
         endDate: new Date(`${res.check_out}T00:00:00`),
       }));
 
       setBookedDates(dates);
-      console.log("Fetched Booked Dates:", dates); // Debugging
+      console.log("Fetched Booked Dates:", dates);
     } catch (error) {
       console.error("Failed to fetch booked dates:", error);
     }
@@ -150,7 +149,7 @@ const ReservationCard: React.FC<ReservationProps> = ({
         <EditReservationModal
           reservation={reservation}
           onClose={() => setIsEditModalOpen(false)}
-          bookedDates={bookedDates} // Pass the transformed ranges
+          bookedDates={bookedDates}
         />
       )}
 

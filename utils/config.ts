@@ -11,12 +11,10 @@ const config: Config = {
 };
 
 export const getImageUrl = (imagePath: string) => {
-  // If the path is already a complete URL, return it as is
   if (imagePath.startsWith("http://") || imagePath.startsWith("https://")) {
     return imagePath;
   }
 
-  // Otherwise, prepend the bucket domain
   return `${config.bucketDomain}/${imagePath}`;
 };
 

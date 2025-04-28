@@ -7,7 +7,7 @@ interface CustomDropdownProps {
   value: string;
   options: string[];
   onChange: (value: string) => void;
-  dropdownColorStyle: string; // Dynamic color styling for hover
+  dropdownColorStyle: string;
 }
 
 const CustomDropdown: React.FC<CustomDropdownProps> = ({

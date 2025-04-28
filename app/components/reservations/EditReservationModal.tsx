@@ -87,7 +87,7 @@ const EditReservationModal: React.FC<EditReservationModalProps> = ({
     );
 
     const subtotalCalc = nights * reservation.room.price_per_night;
-    const feeCalc = subtotalCalc * 0.05; // 5% resort fee
+    const feeCalc = subtotalCalc * 0.05;
 
     setSubtotal(subtotalCalc);
     setFee(feeCalc);

@@ -2,7 +2,6 @@ import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import DeleteReservationModal from "@/app/components/reservations/DeleteReservationModal";
 import "@testing-library/jest-dom";
 
-// 🔌 Mock dependencies
 jest.mock("@/app/components/Modal", () => (props: any) => (
   <div>
     <div>{props.label}</div>

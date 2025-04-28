@@ -9,7 +9,7 @@ import useLoginModal from "@/app/hooks/useLoginModal";
 interface ActionButtonProps {
   userId: string | null;
   performBooking: () => Promise<void>;
-  button: React.ReactElement; // Custom button passed from parent
+  button: React.ReactElement;
   isSuccessModalOpen: boolean;
   setIsSuccessModalOpen: (state: boolean) => void;
   isErrorModalOpen: boolean;

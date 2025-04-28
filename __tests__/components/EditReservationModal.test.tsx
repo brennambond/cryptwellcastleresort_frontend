@@ -3,7 +3,6 @@ import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import EditReservationModal from "@/app/components/reservations/EditReservationModal";
 
-// 🧱 Mocks for child components
 jest.mock("@/app/components/Calendar", () => () => (
   <div>Calendar Component</div>
 ));
@@ -40,7 +39,6 @@ jest.mock(
 );
 jest.mock("@/app/components/Spinner", () => () => <div>Loading...</div>);
 
-// 🚫 Avoid real API calls
 jest.mock("@/app/services/apiService", () => ({
   __esModule: true,
   default: {

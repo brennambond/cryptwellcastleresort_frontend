@@ -26,7 +26,7 @@ const ChambersList: React.FC<{ searchQuery: any }> = ({ searchQuery }) => {
   const [loading, setLoading] = useState<boolean>(true);
 
   const fetchChambers = useCallback(async () => {
-    setLoading(true); // Start loading
+    setLoading(true);
     try {
       const queryParams = new URLSearchParams();
 
@@ -64,7 +64,7 @@ const ChambersList: React.FC<{ searchQuery: any }> = ({ searchQuery }) => {
     } catch (error) {
       console.error("Failed to fetch chambers:", error);
     } finally {
-      setLoading(false); // Stop loading
+      setLoading(false);
       setHasFetched(true);
     }
   }, [searchQuery]);

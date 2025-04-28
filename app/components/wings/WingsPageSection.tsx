@@ -15,7 +15,7 @@ const WingsPageSection = () => {
   const getWings = async () => {
     try {
       const response = await apiService.get("/rooms/wings/");
-      setWings(response); // Adjust based on API response structure
+      setWings(response);
     } catch (error) {
       console.error("Error fetching wings:", error);
     }
@@ -27,7 +27,7 @@ const WingsPageSection = () => {
 
   useEffect(() => {
     if (wings.length > 0) {
-      setActive(wings[0]); // Safely set the first wing as active
+      setActive(wings[0]);
     }
   }, [wings]);
   return (

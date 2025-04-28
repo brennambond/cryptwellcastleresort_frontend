@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import { headerLinks } from "../../constants";
 
 interface NavLinksProps {
-  closeOnClick?: boolean | (() => void); // Allow boolean or function
+  closeOnClick?: boolean | (() => void);
 }
 
 const NavLinks: React.FC<NavLinksProps> = ({ closeOnClick = false }) => {

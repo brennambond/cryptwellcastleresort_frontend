@@ -17,11 +17,11 @@ const Header = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        await getCurrentUser(); // No need to handle the userId here
+        await getCurrentUser();
       } catch (error) {
         console.error("Error fetching user session:", error);
       } finally {
-        setLoading(false); // Ensure loading state ends
+        setLoading(false);
       }
     };
 

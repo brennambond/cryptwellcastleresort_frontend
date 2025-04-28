@@ -25,7 +25,7 @@ const SignupModal: React.FC = () => {
     }
     try {
       await register(email, password1, password2);
-      setIsSuccessModalOpen(true); // Show success modal
+      setIsSuccessModalOpen(true);
     } catch (error: any) {
       setErrors([error.message || "An unexpected error occurred."]);
     } finally {
@@ -35,10 +35,10 @@ const SignupModal: React.FC = () => {
 
   const handleSuccessClose = async () => {
     try {
-      await login(email, password1); // Log in the user
+      await login(email, password1);
       setIsSuccessModalOpen(false);
       signupModal.close();
-      window.location.reload(); // Refresh the page
+      window.location.reload();
     } catch (error: any) {
       console.error("Error logging in after signup:", error.message);
       setErrors([error.message || "Failed to log in. Please try again."]);

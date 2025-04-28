@@ -45,7 +45,7 @@ const SearchModal: React.FC<SearchModalProps> = ({
 
     setFilteredRooms(newSearchQuery);
     console.log("Closing modal after applying filters");
-    onRequestClose(); // Close the modal properly
+    onRequestClose();
   };
 
   const _setDateRange = (selection: Range) => {
@@ -66,7 +66,7 @@ const SearchModal: React.FC<SearchModalProps> = ({
         <Calendar
           value={dateRange}
           onChange={(value) => _setDateRange(value.selection)}
-          bookedDates={[]} // Replace with actual booked dates
+          bookedDates={[]}
         />
         <CustomButton
           className='button-main'
@@ -83,7 +83,7 @@ const SearchModal: React.FC<SearchModalProps> = ({
         <Calendar
           value={dateRange}
           onChange={(value) => _setDateRange(value.selection)}
-          bookedDates={[]} // Replace with actual booked dates
+          bookedDates={[]}
         />
         <div className='mt-6 flex flex-row gap-4 w-full'>
           <CustomButton

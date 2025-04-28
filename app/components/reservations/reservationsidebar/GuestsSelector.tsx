@@ -4,8 +4,8 @@ import CustomDropdown from "../../CustomDropdown";
 
 interface GuestsSelectorProps {
   guests: string;
-  onChange: (value: string) => void; // Correct type
-  guestsRange: string[]; // Use the provided guestsRange prop
+  onChange: (value: string) => void;
+  guestsRange: string[];
   backgroundColorStyle: string;
   className?: string;
 }
@@ -13,7 +13,7 @@ interface GuestsSelectorProps {
 const GuestsSelector: React.FC<GuestsSelectorProps> = ({
   guests,
   onChange,
-  guestsRange, // Use the prop for options
+  guestsRange,
   backgroundColorStyle,
   className,
 }) => (
@@ -25,7 +25,7 @@ const GuestsSelector: React.FC<GuestsSelectorProps> = ({
     </label>
     <CustomDropdown
       value={guests}
-      options={guestsRange} // Use guestsRange as the source for options
+      options={guestsRange}
       onChange={onChange}
       dropdownColorStyle={backgroundColorStyle}
     />

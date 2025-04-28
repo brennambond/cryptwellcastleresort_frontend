@@ -1,9 +1,9 @@
 import React from "react";
 
 interface SpinnerProps {
-  size?: "sm" | "md" | "lg"; // Explicit union type for size
-  color?: string; // Color of the spinner
-  fullScreen?: boolean; // Whether to display a full-screen loader
+  size?: "sm" | "md" | "lg";
+  color?: string;
+  fullScreen?: boolean;
 }
 
 const Spinner: React.FC<SpinnerProps> = ({

@@ -1,6 +1,5 @@
 import "@testing-library/jest-dom";
 
-// jest.setup.ts
 class IntersectionObserverMock {
   constructor(
     _callback: IntersectionObserverCallback,
@@ -14,7 +13,6 @@ class IntersectionObserverMock {
     return [];
   }
 
-  // Add these to satisfy the interface
   readonly root: Element | Document | null = null;
   readonly rootMargin: string = "";
   readonly thresholds: ReadonlyArray<number> = [];

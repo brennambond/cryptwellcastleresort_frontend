@@ -49,7 +49,7 @@ export const register = async (
       },
       body: JSON.stringify({
         email,
-        password: password1, // Send only one password field
+        password: password1,
       }),
     }
   );
@@ -61,7 +61,6 @@ export const register = async (
 
   const data = await response.json();
 
-  // Store tokens in localStorage
   if (isClientSide) {
     localStorage.setItem("accessToken", data.access);
     localStorage.setItem("refreshToken", data.refresh);
@@ -89,7 +88,6 @@ export const login = async (email: string, password: string) => {
 
   const data = await response.json();
 
-  // Store tokens in localStorage
   if (typeof window !== "undefined") {
     localStorage.setItem("accessToken", data.access);
     localStorage.setItem("refreshToken", data.refresh);
@@ -121,10 +119,9 @@ export const logout = async () => {
     throw new Error(`Logout failed: ${response.statusText}`);
   }
 
-  // Clear tokens from localStorage
   localStorage.removeItem("accessToken");
   localStorage.removeItem("refreshToken");
-  localStorage.removeItem("user_id"); // If used
+  localStorage.removeItem("user_id");
   return true;
 };
 
@@ -158,7 +155,7 @@ export const refreshAccessToken = async (): Promise<string | null> => {
 
     const data = await response.json();
     console.log("New access token received:", data.access);
-    localStorage.setItem("accessToken", data.access); // Save new token
+    localStorage.setItem("accessToken", data.access);
     return data.access;
   } catch (error) {
     console.error("Error refreshing access token:", error);
@@ -177,7 +174,6 @@ export const fetchWithAuth = async (
 
     let accessToken = localStorage.getItem("accessToken");
 
-    // Check if the token is expired
     if (accessToken && isTokenExpired(accessToken)) {
       console.warn("Access token expired. Refreshing token...");
       accessToken = await refreshAccessToken();
@@ -185,7 +181,7 @@ export const fetchWithAuth = async (
 
     if (!accessToken) {
       console.warn("No valid access token available. User may need to log in.");
-      throw new Error("No valid access token."); // Optionally rethrow to handle this elsewhere
+      throw new Error("No valid access token.");
     }
 
     const response = await fetch(url, {
@@ -203,7 +199,6 @@ export const fetchWithAuth = async (
 
     return await response.json();
   } catch (error) {
-    // Log unexpected errors
     if (error !== "No valid access token.") {
       console.error("Error in fetchWithAuth:", error);
     }

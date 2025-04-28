@@ -26,7 +26,7 @@ const DeleteReservationModal: React.FC<DeleteReservationModalProps> = ({
   }, []);
 
   const handleDelete = async () => {
-    setLoading(true); // Start loading
+    setLoading(true);
     try {
       await apiService.deleteReservation(reservationId);
       setIsSuccessModalOpen(true);
@@ -34,7 +34,7 @@ const DeleteReservationModal: React.FC<DeleteReservationModalProps> = ({
       console.error("Failed to delete reservation:", error);
       alert("Failed to delete reservation. Please try again.");
     } finally {
-      setLoading(false); // End loading
+      setLoading(false);
     }
   };
 
@@ -59,20 +59,16 @@ const DeleteReservationModal: React.FC<DeleteReservationModalProps> = ({
               <button
                 onClick={onClose}
                 className='bg-gray-400 text-gray-800 py-2 px-4 rounded-md hover:bg-gray-500 button-mini'
-                disabled={loading} // Disable during loading
+                disabled={loading}
               >
                 Cancel
               </button>
               <button
                 onClick={handleDelete}
                 className='bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600 button-mini flex items-center justify-center'
-                disabled={loading} // Disable during loading
+                disabled={loading}
               >
-                {loading ? (
-                  <Spinner size='sm' color='text-white' /> // Show spinner
-                ) : (
-                  "Confirm" // Default text
-                )}
+                {loading ? <Spinner size='sm' color='text-white' /> : "Confirm"}
               </button>
             </div>
           </div>

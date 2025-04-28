@@ -1,4 +1,3 @@
-// e2e/homepage.spec.ts
 import { test, expect } from "@playwright/test";
 
 test("homepage has Cryptwell Castle Resort title", async ({ page }) => {

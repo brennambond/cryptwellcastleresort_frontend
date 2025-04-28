@@ -3,13 +3,11 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import ReservationCard from "@/app/components/reservations/ReservationCard";
 
-// 👇 mock next/image
 jest.mock("next/image", () => ({
   __esModule: true,
-  default: (props: any) => <img {...props} />, // ✅ This should now work
+  default: (props: any) => <img {...props} />,
 }));
 
-// 👇 mock modals (prevent crashes during open)
 jest.mock("@/app/components/reservations/EditReservationModal", () => () => (
   <div>Edit Modal</div>
 ));
@@ -17,11 +15,10 @@ jest.mock("@/app/components/reservations/DeleteReservationModal", () => () => (
   <div>Delete Modal</div>
 ));
 
-// 👇 mock API service to avoid actual fetch
 jest.mock("@/app/services/apiService", () => ({
   __esModule: true,
   default: {
-    get: jest.fn(() => Promise.resolve([])), // return empty bookings
+    get: jest.fn(() => Promise.resolve([])),
   },
 }));
 

@@ -1,4 +1,3 @@
-// e2e/pages/ReservationsPage.spec.ts
 import { test, expect } from "@playwright/test";
 
 test.describe("Reservations Page", () => {

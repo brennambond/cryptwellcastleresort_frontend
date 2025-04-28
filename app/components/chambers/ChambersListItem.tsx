@@ -21,7 +21,7 @@ const getChamberColor = (title: string): string => {
 const ChambersListItem: React.FC<ChamberProps> = ({ chamber, index }) => {
   if (!chamber || !chamber.title || !chamber.image_url) {
     console.warn("Missing chamber data:", chamber);
-    return null; // Skip rendering if chamber data is incomplete
+    return null;
   }
   const colorStyle = getChamberColor(chamber.title);
 

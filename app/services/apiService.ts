@@ -5,7 +5,6 @@ import {
 } from "../lib/actions";
 
 const apiService = {
-  // Generic GET request
   get: async (url: string) => {
     const finalUrl = url.startsWith("http")
       ? url
@@ -27,7 +26,6 @@ const apiService = {
     return await response.json();
   },
 
-  // Generic POST request
   post: async (url: string, body: any) => {
     return await fetchWithAuth(url, {
       method: "POST",
@@ -35,7 +33,6 @@ const apiService = {
     });
   },
 
-  // Generic PUT request
   put: async (url: string, body: any) => {
     return await fetchWithAuth(url, {
       method: "PUT",
@@ -43,26 +40,22 @@ const apiService = {
     });
   },
 
-  // Generic DELETE request
   delete: async (url: string) => {
     return await fetchWithAuth(url, {
       method: "DELETE",
     });
   },
 
-  // Fetch all rooms
   getRooms: async (query: string = "") => {
     const relativeUrl = `/rooms/rooms/${query}`;
     return await apiService.get(relativeUrl);
   },
 
-  // Fetch details for a specific room
   getRoomDetails: async (roomId: string) => {
     const url = `/rooms/rooms/${roomId}/`;
     return await apiService.get(url);
   },
 
-  // Fetch all reservations
   getReservations: async () => {
     const url = `${process.env.NEXT_PUBLIC_API_URL}/reservations/`;
     return await fetchWithAuth(url);
@@ -78,7 +71,6 @@ const apiService = {
     return await apiService.get(url);
   },
 
-  // Create a new reservation
   createReservation: async (body: any) => {
     const url = `${process.env.NEXT_PUBLIC_API_URL}/reservations/create/`;
     return await apiService.post(url, body);
@@ -111,11 +103,11 @@ const apiService = {
     );
 
     if (!response.ok) {
-      const errorData = await response.json().catch(() => ({})); // Handle potential JSON errors gracefully
+      const errorData = await response.json().catch(() => ({}));
       throw new Error(errorData.error || "Failed to delete reservation.");
     }
 
-    console.log("Reservation deleted successfully."); // 204 implies success
+    console.log("Reservation deleted successfully.");
   },
 };
 
