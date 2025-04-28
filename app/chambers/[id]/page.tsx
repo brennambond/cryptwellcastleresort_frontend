@@ -30,11 +30,11 @@ const ChamberDetailPage: React.FC<SearchParamProps> = ({ params }) => {
         setChamber(chamberData);
 
         const user = await getCurrentUser();
-        setUserId(user?.id || null); // Safely handle null user
+        setUserId(user?.id || null);
       } catch (error) {
         console.error("Error fetching data:", error);
         if (!chamber) {
-          router.push("/404"); // Redirect only if chamber data is not found
+          router.push("/404");
         }
       }
     };
@@ -57,7 +57,7 @@ const ChamberDetailPage: React.FC<SearchParamProps> = ({ params }) => {
       return "bg-[url('../public/background-blue.png')]";
     if (title.startsWith("Reborn"))
       return "bg-[url('../public/background-2.png')]";
-    return "bg-[url('../public/background-purple.png')]"; // Default background
+    return "bg-[url('../public/background-purple.png')]";
   };
 
   const backgroundStyle = getBackgroundStyle(chamber.title);
