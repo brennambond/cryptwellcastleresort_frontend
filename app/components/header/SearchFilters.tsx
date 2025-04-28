@@ -9,16 +9,15 @@ const SearchFilters: React.FC<SearchFiltersProps> = ({
   setIsSearchModalOpen,
 }) => {
   return (
-    <motion.span
+    <motion.button
       whileHover={{ scale: 1.1 }}
       onClick={() => {
-        console.log("Opening SearchModal");
         setIsSearchModalOpen(true);
       }}
       className='p-bold-18 md:p-bold-20 xl:max-w-[90%] cursor-pointer underline transition-colors hover:text-purple-500'
     >
       Search Now:
-    </motion.span>
+    </motion.button>
   );
 };
 
