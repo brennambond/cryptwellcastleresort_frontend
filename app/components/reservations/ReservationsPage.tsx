@@ -10,8 +10,8 @@ import Spinner from "../Spinner";
 
 interface Reservation {
   id: string;
-  check_in: string; // Updated field name
-  check_out: string; // Updated field name
+  check_in: string;
+  check_out: string;
   guests: number;
   total_price: number;
   room: {
@@ -21,12 +21,12 @@ interface Reservation {
     wing: {
       name: string;
     };
-    price_per_night: number; // Ensure this field exists
+    price_per_night: number;
   };
-  number_of_nights: number; // Required
+  number_of_nights: number;
 }
 
-const MyReservationsPage: React.FC = () => {
+const ReservationsPage: React.FC = () => {
   const [reservations, setReservations] = useState<Reservation[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -47,7 +47,7 @@ const MyReservationsPage: React.FC = () => {
           ),
           room: {
             ...reservation.room,
-            price_per_night: reservation.room.price_per_night || 0, // Ensure price_per_night exists
+            price_per_night: reservation.room.price_per_night || 0,
           },
         }));
 
@@ -92,4 +92,4 @@ const MyReservationsPage: React.FC = () => {
   );
 };
 
-export default MyReservationsPage;
+export default ReservationsPage;

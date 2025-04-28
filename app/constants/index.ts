@@ -13,6 +13,6 @@ export const headerLinks = [
   },
   {
     label: "Reservations",
-    route: "/myreservations",
+    route: "/reservations",
   },
 ];
