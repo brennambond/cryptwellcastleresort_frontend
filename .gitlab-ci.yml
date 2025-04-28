@@ -30,6 +30,7 @@ e2e-tests:
     - npm ci
     - npm run build
     - npx playwright install --with-deps
+    - echo "NEXT_PUBLIC_API_URL=https://hauntedhotel-backend-api.com/api" >> .env.production.local
     - npm run start &
     - npx wait-on http://localhost:3000
     - npm run test:e2e
