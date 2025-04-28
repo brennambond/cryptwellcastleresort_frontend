@@ -34,7 +34,7 @@ export default function DiningHomePage() {
         className='flex-center flex-col text-center gap-6 md:max-w-[90%] lg:max-w-[80%]'
       >
         <h1 className='flex-center h2-bold font-germania tracking-wider border-b-4 border-white-main '>
-          Welcome to the The Veiled Board
+          Welcome to The Veiled Board
         </h1>
         <div className='p-regular-18 lg:p-regular-20 max-w-[90%] lg:max-w-full backdrop-blur-[2px]'>
           Step into a realm of spectral sophistication where elegance and the
