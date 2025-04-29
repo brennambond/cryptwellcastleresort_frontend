@@ -13,7 +13,7 @@ jest.mock(
       <div>
         GuestsSelector
         <select
-          onChange={(e) => props.onChange(e.target.value)}
+          onChange={(e) => props.onChange(Number(e.target.value))}
           data-testid='guest-select'
         >
           {[...Array(10)].map((_, i) => (
@@ -92,6 +92,28 @@ describe("EditReservationModal", () => {
 
     await waitFor(() => {
       expect(screen.getByText("SuccessModal")).toBeInTheDocument();
+    });
+  });
+
+  it("shows error modal when update fails", async () => {
+    const { default: apiService } = await import("@/app/services/apiService");
+    (apiService.updateReservation as jest.Mock).mockRejectedValueOnce(
+      new Error("Update failed")
+    );
+
+    render(
+      <EditReservationModal
+        reservation={mockReservation}
+        bookedDates={bookedDates}
+        onClose={jest.fn()}
+      />
+    );
+
+    const button = screen.getByText("Save Changes");
+    fireEvent.click(button);
+
+    await waitFor(() => {
+      expect(screen.getByText("ErrorModal")).toBeInTheDocument();
     });
   });
 });
