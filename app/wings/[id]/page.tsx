@@ -6,7 +6,6 @@ import WingChambersList from "@/app/components/wings/WingChambersList";
 
 import apiService from "@/app/services/apiService";
 import MotionDiv from "@/components/motion/MotionDiv";
-import { getImageUrl } from "@/utils/config";
 import { fadeIn } from "@/utils/motion";
 import { Metadata } from "next";
 import Image from "next/image";
