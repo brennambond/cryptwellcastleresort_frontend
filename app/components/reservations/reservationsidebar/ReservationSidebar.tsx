@@ -192,7 +192,7 @@ const ReservationSidebar: React.FC<ReservationSidebarProps> = ({
               title='Booking Confirmed'
               description='Your reservation has been successfully created!'
               linkText='View Your Reservations'
-              linkHref='/myreservations'
+              linkHref='/reservations'
             />
             <ErrorModal
               isOpen={isErrorModalOpen}

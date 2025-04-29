@@ -77,7 +77,7 @@ const UserNav: React.FC = () => {
                 label='My Reservations'
                 onClick={() => {
                   closeMenu?.();
-                  router.push("/myreservations");
+                  router.push("/reservations");
                 }}
               />
               <MenuLink
