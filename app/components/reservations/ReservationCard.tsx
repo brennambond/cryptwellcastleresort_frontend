@@ -25,6 +25,7 @@ interface ReservationProps {
         name: string;
       };
       price_per_night: number;
+      guests: number;
     };
   };
   index: number;
