@@ -22,6 +22,7 @@ interface Reservation {
       name: string;
     };
     price_per_night: number;
+    guests: number;
   };
   number_of_nights: number;
 }
