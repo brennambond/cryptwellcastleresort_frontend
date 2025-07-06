@@ -52,11 +52,7 @@ describe("ChamberDetailPage", () => {
       guests: 2,
       bedrooms: 1,
       bathrooms: 1,
-<<<<<<< HEAD
       image_url: "/phantom-suite.jpg",
-=======
-      image: "/phantom-suite.jpg",
->>>>>>> ca66d22 (Finalize frontend changes to support new backend and Supabase images)
     });
 
     render(<ChamberDetailPage params={{ id: "1" }} />);

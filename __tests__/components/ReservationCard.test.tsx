@@ -32,11 +32,7 @@ const mockReservation = {
   room: {
     id: "101",
     title: "Royal Suite",
-<<<<<<< HEAD
     image_url: "/royal-suite.jpg",
-=======
-    image: "/royal-suite.jpg",
->>>>>>> ca66d22 (Finalize frontend changes to support new backend and Supabase images)
     wing: {
       name: "Reborn",
     },

@@ -9,12 +9,8 @@ interface WingProps {
 const WingListItem: React.FC<WingProps> = ({ wing }) => {
   const router = useRouter();
   const wing_imageurl =
-<<<<<<< HEAD
-    "https://hauntedhotel-backend-bucket" + wing.image_url.slice(17);
-=======
-    "https://cryptwellcastleresort-backend.onrender.com" + wing.image.slice(17);
-  // https://hauntedhotel-backend-bucket
->>>>>>> ca66d22 (Finalize frontend changes to support new backend and Supabase images)
+    "https://cryptwellcastleresort-backend.onrender.com" +
+    wing.image_url.slice(17);
 
   return (
     <div

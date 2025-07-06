@@ -14,11 +14,7 @@ test("Chamber Detail Page renders correctly", async ({ page }) => {
           price_per_night: 150,
           wing: "wing-id",
           category: "category-id",
-<<<<<<< HEAD
           image_url: "https://example.com/fake-room.png",
-=======
-          image: "https://example.com/fake-room.png",
->>>>>>> ca66d22 (Finalize frontend changes to support new backend and Supabase images)
           beds: 2,
           bedrooms: 1,
           bathrooms: 1,
