@@ -22,6 +22,7 @@ interface EditReservationModalProps {
       id: string;
       title: string;
       price_per_night: number;
+      guests: number;
     };
   };
   onClose: () => void;
@@ -150,8 +151,9 @@ const EditReservationModal: React.FC<EditReservationModalProps> = ({
               <div className='flex flex-col px-4 py-8 gap-8'>
                 <GuestsSelector
                   guests={guests}
-                  guestsRange={Array.from({ length: 10 }, (_, i) =>
-                    (i + 1).toString()
+                  guestsRange={Array.from(
+                    { length: reservation.room.guests },
+                    (_, i) => (i + 1).toString()
                   )}
                   onChange={(value: any) => setGuests(value)}
                   backgroundColorStyle='bg-gray-700'
