@@ -28,7 +28,11 @@ e2e-tests:
   stage: test
   script:
     - npm ci
+<<<<<<< HEAD
     - echo "NEXT_PUBLIC_API_URL=https://hauntedhotel-backend-api.com/api" >> .env.production.local
+=======
+    - echo "NEXT_PUBLIC_API_URL=https://cryptwellcastleresort-backend.onrender.com/api" >> .env.production.local
+>>>>>>> ca66d22 (Finalize frontend changes to support new backend and Supabase images)
     - npm run build
     - npx playwright install --with-deps
     - npm run start &

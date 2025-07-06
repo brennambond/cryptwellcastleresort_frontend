@@ -29,7 +29,11 @@ test("User can create, edit, and delete a reservation", async ({
   const fullNewEnd = formatFullDate(newEndDate);
 
   const loginResponse = await request.post(
+<<<<<<< HEAD
     "https://hauntedhotel-backend-api.com/api/auth/login/",
+=======
+    "https://cryptwellcastleresort-backend.onrender.com/api/auth/login/",
+>>>>>>> ca66d22 (Finalize frontend changes to support new backend and Supabase images)
     {
       data: {
         email: "testuser@example.com",

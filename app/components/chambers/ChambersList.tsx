@@ -10,7 +10,11 @@ interface Chamber {
   id: string;
   title: string;
   price_per_night: number;
+<<<<<<< HEAD
   image_url: string;
+=======
+  image: string;
+>>>>>>> ca66d22 (Finalize frontend changes to support new backend and Supabase images)
   wing: string;
   beds: number;
   bedrooms: number;

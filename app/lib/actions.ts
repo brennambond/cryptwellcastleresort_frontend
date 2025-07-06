@@ -249,7 +249,11 @@ export const createReservation = async (reservationData: any): Promise<any> => {
       console.error("Backend response error:", errorData);
       throw new Error(errorData.error || "Failed to create reservation.");
     }
+<<<<<<< HEAD
 
+=======
+    console.log(reservationData);
+>>>>>>> ca66d22 (Finalize frontend changes to support new backend and Supabase images)
     return await response.json();
   } catch (error) {
     console.error("Error creating reservation:", error);
