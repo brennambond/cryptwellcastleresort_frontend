@@ -22,11 +22,11 @@ const nextConfig = {
       },
       {
         protocol: "https",
-        hostname: "qvnsaopoeydtfrjwrudb.supabase.co",
+        hostname: "pkzsqdqeqvjcnubynrxm.supabase.co",
       },
       {
         protocol: "http",
-        hostname: "qvnsaopoeydtfrjwrudb.supabase.co",
+        hostname: "pkzsqdqeqvjcnubynrxm.supabase.co",
       },
     ],
   },
