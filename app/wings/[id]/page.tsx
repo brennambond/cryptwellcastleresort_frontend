@@ -23,14 +23,13 @@ const WingDetailPage = async ({ params }: { params: { id: string } }) => {
     wing.name === "Bloodborn"
       ? "bg-[url('../public/background-red.png')]"
       : wing.name === "Haunted"
-      ? "bg-[url('../public/background-blue.png')]"
-      : wing.name === "Reborn"
-      ? "bg-[url('../public/background-2.png')]"
-      : "bg-[url('../public/background-purple.png')]",
+        ? "bg-[url('../public/background-blue.png')]"
+        : wing.name === "Reborn"
+          ? "bg-[url('../public/background-2.png')]"
+          : "bg-[url('../public/background-purple.png')]",
   ];
 
-  console.log(wing);
-  console.log("Haunted Wing Image URL:", wing.image_url);
+  console.log("Image is coming from:" + wing.image_url);
 
   return (
     <main className={`wrapper-main ${backgroundStyle} gap-20`}>
