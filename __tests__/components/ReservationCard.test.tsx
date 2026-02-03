@@ -37,6 +37,7 @@ const mockReservation = {
       name: "Reborn",
     },
     price_per_night: 250,
+    guests: 2,
   },
 };
 
@@ -49,13 +50,13 @@ describe("ReservationCard", () => {
     expect(screen.getByText("2025-06-01")).toBeInTheDocument();
     expect(screen.getByText("2025-06-04")).toBeInTheDocument();
     expect(
-      screen.getByText(/Number of nights:/i).parentElement
+      screen.getByText(/Number of nights:/i).parentElement,
     ).toHaveTextContent("3");
     expect(
-      screen.getByText(/Number of guests:/i).parentElement
+      screen.getByText(/Number of guests:/i).parentElement,
     ).toHaveTextContent("2");
     expect(screen.getByText(/Total price:/i).parentElement).toHaveTextContent(
-      "$750"
+      "$750",
     );
   });
 
